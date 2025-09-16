@@ -57,6 +57,10 @@ for i = 1:nConfigs
     seriesT = tightRow.filter_life_series{1};
     seriesL = leakyRow.filter_life_series{1};
 
+    % Ensure consistent orientation for vector operations
+    seriesT = seriesT(:)';
+    seriesL = seriesL(:)';
+
     % Ensure same length
     maxLen = max(length(seriesT), length(seriesL));
     if length(seriesT) < maxLen
@@ -74,6 +78,10 @@ for i = 1:nConfigs
     % Calculate envelope
     lower = min(seriesT, seriesL);
     upper = max(seriesT, seriesL);
+
+    % Ensure row vectors for area fill operation
+    lower = lower(:)';
+    upper = upper(:)';
     mean_life = (seriesT + seriesL) / 2;
 
     % Plot envelope as shaded area
