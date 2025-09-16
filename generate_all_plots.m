@@ -54,7 +54,7 @@ allCats = strcat(strrep(rangeTable.location,'_','-'), "-", ...
 uniqueCats = unique(allCats, 'stable');
 rangeColors = get_color_palette(numel(uniqueCats));
 for i = 1:numel(rangeMetrics)
-    plot_scalar_ranges(rangeTable, rangeMetrics{i}, cats.ranges, uniqueCats, rangeColors);
+    plot_scalar_ranges(rangeTable, rangeMetrics{i}, cats.ranges, uniqueCats, rangeColors, summaryTable);
 end
 
 % --- Summary visualizations ---

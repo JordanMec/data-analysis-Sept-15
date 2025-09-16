@@ -21,6 +21,8 @@ avg_outdoor_PM25 = zeros(n,1);
 avg_outdoor_PM10 = zeros(n,1);
 total_cost = zeros(n,1);
 filter_replaced = NaN(n,1);  % Hours between filter changes (computed below)
+filter_replacement_events = NaN(n,1); % Count of replacements observed
+filter_runtime_hours = NaN(n,1);      % Total hours represented in filter life series
 filter_life_series = cell(n,1);
 ach_series = cell(n,1);
 max_ach = NaN(n,1);
@@ -64,7 +66,8 @@ for i = 1:n
     total_cost(i) = simulationData(i).total_cost;
 
     % Compute average hours between filter replacements if life series provided
-    filter_replaced(i) = compute_replacement_interval(filter_life_series{i});
+    [filter_replaced(i), filter_replacement_events(i), filter_runtime_hours(i)] = ...
+        compute_replacement_interval(filter_life_series{i});
 
 end
 
@@ -83,27 +86,46 @@ summaryTable = table(location, leakage, filterType, mode, ...
     filter_life_series, ach_series, ...
     avg_indoor_PM25, avg_indoor_PM10, ...
     avg_outdoor_PM25, avg_outdoor_PM10, max_ach, ...
-    total_cost, filter_replaced, ...
+    total_cost, filter_replaced, filter_replacement_events, filter_runtime_hours, ...
     pm25_efficiency, pm10_efficiency, ...
     aqi_hours_avoided, cost_per_ug_pm25_removed, cost_per_ug_pm10_removed, ...
     cost_per_aqi_hour_avoided);
 end
 
-function hours = compute_replacement_interval(series)
+function [hours, eventCount, runtimeHours] = compute_replacement_interval(series)
 %COMPUTE_REPLACEMENT_INTERVAL Estimate average hours between filter changes
-%   Looks for increases in the filter life series to infer replacement events.
-if isempty(series) || all(series == 100)
+%   Returns the average interval between replacements (hours), the number of
+%   replacement events observed, and the total hours contained in the series.
+
+if isempty(series)
+    hours = NaN;
+    eventCount = NaN;
+    runtimeHours = NaN;
+    return;
+end
+
+% Work with a clean, column-oriented copy of the data
+series = series(:);
+series = series(isfinite(series));
+runtimeHours = numel(series);
+
+if runtimeHours == 0
+    hours = NaN;
+    eventCount = NaN;
+    return;
+end
+
+resetIdx = find(diff(series) > 0);
+eventCount = numel(resetIdx);
+
+if eventCount == 0
     hours = NaN;
     return;
 end
-resetIdx = find(diff(series) > 0);
-if isempty(resetIdx)
-    hours = NaN;
-else
-    % Ensure indices are treated as a single column vector before taking
-    % differences so concatenation does not fail for column-oriented input
-    intervalBoundaries = [0; resetIdx(:); numel(series)];
-    intervals = diff(intervalBoundaries);
-    hours = mean(intervals);
-end
+
+% Ensure indices are treated as a single column vector before taking
+% differences so concatenation does not fail for column-oriented input
+intervalBoundaries = [0; resetIdx(:); runtimeHours];
+intervals = diff(intervalBoundaries);
+hours = mean(intervals);
 end
