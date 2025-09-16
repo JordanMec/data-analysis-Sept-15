@@ -100,7 +100,10 @@ resetIdx = find(diff(series) > 0);
 if isempty(resetIdx)
     hours = NaN;
 else
-    intervals = diff([0 resetIdx numel(series)]);
+    % Ensure indices are treated as a single column vector before taking
+    % differences so concatenation does not fail for column-oriented input
+    intervalBoundaries = [0; resetIdx(:); numel(series)];
+    intervals = diff(intervalBoundaries);
     hours = mean(intervals);
 end
 end
