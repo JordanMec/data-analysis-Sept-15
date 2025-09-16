@@ -271,4 +271,3 @@ switch lower(label)
         readable = strrep(label, '_', ' ');
 end
 end
-end
