@@ -166,11 +166,11 @@ create_efficacy_ranking_table(efficacyScoreTable, figuresDir);
 end
 
 function create_efficacy_ranking_table(efficacyScoreTable, figuresDir)
-% Create a clean table visualization of the ranking
+% Create a clean table visualization of the ranking without UI components
 
-figure('Position',[100 100 1000 600],'Visible','off');
-ax = axes('Position',[0.1 0.1 0.8 0.8]);
-axis off;
+fig = figure('Position',[100 100 1000 600],'Visible','off');
+ax = axes('Parent', fig, 'Position',[0.05 0.18 0.9 0.74]);
+axis(ax, 'off');
 
 % Prepare table data
 nRows = min(10, height(efficacyScoreTable)); % Show top 10
@@ -191,18 +191,61 @@ for i = 1:nRows
     tableData{i+1,7} = sprintf('%.1f', row.avg_aqi_component);
 end
 
-% Create table
-tbl = uitable('Parent', gcf, 'Data', tableData, ...
-    'Units', 'normalized', 'Position', [0.05 0.05 0.9 0.9], ...
-    'FontSize', 10, 'RowName', []);
+% Layout settings
+colWidths = [0.08 0.28 0.12 0.12 0.12 0.12 0.16];
+colPositions = [0, cumsum(colWidths)];
+rowHeight = 1;
+nDisplayRows = size(tableData, 1);
 
-% Style header
-tbl.BackgroundColor = [ones(1,3); repmat([0.95 0.95 0.95; 1 1 1], ceil(nRows/2), 1)];
+% Configure axes for manual table rendering
+set(ax, 'XLim', [0 1], 'YLim', [0 nDisplayRows], 'YDir', 'reverse');
+hold(ax, 'on');
 
-title('Efficacy Score Rankings: Top Performing Configurations', ...
+headerColor = [0.2 0.4 0.6];
+headerTextColor = [1 1 1];
+rowColors = [1 1 1; 0.95 0.95 0.95];
+textAlignments = {'center','left','center','center','center','center','center'};
+
+for rowIdx = 1:nDisplayRows
+    isHeader = (rowIdx == 1);
+    if isHeader
+        bgColor = headerColor;
+        fontWeight = 'bold';
+        fontColor = headerTextColor;
+    else
+        bgColor = rowColors(mod(rowIdx-2, size(rowColors,1)) + 1, :);
+        fontWeight = 'normal';
+        fontColor = [0 0 0];
+    end
+
+    yPos = (rowIdx-1) * rowHeight;
+
+    for colIdx = 1:numel(colWidths)
+        xPos = colPositions(colIdx);
+        rectangle('Parent', ax, 'Position', [xPos, yPos, colWidths(colIdx), rowHeight], ...
+            'FaceColor', bgColor, 'EdgeColor', [0.8 0.8 0.8]);
+
+        if strcmp(textAlignments{colIdx}, 'left')
+            textX = xPos + 0.01;
+        else
+            textX = xPos + colWidths(colIdx)/2;
+        end
+        text(ax, textX, yPos + rowHeight/2, tableData{rowIdx, colIdx}, ...
+            'HorizontalAlignment', textAlignments{colIdx}, ...
+            'VerticalAlignment', 'middle', ...
+            'FontWeight', fontWeight, ...
+            'FontSize', 11, ...
+            'Color', fontColor, ...
+            'Interpreter', 'none');
+    end
+end
+
+title(ax, 'Efficacy Score Rankings: Top Performing Configurations', ...
     'FontSize', 14, 'FontWeight', 'bold');
 
+hold(ax, 'off');
+
 % Save
-save_figure(gcf, figuresDir, 'efficacy_ranking_table.png');
-close(gcf);
+save_figure(fig, figuresDir, 'efficacy_ranking_table.png');
+close(fig);
 end
