@@ -172,7 +172,14 @@ function create_efficacy_ranking_table(efficacyScoreTable, figuresDir)
 
 fig = figure('Position',[100 100 1000 600],'Visible','off');
 ax = axes('Parent', fig, 'Position',[0.05 0.18 0.9 0.74]);
-axis(ax, 'off');
+
+% Hide axis visuals without disabling visibility (exportgraphics ignores
+% children of invisible axes when saving figures)
+set(ax, 'XTick', [], 'YTick', [], 'Box', 'off', 'Color', 'none');
+if isprop(ax, 'XAxis') % Guard for Octave compatibility
+    ax.XAxis.Visible = 'off';
+    ax.YAxis.Visible = 'off';
+end
 
 % Prepare table data
 nRows = min(10, height(efficacyScoreTable)); % Show top 10
