@@ -137,6 +137,8 @@ end
 % Ensure real values before plotting
 locationMeans  = real(locationMeans);
 locationRanges = real(locationRanges);
+locationLower  = real(locationLower);
+locationUpper  = real(locationUpper);
 
 b = bar(locationMeans, 'grouped');
 for i = 1:length(b)
