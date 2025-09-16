@@ -104,11 +104,17 @@ function plot_filter_radar_comparison(filterComparison)
 %PLOT_FILTER_RADAR_COMPARISON Create a simple radar chart comparing HEPA and MERV
 %   Averages metrics across all locations and normalizes them for display.
 
-ax = gca;
-pos = get(ax, 'Position');
-delete(ax);        % replace subplot axes with polar axes
-ax = polaraxes('Position', pos);
+cartAx = gca;
+pos = get(cartAx, 'Position');
+delete(cartAx);        % replace subplot axes with custom radar axes
+ax = axes('Position', pos);
 hold(ax, 'on');
+axis(ax, 'equal');
+ax.XLim = [-1.1 1.1];
+ax.YLim = [-1.1 1.1];
+ax.XTick = [];
+ax.YTick = [];
+box(ax, 'off');
 
 metrics = {'avg_io_ratio_pm25', 'avg_io_ratio_pm10', ...
            'response_time', 'peak_reduction', 'stability_score'};
@@ -117,6 +123,44 @@ metric_labels = {'I/O PM2.5', 'I/O PM10', 'Response', ...
 
 locations = fieldnames(filterComparison);
 nMetrics = numel(metrics);
+
+% Draw radar grid
+thetaFine = linspace(0, 2*pi, 360);
+gridRadii = linspace(0.25, 1, 4);
+for r = gridRadii
+    [xCircle, yCircle] = pol2cart(thetaFine, r * ones(size(thetaFine)));
+    plot(ax, xCircle, yCircle, 'Color', [0.85 0.85 0.85], 'LineStyle', '-', ...
+        'HandleVisibility', 'off');
+    [radialLabelX, radialLabelY] = pol2cart(pi/2, r);
+    text(ax, radialLabelX, radialLabelY, sprintf('%.2f', r), ...
+        'Color', [0.6 0.6 0.6], 'HorizontalAlignment', 'center', ...
+        'VerticalAlignment', 'bottom', 'FontSize', 8, 'HandleVisibility', 'off');
+end
+
+thetaSpokes = linspace(0, 2*pi, nMetrics + 1);
+thetaSpokes = thetaSpokes(1:end-1);
+for m = 1:nMetrics
+    [xSpoke, ySpoke] = pol2cart([thetaSpokes(m) thetaSpokes(m)], [0 1]);
+    plot(ax, xSpoke, ySpoke, 'Color', [0.85 0.85 0.85], 'LineStyle', '-', ...
+        'HandleVisibility', 'off');
+    [labelX, labelY] = pol2cart(thetaSpokes(m), 1.12);
+    hAlign = 'center';
+    if cos(thetaSpokes(m)) > 0.1
+        hAlign = 'left';
+    elseif cos(thetaSpokes(m)) < -0.1
+        hAlign = 'right';
+    end
+    vAlign = 'middle';
+    if sin(thetaSpokes(m)) > 0.1
+        vAlign = 'bottom';
+    elseif sin(thetaSpokes(m)) < -0.1
+        vAlign = 'top';
+    end
+    text(ax, labelX, labelY, metric_labels{m}, 'HorizontalAlignment', hAlign, ...
+        'VerticalAlignment', vAlign, 'FontWeight', 'bold');
+end
+
+axis(ax, 'off');
 
 hepa_vals = NaN(numel(locations), nMetrics);
 merv_vals = NaN(numel(locations), nMetrics);
@@ -170,23 +214,29 @@ hepa_upper_poly = [hepa_upper_norm hepa_upper_norm(1)];
 merv_lower_poly = [merv_lower_norm merv_lower_norm(1)];
 merv_upper_poly = [merv_upper_norm merv_upper_norm(1)];
 
-hold(ax, 'on');
 if all(isfinite(hepa_lower_poly)) && all(isfinite(hepa_upper_poly))
-    patch(ax, [theta fliplr(theta)], [hepa_lower_poly fliplr(hepa_upper_poly)], ...
+    [hepaLowerX, hepaLowerY] = pol2cart(theta, hepa_lower_poly);
+    [hepaUpperX, hepaUpperY] = pol2cart(theta, hepa_upper_poly);
+    patch(ax, [hepaLowerX fliplr(hepaUpperX)], [hepaLowerY fliplr(hepaUpperY)], ...
         [0.2 0.4 0.8], 'FaceAlpha', 0.1, 'EdgeColor', 'none', 'HandleVisibility', 'off');
 end
 if all(isfinite(merv_lower_poly)) && all(isfinite(merv_upper_poly))
-    patch(ax, [theta fliplr(theta)], [merv_lower_poly fliplr(merv_upper_poly)], ...
+    [mervLowerX, mervLowerY] = pol2cart(theta, merv_lower_poly);
+    [mervUpperX, mervUpperY] = pol2cart(theta, merv_upper_poly);
+    patch(ax, [mervLowerX fliplr(mervUpperX)], [mervLowerY fliplr(mervUpperY)], ...
         [0.8 0.3 0.3], 'FaceAlpha', 0.1, 'EdgeColor', 'none', 'HandleVisibility', 'off');
 end
-hPolarHepa = polarplot(ax, theta, hepa_r, 'LineWidth', 2, 'Color', [0.2 0.4 0.8]);
-hPolarMerv = polarplot(ax, theta, merv_r, 'LineWidth', 2, 'Color', [0.8 0.3 0.3]);
-polarscatter(ax, theta, hepa_r, 50, [0.2 0.4 0.8], 'filled', 'HandleVisibility', 'off');
-polarscatter(ax, theta, merv_r, 50, [0.8 0.3 0.3], 'filled', 'HandleVisibility', 'off');
 
-ax.ThetaTick = rad2deg(theta(1:end-1));
-ax.ThetaTickLabel = metric_labels;
-ax.RLim = [0 1];
+[hepaX, hepaY] = pol2cart(theta, hepa_r);
+[mervX, mervY] = pol2cart(theta, merv_r);
+hPolarHepa = plot(ax, hepaX, hepaY, 'LineWidth', 2, 'Color', [0.2 0.4 0.8]);
+hPolarMerv = plot(ax, mervX, mervY, 'LineWidth', 2, 'Color', [0.8 0.3 0.3]);
+
+[hepaPointX, hepaPointY] = pol2cart(theta(1:end-1), hepa_r(1:end-1));
+[mervPointX, mervPointY] = pol2cart(theta(1:end-1), merv_r(1:end-1));
+scatter(ax, hepaPointX, hepaPointY, 50, [0.2 0.4 0.8], 'filled', 'HandleVisibility', 'off');
+scatter(ax, mervPointX, mervPointY, 50, [0.8 0.3 0.3], 'filled', 'HandleVisibility', 'off');
+
 hRangeHepa = patch(ax, NaN, NaN, [0.2 0.4 0.8], 'FaceAlpha', 0.1, 'EdgeColor', 'none');
 hRangeMerv = patch(ax, NaN, NaN, [0.8 0.3 0.3], 'FaceAlpha', 0.1, 'EdgeColor', 'none');
 legend(ax, [hPolarHepa hPolarMerv hRangeHepa hRangeMerv], ...
