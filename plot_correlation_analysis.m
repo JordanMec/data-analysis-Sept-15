@@ -57,6 +57,9 @@ for i = 1:nConfigs
 end
 
 sgtitle('Cross Correlation Analysis for Indoor Versus Outdoor Trends', 'FontSize', 14, 'FontWeight', 'bold');
+add_figure_caption(fig, sprintf(['Each subplot plots indoor versus outdoor cross correlations across lags, with shaded bands when tight and leaky bounds are available.' newline ...
+    'Markers indicate the lag where PM2.5 and PM10 correlations peak so you can gauge how quickly indoor air follows outdoor changes.' newline ...
+    'Reviewing the grid reveals which configurations respond promptly and which lag behind under different envelope assumptions.']));
 save_figure(fig, saveDir, 'correlation_analysis.png');
 close(fig);
 end

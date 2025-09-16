@@ -39,6 +39,8 @@ title(ax, titleStr);
 xtickangle(ax,45);
 ax.YGrid = 'on';
 
+add_figure_caption(fig, sprintf(['The grouped bar chart titled "%s" compares %s for each scenario, with color-coded series for every filter and error bars showing the provided bounds.' newline ...
+    'Category labels on the x-axis and the legend tie each cluster to its scenario so differences in both magnitude and uncertainty stand out.'], titleStr, yLabel));
 if nargin >= 9 && ~isempty(savePath)
     saveas(fig, savePath);
 end

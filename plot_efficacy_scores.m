@@ -160,6 +160,10 @@ sgtitle('Composite Efficacy Score Analysis with Multiple Performance Criteria', 
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save
+add_figure_caption(fig, sprintf(['The six panels summarize how each configuration performs on the composite efficacy score and the ingredients that drive it.' newline ...
+    'Bar and stacked plots rank the overall scores, break them into PM, cost, and AQI components, and compare tight versus leaky envelopes alongside the resulting uncertainty range.' newline ...
+    'Scatter and heatmap views highlight trade-offs between particulate removal and cost while numeric annotations and colors make it easy to spot top-ranked options.']));
+
 save_figure(fig, figuresDir, 'efficacy_scores_comprehensive.png');
 close(fig);
 
@@ -257,6 +261,9 @@ title(ax, 'Efficacy Score Rankings for Top Performing Configurations', ...
 hold(ax, 'off');
 
 % Save
+add_figure_caption(fig, sprintf(['This table lists the top-ranked configurations alongside their overall scores, uncertainty half-ranges, and key component contributions.' newline ...
+    'Alternating row shading guides the eye across columns so you can quickly compare particulate, cost, and AQI components for each option.' newline ...
+    'Use it as a quick reference companion to the more visual dashboard to see the precise numbers behind the rankings.']));
 save_figure(fig, figuresDir, 'efficacy_ranking_table.png');
 close(fig);
 end

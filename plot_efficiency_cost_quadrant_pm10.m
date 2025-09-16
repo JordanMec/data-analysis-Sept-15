@@ -66,6 +66,9 @@ legend('Location', 'eastoutside');
 text(0.02, 0.02, 'Shaded regions show full uncertainty from tight/leaky bounds', ...
     'Units', 'normalized', 'FontSize', 8, 'FontAngle', 'italic');
 
+add_figure_caption(fig, sprintf(['This scatter plot mirrors the PM2.5 analysis but focuses on PM10, pairing each configuration''s average cost with its coarse particle reduction.' newline ...
+    'Shaded rectangles and error whiskers show the full tight-to-leaky envelope, and median lines divide the space into intuitive cost-effectiveness quadrants.' newline ...
+    'Use it to see which interventions cut coarse particles efficiently without driving up operating costs.']));
 save_figure(fig, figuresDir, 'efficiency_cost_quadrant_pm10.png');
 close(fig);
 end

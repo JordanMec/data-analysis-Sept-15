@@ -79,6 +79,9 @@ legend('Location', 'eastoutside');
          'Units', 'normalized', 'VerticalAlignment', 'top', ...
          'FontSize', 8, 'FontAngle', 'italic');
 
+add_figure_caption(fig, sprintf(['Each marker represents a location-filter-mode combination with horizontal and vertical whiskers showing tight and leaky bounds on avoided AQI hours and annual cost.' newline ...
+    'Shaded rectangles reinforce the full envelope range, while median lines and the dotted trend reveal the typical cost-benefit balance.' newline ...
+    'The chart makes it easy to spot which interventions deliver large avoided exposure for modest cost increases.']));
 save_figure(fig, figuresDir, 'cost_vs_aqi_avoided.png');
 close(fig);
 end

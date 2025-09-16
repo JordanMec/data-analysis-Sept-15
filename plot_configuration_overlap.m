@@ -257,6 +257,10 @@ sgtitle('Configuration Performance Overlap Analysis Across Envelopes', ...
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save
+add_figure_caption(fig, sprintf(['Horizontal bars on the top row show how much the fine particulate reduction and operating cost estimates overlap across configurations.' newline ...
+    'Colors distinguish filter types while the bottom panel maps each configuration''s bounded region in cost-effectiveness space with matching numbers that link back to the legend.' newline ...
+    'The shaded overlaps and iso-lines make it easy to spot where different strategies deliver similar performance or diverge sharply.']));
+
 save_figure(fig, figuresDir, 'configuration_overlap_analysis.png');
 close(fig);
 

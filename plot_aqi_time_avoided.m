@@ -118,6 +118,9 @@ end
 sgtitle('Avoided Air Quality Index Exposure Time Relative to Outdoors', ...
     'FontSize',14,'FontWeight','bold');
 
+add_figure_caption(hFig, sprintf(['Each tile shows stacked hours spent in each Air Quality Index category for a specific location and filter, comparing baseline, active, and always-on strategies.' newline ...
+    'Colored stacks visualize the mix of AQI categories while error bars capture the tight versus leaky envelope results and gray markers show avoided hours relative to baseline.' newline ...
+    'Taken together they reveal which interventions keep more time in healthier air bands and how sensitive those gains are to envelope assumptions.']));
 save_figure(hFig, figuresDir, 'aqi_time_avoided.png');
 close(hFig);
 end

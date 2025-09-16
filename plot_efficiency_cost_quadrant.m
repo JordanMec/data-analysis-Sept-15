@@ -78,6 +78,9 @@ legend('Location', 'eastoutside');
     text(0.02, 0.02, 'Shaded regions show full uncertainty from tight/leaky bounds', ...
          'Units', 'normalized', 'FontSize', 8, 'FontAngle', 'italic');
 
+add_figure_caption(fig, sprintf(['Each point shows a configuration''s average cost versus PM2.5 reduction, with shaded rectangles and error bars capturing the tight and leaky envelope bounds.' newline ...
+    'Median lines divide the space into four cost-effectiveness quadrants, and the annotations describe what each zone implies.' newline ...
+    'This view quickly highlights which strategies deliver strong reductions without escalating operating costs.']));
 save_figure(fig, figuresDir, 'efficiency_cost_quadrant.png');
 close(fig);
 end

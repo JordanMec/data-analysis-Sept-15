@@ -210,6 +210,10 @@ sgtitle('Indoor Air Quality Index Exposure Mean Values with Building Envelope Un
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save with high resolution
+add_figure_caption(hFig, sprintf(['Stacked bars for each scenario show how many hours fall into every Air Quality Index category, with colors matching the EPA palette.' newline ...
+    'The solid bars represent average exposure while the colored error whiskers reflect tight versus leaky envelopes, and the gray markers quantify avoided hours relative to baseline.' newline ...
+    'Comparing tiles across locations and filters reveals which strategies keep households out of unhealthy categories the longest.']));
+
 save_figure(hFig, figuresDir, 'aqi_exposure_with_bounds.png');
 close(hFig);
 

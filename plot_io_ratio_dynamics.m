@@ -46,6 +46,9 @@ for i = 1:nConfigs
 end
 
 sgtitle('Indoor to Outdoor Ratio Dynamics During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+add_figure_caption(fig, sprintf(['Each subplot tracks the indoor-to-outdoor concentration ratio over time with shaded bands for tight and leaky envelopes.' newline ...
+    'Blue traces correspond to PM2.5 and red traces to PM10, with a dashed line marking the no-filtration threshold for context.' newline ...
+    'Comparing panels reveals which configurations keep ratios consistently below one and how much the envelope assumptions widen the uncertainty.']));
 save_figure(fig, saveDir, 'io_ratio_dynamics.png');
 close(fig);
 end

@@ -238,6 +238,10 @@ sgtitle('Deterministic Physical Bounds Analysis of Building Envelope Performance
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save
+add_figure_caption(fig, sprintf(['This dashboard summarizes the deterministic tight-versus-leaky bounds for every configuration in the study.' newline ...
+    'The parallel coordinates panel traces how normalized PM2.5, operating cost, and filter hours shift between envelope assumptions, while the adjacent scatter shows the feasible operating range in terms of cost versus air quality improvement.' newline ...
+    'Bar charts quantify the width of those bounds across scenarios, and the timeline highlights how a representative indoor concentration envelope widens over the first week.']));
+
 save_figure(fig, figuresDir, 'deterministic_bounds_analysis.png');
 close(fig);
 end

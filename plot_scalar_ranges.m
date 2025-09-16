@@ -157,6 +157,9 @@ if strcmp(metricName, 'filter_replaced')
 end
 
 fname = sprintf('%s_range.png', metricName);
+add_figure_caption(fig, sprintf(['Bars show the average %s for each location-filter-mode combination, and the whiskers span outcomes between tight and leaky envelopes.' newline ...
+    'Color coding keeps scenarios consistent across metrics, and any italic note under the figure explains how zero or derived values were handled.' newline ...
+    'The layout makes it easy to compare which setups have the widest envelope-induced spread and which remain tightly clustered.'], strrep(metricName, '_', ' ')));
 save_figure(fig, figuresDir, fname);
 close(fig);
 end

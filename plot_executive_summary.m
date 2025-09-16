@@ -325,6 +325,10 @@ text(0.5, 0.05, 'Score = 0.5×(PM2.5 reduction) + 0.3×(cost efficiency) + 0.2×
 sgtitle('Executive Summary of Intervention Performance with Uncertainty Ranges', ...
     'FontSize', 16, 'FontWeight', 'bold');
 
+add_figure_caption(fig, sprintf(['This executive dashboard blends bar charts, scatter plots, and a ranking table to summarize intervention performance under uncertainty.' newline ...
+    'The upper panels show Bakersfield active-mode outcomes alongside a cost-versus-effectiveness quadrant map, while the lower plots trace how reductions distribute by filter type and how uncertainty expands with performance.' newline ...
+    'A curated table distills the top scoring configurations so decision makers can quickly see which options balance impact, cost, and reliability.']));
+
 save_figure(fig, figuresDir, 'executive_summary_with_bounds.png');
 close(fig);
 end

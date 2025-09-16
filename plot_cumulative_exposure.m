@@ -86,6 +86,9 @@ else
     sgTxt = sprintf('Cumulative %s %s Exposure Over Time', envLabel, readablePmLabel);
 end
 sgtitle(sgTxt);
+add_figure_caption(fig, sprintf(['Each panel compares baseline cumulative exposure against alternative operating modes for a given location and filter.' newline ...
+    'Solid lines trace the average cumulative exposure while shaded ribbons bracket the full range observed across tight and leaky simulations.' newline ...
+    'Seeing how quickly the colored curves diverge from the dashed baseline reveals when interventions meaningfully cut indoor pollutant dose.']));
 save_figure(fig, figuresDir, fileName);
 close(fig);
 end

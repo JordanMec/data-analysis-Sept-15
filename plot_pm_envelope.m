@@ -250,6 +250,9 @@ for i = 1:height(configs)
     filtStr = matlab.lang.makeValidName(filtStr);
 
     fname = sprintf('%s_%s_%s_enhanced.png', prefix, locStr, filtStr);
+    add_figure_caption(fig, sprintf(['The top panel shows the hourly concentration envelope for tight and leaky runs, with mean and percentile lines to highlight the typical range.' newline ...
+        'The lower left panel compares the overall distribution of concentrations across envelopes, and the lower right panel tracks how wide the bounds are over time.' newline ...
+        'Together these views explain both the magnitude and variability of %s concentrations for %s using a %s filter.'], readablePmLabel, cleanLoc, cleanFilt));
     save_figure(fig, figuresDir, fullfile(locStr, filtStr), fname);
     close(fig);
 end

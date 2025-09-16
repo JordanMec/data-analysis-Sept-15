@@ -93,6 +93,9 @@ subplot(2, 2, [3 4]);
 plot_filter_radar_comparison(filterComparison);
 
 sgtitle('Dynamic Filter Performance Comparison During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+add_figure_caption(fig, sprintf(['Bar charts across the top compare normalized HEPA and MERV performance metrics for each location, and the radar chart aggregates those differences across all sites.' newline ...
+    'Error bars appear when uncertainty bounds are available so you can see how envelope assumptions might change the story.' newline ...
+    'Together the visuals reveal whether one filter consistently leads or if strengths trade places depending on metric and location.']));
 save_figure(fig, saveDir, 'filter_comparison_dynamic.png');
 close(fig);
 end

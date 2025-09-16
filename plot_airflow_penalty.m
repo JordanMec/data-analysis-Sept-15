@@ -265,6 +265,9 @@ end
 sgtitle('Comprehensive Airflow Penalty Analysis Using Consistent Methodology', ...
         'FontSize', 14, 'FontWeight', 'bold');
 
+add_figure_caption(fig, sprintf(['Multiple panels break down airflow penalties: grouped bars compare filters and modes, annotated text summarizes the physics, additional charts show location differences and envelope sensitivity, and the scatter links mean penalties to their uncertainty ranges.' newline ...
+    'Error bars and formatted labels on the bars quantify tight versus leaky bounds so you can see how envelope assumptions widen the penalty.' newline ...
+    'Use the scatter panel to spot configurations where high airflow loss also comes with large uncertainty, indicating a need for further investigation.']));
 save_figure(fig, figuresDir, 'airflow_penalty_comprehensive_improved.png');
 close(fig);
 end

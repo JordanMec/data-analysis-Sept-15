@@ -147,6 +147,9 @@ else
 end
 
 sgtitle('Trigger Response Analysis During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+add_figure_caption(fig, sprintf(['The upper panels compare average lag times, peak reductions, and indoor-to-outdoor ratios across configurations so their trigger responsiveness can be judged side by side.' newline ...
+    'Each marker is labeled for clarity and error bars capture the spread between tight and leaky cases when that information is available.' newline ...
+    'The lower timeline illustrates how a representative event unfolded, tying the summary statistics back to the indoor and outdoor concentration traces.']));
 save_figure(fig, saveDir, 'trigger_response_analysis.png');
 close(fig);
 end
@@ -265,6 +268,9 @@ if isfield(data, 'hourly_penetration_pm25')
 end
 
 sgtitle('Particle Penetration Analysis During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+add_figure_caption(fig, sprintf(['The top row compares absolute penetration factors and removal efficiencies for PM2.5 and PM10 so you can see how each configuration performs under tight and leaky envelopes.' newline ...
+    'Error bars translate the envelope assumptions into uncertainty ranges, and the bottom-left ratio panel highlights whether coarse particles sneak indoors more readily than fine ones.' newline ...
+    'A final time-series view illustrates how penetration fluctuates across the first week for a representative setup, connecting the summary metrics to hourly behavior.']));
 save_figure(fig, saveDir, 'penetration_analysis.png');
 close(fig);
 end
@@ -391,6 +397,9 @@ subplot(2, 3, [4 6]);
 plot_example_event_responses(eventAnalysis);
 
 sgtitle('Pollution Event Response Analysis During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+add_figure_caption(fig, sprintf(['Bar charts, scatters, and boxplots work together here to explain how frequently pollution events occur and how strongly interventions respond.' newline ...
+    'The left panel balances event counts against average duration with uncertainty bands, the center scatter compares peak versus integrated removal, and the right boxplots contrast severity under tight and leaky envelopes.' newline ...
+    'Example response curves across the bottom tie these statistics to actual indoor concentration trajectories during representative events.']));
 save_figure(fig, saveDir, 'event_response_analysis.png');
 close(fig);
 end
@@ -467,6 +476,9 @@ legend(strrep(configs, '_', ' '), 'Location', 'best');
 grid on;
 
 sgtitle('Temporal Patterns in Active Mode Filtration Performance', 'FontSize', 14, 'FontWeight', 'bold');
+add_figure_caption(fig, sprintf(['The temporal dashboard contrasts short- and long-term behavior of indoor to outdoor ratios across configurations.' newline ...
+    'Diurnal lines reveal how filtration responds hour by hour, the bar chart summarizes a stability score for each site, and the bottom panel tracks multi-day trends to show whether performance drifts.' newline ...
+    'Together these views explain when interventions work best during the day and how consistent they remain over extended deployments.']));
 save_figure(fig, saveDir, 'temporal_patterns.png');
 close(fig);
 end
@@ -513,6 +525,9 @@ for i = 1:nConfigs
 end
 
 sgtitle('Cross Correlation Analysis for Indoor Versus Outdoor Trends', 'FontSize', 14, 'FontWeight', 'bold');
+add_figure_caption(fig, sprintf(['Each subplot plots the cross correlation between indoor and outdoor particulate levels across lag times for a given configuration.' newline ...
+    'Blue lines track PM2.5 relationships and red lines show PM10, with markers calling out the lag that yields the strongest coupling.' newline ...
+    'Reading across panels highlights which systems respond quickly and which exhibit longer delays in mirroring outdoor changes.']));
 save_figure(fig, saveDir, 'correlation_analysis.png');
 close(fig);
 end
@@ -574,6 +589,9 @@ subplot(2, 2, [3 4]);
 plot_filter_radar_comparison(filterComparison);
 
 sgtitle('Dynamic Filter Performance Comparison During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+add_figure_caption(fig, sprintf(['Side-by-side bar charts compare normalized performance metrics for HEPA and MERV filters at each location, while the radar chart synthesizes their strengths and weaknesses.' newline ...
+    'The shared scale makes it easy to see which filter leads on indoor/outdoor ratios, response time, and stability without being misled by differing units.' newline ...
+    'By scanning across panels, you can judge whether one filter consistently dominates or whether the best choice depends on the site-specific priorities.']));
 save_figure(fig, saveDir, 'filter_comparison_dynamic.png');
 close(fig);
 end
@@ -662,6 +680,9 @@ subplot(2, 2, 4);
 plot_sensitivity_tornado(uncertaintyAnalysis);
 
 sgtitle('Uncertainty Quantification During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+add_figure_caption(fig, sprintf(['This figure decomposes uncertainty in several complementary ways to show where the analysis is most sensitive.' newline ...
+    'The upper panels quantify overall envelope ranges and show an hourly confidence band for a sample site, while the lower panels attribute uncertainty to different sources and visualize factor sensitivity.' newline ...
+    'Together they reveal whether building leakage, outdoor variability, or model parameters dominate the uncertainty budget.']));
 save_figure(fig, saveDir, 'uncertainty_analysis.png');
 close(fig);
 end

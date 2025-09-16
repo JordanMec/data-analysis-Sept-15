@@ -139,6 +139,9 @@ text(0.5, -0.15, 'Wider range indicates greater sensitivity to building envelope
 sgtitle('Filter Replacement Analysis Across Building Envelope Scenarios', ...
     'FontSize', 14, 'FontWeight', 'bold');
 
+add_figure_caption(fig, sprintf(['Grouped bars compare expected filter replacements per year for each operating mode, with error bars showing how tight and leaky envelopes change the estimate.' newline ...
+    'The companion chart on the right translates those bounds into relative percentage ranges so you can see which filters are most sensitive to envelope assumptions.' newline ...
+    'Together they make it clear whether a strategy requires frequent filter changes or maintains stable maintenance schedules.']));
 save_figure(fig, figuresDir, 'filter_replacement_with_bounds.png');
 close(fig);
 end

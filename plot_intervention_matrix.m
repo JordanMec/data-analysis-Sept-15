@@ -164,6 +164,10 @@ text(ax1, 0.02, 0.02, 'Range bars span tight (left) to leaky (right) outcomes', 
     'Units', 'normalized', 'FontSize', 8, 'FontAngle', 'italic', ...
     'Color', [0 0 0]);
 
+add_figure_caption(fig, sprintf(['This heatmap compares the mean %s reduction achieved at each location for every intervention pairing.' newline ...
+    'Cell colors show the central estimate, the overlaid numbers report the mean with tight and leaky bounds, and the miniature range bars span the envelope between those assumptions.' newline ...
+    'Reading down a column reveals how locations differ for the same strategy while scanning across rows highlights which interventions bring the largest and most reliable improvements.'], readablePollutant));
+
 save_figure(fig, figuresDir, sprintf('intervention_matrix_%s_with_uncertainty.png', lower(pollutant)));
 close(fig);
 end
