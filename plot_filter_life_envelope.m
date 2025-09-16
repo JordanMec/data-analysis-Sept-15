@@ -58,6 +58,10 @@ for i = 1:nConfigs
     seriesT = tightRow.filter_life_series{1};
     seriesL = leakyRow.filter_life_series{1};
 
+    % Compute replacement statistics before any padding adjustments
+    avgLifeT = compute_replacement_interval_local(seriesT);
+    avgLifeL = compute_replacement_interval_local(seriesL);
+
     % Ensure consistent orientation for vector operations
     seriesT = seriesT(:)';
     seriesL = seriesL(:)';
@@ -107,9 +111,22 @@ for i = 1:nConfigs
         plot(replaceL, ones(size(replaceL))*100, 'ro', 'MarkerSize', 8, 'MarkerFaceColor', 'r');
     end
 
-    % Calculate key statistics
-    avgLife = mean([tightRow.filter_replaced, leakyRow.filter_replaced]);
-    rangeLife = abs(tightRow.filter_replaced - leakyRow.filter_replaced);
+    % Calculate key statistics using available replacement data
+    avgValues = [avgLifeT, avgLifeL];
+    validMask = ~isnan(avgValues);
+
+    if any(validMask)
+        avgLife = mean(avgValues(validMask));
+        if sum(validMask) == 2
+            rangeHalf = abs(avgLifeT - avgLifeL) / 2;
+            statsText = sprintf('Avg replacement: %.0f hrs\nRange: ±%.0f hrs', ...
+                avgLife, rangeHalf);
+        else
+            statsText = sprintf('Avg replacement: %.0f hrs\nRange: n/a', avgLife);
+        end
+    else
+        statsText = 'Avg replacement: n/a\nRange: n/a';
+    end
 
     % Formatting
     ylim([0 105]);
@@ -119,8 +136,7 @@ for i = 1:nConfigs
     grid on;
 
     % Add statistics box
-    text(0.02, 0.98, sprintf('Avg replacement: %.0f hrs\nRange: ±%.0f hrs', ...
-        avgLife, rangeLife/2), ...
+    text(0.02, 0.98, statsText, ...
         'Units', 'normalized', 'VerticalAlignment', 'top', ...
         'BackgroundColor', 'w', 'EdgeColor', 'k', 'FontSize', 8);
 
@@ -143,4 +159,32 @@ annotation('textbox', [0.02 0.02 0.96 0.03], ...
 
 save_figure(fig, figuresDir, 'filter_life_envelope_bounds.png');
 close(fig);
+end
+
+function hours = compute_replacement_interval_local(series)
+%COMPUTE_REPLACEMENT_INTERVAL_LOCAL Estimate average hours between filter changes
+%   This local helper mirrors the preprocessing logic while tolerating empty
+%   or NaN-only series so the statistics box can display informative values.
+
+if isempty(series)
+    hours = NaN;
+    return;
+end
+
+series = series(:);
+series = series(isfinite(series));
+
+if isempty(series)
+    hours = NaN;
+    return;
+end
+
+resetIdx = find(diff(series) > 0);
+if isempty(resetIdx)
+    hours = NaN;
+else
+    intervalBoundaries = [0; resetIdx(:); numel(series)];
+    intervals = diff(intervalBoundaries);
+    hours = mean(intervals);
+end
 end
