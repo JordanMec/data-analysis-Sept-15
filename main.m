@@ -7,7 +7,7 @@ close all; clear all; clc;
 disp("Starting enhanced air quality simulation pipeline...");
 
 % Determine location of simulation result files
-dataDir = 'C:\Users\jorda\MATLAB Drive\Digital Twin - SAPPHIRES\RESULTS digital twin\simulation_data_only_9_13';
+dataDir = 'C:\Users\jorda\MATLAB Drive\twinSAPPHIRES\twinRESULTS\simulation_data_only_9_16';
 if isempty(dataDir)
     dataDir = fullfile(pwd, 'data');
 end
@@ -276,5 +276,6 @@ if ~isempty(efficacyScoreTable) && height(efficacyScoreTable) > 0
     fprintf('  • efficacy_scores_comprehensive.png (NEW - multi-criteria analysis)\n');
     fprintf('  • efficacy_ranking_table.png (NEW - performance rankings)\n');
 end
+
 
 disp("==========================================");
