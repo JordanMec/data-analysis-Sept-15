@@ -56,6 +56,9 @@ for m = 1:numel(metrics)
     legend('Location','best');
     grid on;
 
+    add_figure_caption(fig, sprintf(['The left panel shows %s across each configuration and pollutant as a boxplot so the median and variability are easy to compare.' newline ...
+            'The right panel plots the empirical cumulative distribution so you can see what fraction of events stay below any given threshold.' newline ...
+            'Reading the two panels together highlights which setups consistently deliver faster or stronger responses.'], labels{m}));
     fname = sprintf('%s_distribution.png', metric);
     save_figure(fig, figuresDir, fname);
     close(fig);

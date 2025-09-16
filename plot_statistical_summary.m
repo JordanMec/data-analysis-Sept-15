@@ -148,6 +148,9 @@ sgtitle('Statistical Summary of Building Envelope Range Analysis', ...
     'FontSize', 16, 'FontWeight', 'bold');
 
 % Save
+add_figure_caption(fig, sprintf(['The radar plot, scatter, bar chart, and heatmap work together to summarize how tight versus leaky envelopes change key metrics.' newline ...
+    'Ranges for PM2.5, PM10, cost, and filter life are normalized in the radar view, while the scatter links average range to particulate reduction performance.' newline ...
+    'Supporting charts rank cost variability and visualize ranges across all metrics, making envelope-driven risk easy to compare across configurations.']));
 save_figure(fig, figuresDir, 'statistical_summary_bounds.png');
 close(fig);
 end

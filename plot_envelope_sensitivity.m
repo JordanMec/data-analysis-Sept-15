@@ -303,6 +303,10 @@ sgtitle('Building Envelope Sensitivity Analysis for Leakage Impact on System Per
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save
+add_figure_caption(fig, sprintf(['Horizontal bars rank which metrics shift most when moving from tight to leaky envelopes, while the grouped bars compare those shifts for every scenario.' newline ...
+    'The scatter in the lower left connects cost increases to changes in effectiveness so trade-offs are apparent, and the stacked bars catalogue whether each calculation relied on percent changes or absolute differences.' newline ...
+    'Together the panels reveal where envelope leakage hurts the system most and whether the analysis leaned on alternate formulas when baselines were near zero.']));
+
 save_figure(fig, figuresDir, 'envelope_sensitivity_analysis.png');
 close(fig);
 end

@@ -141,6 +141,9 @@ if isfield(data, 'hourly_penetration_pm25')
 end
 
 sgtitle('Particle Penetration Analysis During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+add_figure_caption(fig, sprintf(['Panels in this figure contrast penetration behavior for PM2.5 and PM10 so the impact of envelope tightness is easy to see.' newline ...
+    'Bars with error ranges summarize average factors and removal efficiencies, the ratio plot checks whether coarse particles bypass filters more readily, and the time-series panel shows how penetration evolves with envelope bounds shaded in.' newline ...
+    'Reading across the layout reveals which configurations keep pollutants out consistently and when leakage risk grows over time.']));
 save_figure(fig, saveDir, 'penetration_analysis.png');
 close(fig);
 end

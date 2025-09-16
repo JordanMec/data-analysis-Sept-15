@@ -13,6 +13,8 @@ xlabel(xLabel);
 title(titleStr);
 xtickangle(45);
 grid on;
+add_figure_caption(fig, sprintf(['The bar chart titled "%s" summarizes %s for each category along the %s axis, with error bars representing the provided uncertainty bounds.' newline ...
+    'Labels and gridlines make it easy to compare categories and judge the spread implied by the lower and upper estimates.'], titleStr, yLabel, xLabel));
 if nargin >= 9 && ~isempty(savePath)
     outDir = fileparts(savePath);
     if ~exist(outDir, 'dir')

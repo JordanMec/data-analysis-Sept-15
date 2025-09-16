@@ -123,6 +123,9 @@ end
 grid on;
 
 sgtitle('Temporal Patterns in Active Mode Filtration Performance', 'FontSize', 14, 'FontWeight', 'bold');
+add_figure_caption(fig, sprintf(['Diurnal curves in the upper left show how indoor-to-outdoor ratios fluctuate through the day, complete with shaded bands where uncertainty data exists.' newline ...
+    'The stability bars summarize each configuration''s overall steadiness, and the lower panel tracks multi-day trends to flag slow degradation or improvement.' newline ...
+    'These complementary views explain both the daily rhythm of filtration performance and whether it holds up over longer deployments.']));
 save_figure(fig, saveDir, 'temporal_patterns.png');
 close(fig);
 end

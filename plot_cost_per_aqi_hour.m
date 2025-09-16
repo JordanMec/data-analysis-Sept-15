@@ -124,6 +124,10 @@ offset = (minFilter - 1.5) * width;
 plot(minMode + offset, minVal, 'g*', 'MarkerSize', 12, 'LineWidth', 2, ...
     'HandleVisibility', 'off');
 
+add_figure_caption(fig, sprintf(['This grouped bar chart compares the average cost per hour of avoided air quality exposure across operating modes and filter types.' newline ...
+            'Error bars capture the spread between tight and leaky building assumptions so readers can gauge uncertainty in each estimate.' newline ...
+            'The highlighted marker points to the lowest cost combination, making it easy to spot the most cost-effective strategy.']));
+
 save_figure(fig, figuresDir, 'cost_per_aqi_hour_with_bounds.png');
 close(fig);
 end

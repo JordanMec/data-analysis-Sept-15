@@ -154,6 +154,9 @@ subplot(2, 3, [4 6]);
 plot_example_event_responses(eventAnalysis);
 
 sgtitle('Pollution Event Response Analysis During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+add_figure_caption(fig, sprintf(['Summary bars on the left track how many pollution events occur and how long they last under each configuration, including tight-versus-leaky uncertainty ranges.' newline ...
+    'The center and right panels evaluate response strength by plotting peak versus integrated reductions and by comparing event severity distributions for the two envelope assumptions.' newline ...
+    'Across the bottom, example response curves illustrate how indoor concentrations fall during some of the most severe events, grounding the summary metrics in real timelines.']));
 save_figure(fig, saveDir, 'event_response_analysis.png');
 close(fig);
 end

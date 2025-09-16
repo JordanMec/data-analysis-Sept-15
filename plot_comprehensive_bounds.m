@@ -94,6 +94,9 @@ box on; grid on;
 
 sgtitle('Comprehensive Scenario Bounds Analysis Across Metrics','FontSize',14,'FontWeight','bold');
 
+add_figure_caption(fig, sprintf(['Horizontal bars summarize tight and leaky envelope bounds for cost, PM2.5 reduction, PM10 reduction, and avoided AQI hours.' newline ...
+    'Colored points mark the mean estimate for each scenario so you can see both the central value and the spread at a glance.' newline ...
+    'The side-by-side layout makes it easy to compare how leakage risk affects different performance metrics for the same configuration.']));
 save_figure(fig, figuresDir, 'comprehensive_bounds_analysis.png');
 close(fig);
 end

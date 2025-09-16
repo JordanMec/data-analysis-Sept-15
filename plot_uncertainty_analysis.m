@@ -102,6 +102,9 @@ subplot(2, 2, 4);
 plot_sensitivity_tornado(uncertaintyAnalysis);
 
 sgtitle('Scenario Bounds Quantification During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+add_figure_caption(fig, sprintf(['The four panels deconstruct uncertainty by showing scenario ranges, hourly confidence bands, stacked contributions, and a tornado-style sensitivity summary.' newline ...
+    'Blue bars and fills represent PM2.5 while red bars indicate PM10, making it easy to compare pollutants.' newline ...
+    'Together the charts highlight which factors dominate uncertainty and how envelope assumptions ripple through time.']));
 save_figure(fig, saveDir, 'uncertainty_analysis.png');
 close(fig);
 end

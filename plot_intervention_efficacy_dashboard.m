@@ -55,6 +55,9 @@ plotEfficacyScorecard(costTable, healthExposureTable);
 if ~exist(figuresDir, 'dir')
     mkdir(figuresDir);
 end
+add_figure_caption(fig, sprintf(['Six coordinated panels summarize intervention performance: pollutant reduction, envelope bounds, cost-effectiveness, cumulative benefits, envelope sensitivity, and a scorecard.' newline ...
+    'Consistent colors link scenarios across charts so you can trace how each strategy balances air quality gains, operating cost, and reliability.' newline ...
+    'Use the dashboard to quickly identify which combinations deliver strong health benefits without triggering unacceptable costs.']));
 save_figure(fig, figuresDir, 'intervention_efficacy_dashboard.png');
 save_figure(fig, figuresDir, 'intervention_efficacy_dashboard_hires.png');
 close(fig);
