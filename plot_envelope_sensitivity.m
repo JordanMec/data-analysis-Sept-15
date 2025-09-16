@@ -272,10 +272,9 @@ grid on;
 
 % 4. Method summary - show which calculations used which approach
 subplot(2,2,4);
-method_counts = zeros(height(sensitivity), 4); % percent, symmetric_percent, absolute, missing
-
 method_types = {'percent', 'symmetric_percent', 'absolute', 'missing', 'both_zero'};
 method_labels = {'Standard %', 'Symmetric %', 'Absolute Δ', 'Missing', 'Both Zero'};
+method_counts = zeros(height(sensitivity), numel(method_types));
 
 for i = 1:height(sensitivity)
     methods = {sensitivity.pm25_method{i}, sensitivity.pm10_method{i}, ...
