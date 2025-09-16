@@ -201,7 +201,7 @@ end
 barh(sortedSens);
 set(gca, 'YTick', 1:length(metrics), 'YTickLabel', metricLabels(sortIdx));
 xlabel('Mean Sensitivity (normalized)');
-title('Tornado Diagram: Parameter Sensitivity');
+title('Parameter Sensitivity Ranking');
 grid on;
 
 % Add note about mixed methods
@@ -236,7 +236,7 @@ end
 
 xlabel('Scenario');
 ylabel('Sensitivity (% change or absolute*)');
-title('Envelope Sensitivity by Scenario');
+title('Envelope Sensitivity Across Scenarios');
 legend({'PM2.5','Cost','Filter Life'}, 'Location','eastoutside');
 set(gca, 'XTick', x, 'XTickLabel', scenarioLabels);
 xtickangle(45);
@@ -253,7 +253,7 @@ scatter(sensitivity.cost_sensitivity(validIdx), ...
 
 xlabel('Cost Increase (%)');
 ylabel('Effectiveness Change (% points)');
-title('Cost vs Effectiveness Trade-off Impact');
+title('Cost Impact Versus Effectiveness Change');
 colormap(lines(sum(validIdx)));
 
 % Add quadrant lines
@@ -294,12 +294,12 @@ set(gca, 'XTick', 1:height(sensitivity));
 set(gca, 'XTickLabel', scenarioLabels);
 ylabel('Number of Metrics');
 legend(method_labels, 'Location', 'best');
-title('Calculation Methods Used');
+title('Distribution of Calculation Methods Across Metrics');
 xtickangle(45);
 grid on;
 
 % Overall title
-sgtitle('Building Envelope Sensitivity Analysis: Impact of Leakage on System Performance (Enhanced)', ...
+sgtitle('Building Envelope Sensitivity Analysis for Leakage Impact on System Performance', ...
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save

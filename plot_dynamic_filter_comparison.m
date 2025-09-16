@@ -83,7 +83,7 @@ for loc_idx = 1:length(locations)
     set(gca, 'XTick', x, 'XTickLabel', metric_labels);
     xtickangle(45);
     ylabel('Normalized Score');
-    title(sprintf('%s - Filter Comparison', location));
+    title(sprintf('Filter Comparison for %s', strrep(location, '_', ' ')));
     legend([hHepa hMerv], {'HEPA', 'MERV'}, 'Location', 'best');
     grid on;
 end
@@ -92,7 +92,7 @@ end
 subplot(2, 2, [3 4]);
 plot_filter_radar_comparison(filterComparison);
 
-sgtitle('Dynamic Filter Performance Comparison - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+sgtitle('Dynamic Filter Performance Comparison During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
 save_figure(fig, saveDir, 'filter_comparison_dynamic.png');
 close(fig);
 end
@@ -189,5 +189,5 @@ hRangeMerv = patch(ax, NaN, NaN, [0.8 0.3 0.3], 'FaceAlpha', 0.1, 'EdgeColor', '
 legend(ax, [hPolarHepa hPolarMerv hRangeHepa hRangeMerv], ...
     {'HEPA mean', 'MERV mean', 'HEPA tight–leaky', 'MERV tight–leaky'}, ...
     'Location', 'southoutside');
-title(ax, 'Multi-Criteria Filter Comparison');
+title(ax, 'Filter Comparison Across Multiple Criteria');
 end

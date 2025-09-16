@@ -50,7 +50,7 @@ end
 set(gca,'YTick',1:nConfigs,'YTickLabel',labels);
 ylabel('Scenario');
 xlabel('Total Cost ($)');
-title('Cost Bounds');
+title('Cost Bounds Across Scenarios');
 box on; grid on;
 
 %% Subplot 2: PM2.5 reduction bounds
@@ -62,7 +62,7 @@ end
 set(gca,'YTick',1:nConfigs,'YTickLabel',labels);
 ylabel('Scenario');
 xlabel('PM2.5 Reduction (%)');
-title('PM2.5 Reduction Bounds');
+title('Fine Particulate Matter Reduction Bounds');
 box on; grid on;
 
 %% Subplot 3: PM10 reduction bounds
@@ -74,7 +74,7 @@ end
 set(gca,'YTick',1:nConfigs,'YTickLabel',labels);
 ylabel('Scenario');
 xlabel('PM10 Reduction (%)');
-title('PM10 Reduction Bounds');
+title('Coarse Particulate Matter Reduction Bounds');
 box on; grid on;
 
 %% Subplot 4: AQI hours avoided bounds with diagnostics
@@ -89,10 +89,10 @@ end
 set(gca,'YTick',1:nConfigs,'YTickLabel',labels);
 ylabel('Scenario');
 xlabel('AQI Hours Avoided');
-title('AQI Hours Avoided Bounds');
+title('Air Quality Index Hours Avoided Bounds');
 box on; grid on;
 
-sgtitle('Comprehensive Scenario Bounds Analysis','FontSize',14,'FontWeight','bold');
+sgtitle('Comprehensive Scenario Bounds Analysis Across Metrics','FontSize',14,'FontWeight','bold');
 
 save_figure(fig, figuresDir, 'comprehensive_bounds_analysis.png');
 close(fig);

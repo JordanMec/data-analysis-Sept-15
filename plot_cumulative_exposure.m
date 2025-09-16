@@ -65,7 +65,8 @@ for i = 1:height(uniqueConfigs)
         legendEntries{end+1} = sprintf('%s Range', modeName);
         legendEntries{end+1} = sprintf('%s Mean', modeName);
     end
-    title(sprintf('%s - %s', loc, filt));
+    title(sprintf('Cumulative Exposure for %s with %s Filter', ...
+        strrep(loc, '_', ' '), strrep(filt, '_', ' ')));
     xlabel('Hour of Year');
     if isempty(envLabel)
         ylabel(sprintf('Cumulative %s Exposure (µg/m³·h)', pmLabel));
@@ -76,12 +77,26 @@ for i = 1:height(uniqueConfigs)
     grid on;
 end
 
+readablePmLabel = expand_pm_label(pmLabel);
 if isempty(envLabel)
-    sgTxt = sprintf('Cumulative %s Exposure Over Time', pmLabel);
+    sgTxt = sprintf('Cumulative %s Exposure Over Time', readablePmLabel);
 else
-    sgTxt = sprintf('Cumulative %s %s Exposure Over Time', envLabel, pmLabel);
+    sgTxt = sprintf('Cumulative %s %s Exposure Over Time', envLabel, readablePmLabel);
 end
 sgtitle(sgTxt);
 save_figure(fig, figuresDir, fileName);
 close(fig);
+end
+
+function readable = expand_pm_label(label)
+%EXPAND_PM_LABEL Provide a descriptive particulate matter label for titles.
+
+switch lower(label)
+    case {'pm2.5', 'pm25', 'pm_25'}
+        readable = 'Fine Particulate Matter Under 2.5 Micrometers';
+    case {'pm10', 'pm_10'}
+        readable = 'Coarse Particulate Matter Under 10 Micrometers';
+    otherwise
+        readable = strrep(label, '_', ' ');
+end
 end

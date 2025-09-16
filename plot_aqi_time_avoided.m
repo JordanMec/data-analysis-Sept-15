@@ -99,7 +99,8 @@ for i = 1:height(configs)
 
     set(gca,'XTick',1:numel(scenarios),'XTickLabel',cellstr(scenarios));
     ylabel('Hours Avoided');
-    title(sprintf('%s - %s',loc,filt),'Interpreter','none');
+    title(sprintf('Avoided Exposure for %s with %s Filter', ...
+        strrep(loc,'_',' '), strrep(filt,'_',' ')),'Interpreter','none');
     grid on;
     ylim([0 max(totalUpper)*1.1]);
 
@@ -114,7 +115,7 @@ for i = 1:height(configs)
     end
 end
 
-sgtitle('Avoided AQI Exposure Time Relative to Outdoors', ...
+sgtitle('Avoided Air Quality Index Exposure Time Relative to Outdoors', ...
     'FontSize',14,'FontWeight','bold');
 
 save_figure(hFig, figuresDir, 'aqi_time_avoided.png');

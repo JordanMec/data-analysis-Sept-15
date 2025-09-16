@@ -93,7 +93,7 @@ end
 
 set(gca, 'XTick', x, 'XTickLabel', modes);
 ylabel('Filter Replacements per Year');
-title('Annual Filter Replacement Frequency');
+title('Annual Filter Replacement Frequency by Operating Mode');
 legend(filters, 'Location', 'northwest');
 grid on;
 % Determine y-axis limits while safely handling missing data
@@ -126,7 +126,7 @@ end
 bar(relativeRange', 'grouped');
 set(gca, 'XTick', 1:nFilters, 'XTickLabel', filters);
 ylabel('Relative Range (%)');
-title('Replacement Frequency Range');
+title('Replacement Frequency Range by Filter Type');
 legend(modes, 'Location', 'best');
 grid on;
 
@@ -136,7 +136,7 @@ text(0.5, -0.15, 'Wider range indicates greater sensitivity to building envelope
     'FontSize', 9, 'FontAngle', 'italic');
 
 % Overall title
-sgtitle('Filter Replacement Analysis with Building Envelope Bounds', ...
+sgtitle('Filter Replacement Analysis Across Building Envelope Scenarios', ...
     'FontSize', 14, 'FontWeight', 'bold');
 
 save_figure(fig, figuresDir, 'filter_replacement_with_bounds.png');

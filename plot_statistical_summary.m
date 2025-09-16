@@ -79,7 +79,7 @@ end
 
 ax1.ThetaTickLabel = r_labels(1:end-1);
 ax1.RLim = [0 1];
-title(ax1, 'Normalized Scenario Ranges (Tight vs Leaky)');
+title(ax1, 'Normalized Scenario Ranges Across Tight and Leaky Envelopes');
 
 % Create legend separately
 legendAx = axes('Position', [0.45 0.65 0.1 0.25], 'Visible', 'off');
@@ -97,7 +97,7 @@ avgPerformance = 100 - summaryStats(:,5); % Convert to reduction
 scatter(avgRange, avgPerformance, 100, 1:nConfigs, 'filled');
 xlabel('Average Range (%)');
 ylabel('PM2.5 Reduction Performance');
-title('Performance vs. Range Trade-off');
+title('Performance Versus Range Tradeoff');
 colormap(lines(nConfigs));
 grid on;
 
@@ -144,7 +144,7 @@ for i = 1:size(heatmapData,1)
 end
 
 % Overall title
-sgtitle('Statistical Summary: Building Envelope Range Analysis', ...
+sgtitle('Statistical Summary of Building Envelope Range Analysis', ...
     'FontSize', 16, 'FontWeight', 'bold');
 
 % Save

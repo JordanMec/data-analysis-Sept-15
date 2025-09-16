@@ -62,7 +62,7 @@ text(0.02,0.98,'Error bars show tight/leaky bounds', 'Units','normalized', ...
 
 set(gca, 'XTick', 1:length(configs), 'XTickLabel', labels);
 xtickangle(45);
-title('Pollution Event Statistics');
+title('Pollution Event Summary Statistics');
 grid on;
 
 
@@ -111,7 +111,7 @@ end
 
 xlabel('Peak Reduction (%)');
 ylabel('Integrated Reduction (%)');
-title('Event Response Effectiveness');
+title('Effectiveness of Event Responses');
 grid on;
 legend('Location','best');
 
@@ -144,7 +144,7 @@ xlim([0 length(configs)+1]);
 set(gca, 'XTick', 1:length(configs), 'XTickLabel', labels);
 xtickangle(45);
 ylabel('Peak/Baseline Ratio');
-title('Distribution of Event Severities');
+title('Distribution of Event Severity Levels');
 legend({'Tight','Leaky'}, 'Location', 'best');
 grid on;
 
@@ -153,7 +153,7 @@ subplot(2, 3, [4 6]);
 % Plot example responses for most severe events
 plot_example_event_responses(eventAnalysis);
 
-sgtitle('Pollution Event Response Analysis - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+sgtitle('Pollution Event Response Analysis During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
 save_figure(fig, saveDir, 'event_response_analysis.png');
 close(fig);
 end
@@ -214,7 +214,7 @@ end
 
 xlabel('Event Index');
 ylabel('Peak Reduction (%)');
-title('Event Response Metrics by Event');
+title('Event Response Metrics by Occurrence');
 % Filter out any invalid handles in case some configs lacked data
 valid = isgraphics(legendHandles);
 if any(valid)

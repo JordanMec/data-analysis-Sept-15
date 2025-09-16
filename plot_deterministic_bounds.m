@@ -84,7 +84,7 @@ end
 
 set(gca, 'XTick', 1:nMetrics, 'XTickLabel', metricLabels);
 ylabel('Normalized Value');
-title('Physical Bounds: Tight (solid) vs Leaky (dashed) Building Envelopes');
+title('Physical Bounds for Tight and Leaky Building Envelopes');
 ylim([0 1]);
 grid on;
 
@@ -223,9 +223,10 @@ if ~isempty(exampleIdx)
         ylabel('Bounds Width (µg/m³)');
 
         xlabel('Hour');
-        title(sprintf('Physical Bounds Evolution: %s %s %s (First Week)', ...
-            scenarios.location{exampleIdx}, scenarios.filterType{exampleIdx}, ...
-            scenarios.mode{exampleIdx}));
+        title(sprintf('Physical Bounds Evolution for %s %s %s During First Week', ...
+            strrep(scenarios.location{exampleIdx}, '_', ' '), ...
+            strrep(scenarios.filterType{exampleIdx}, '_', ' '), ...
+            strrep(scenarios.mode{exampleIdx}, '_', ' ')));
         legend({'Operating Envelope', 'Tight', 'Leaky', 'Bounds Width'}, ...
             'Location','eastoutside');
         grid on;
@@ -233,7 +234,7 @@ if ~isempty(exampleIdx)
 end
 
 % Overall title
-sgtitle('Deterministic Physical Bounds Analysis: Building Envelope Performance', ...
+sgtitle('Deterministic Physical Bounds Analysis of Building Envelope Performance', ...
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save

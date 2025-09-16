@@ -70,7 +70,7 @@ text(x_median*1.5, y_median*1.5, 'High Cost, High Reduction', ...
 
 xlabel('% Indoor PM2.5 Reduction from Baseline');
 ylabel('Total Operational Cost ($)');
-title('Cost vs. Indoor PM2.5 Reduction Quadrant Map (with Uncertainty Regions)');
+title('Cost Versus Indoor Fine Particulate Matter Reduction with Uncertainty Regions');
 grid on;
 legend('Location', 'eastoutside');
 

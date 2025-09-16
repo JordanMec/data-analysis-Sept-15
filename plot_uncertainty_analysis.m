@@ -37,7 +37,7 @@ set(gca, 'XTick', x, 'XTickLabel', labels);
 xtickangle(45);
 ylabel('Scenario Range (%)');
 legend([h25 h10], {'PM2.5', 'PM10'}, 'Location', 'best');
-title('Building Envelope Scenario Bounds');
+title('Building Envelope Scenario Bounds Comparison');
 grid on;
 
 % Confidence intervals over time
@@ -58,7 +58,7 @@ if isfield(data, 'hourly_ci_pm25')
     xlabel('Hour');
     % Use TeX interpreter for micro symbol and superscript
     ylabel('Indoor PM2.5 (\mu g/m^3)', 'Interpreter', 'tex');
-    title(sprintf('Confidence Intervals - %s', config));
+    title(sprintf('Confidence Intervals for %s', strrep(config, '_', ' ')));
     legend({'Envelope Bounds', 'Mean'}, 'Location', 'best');
     grid on;
 end
@@ -94,7 +94,7 @@ if ~isempty(contribution_data)
     xtickangle(45);
     ylabel('Contribution to Total Range (%)');
     legend(contribution_labels, 'Location', 'best');
-    title('Scenario Bounds Source Analysis');
+    title('Scenario Bounds Source Contribution Analysis');
     grid on;
 end
 
@@ -102,7 +102,7 @@ end
 subplot(2, 2, 4);
 plot_sensitivity_tornado(uncertaintyAnalysis);
 
-sgtitle('Scenario Bounds Quantification - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+sgtitle('Scenario Bounds Quantification During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
 save_figure(fig, saveDir, 'uncertainty_analysis.png');
 close(fig);
 end
@@ -121,7 +121,7 @@ for i = 1:numel(configs)
 end
 
 if isempty(contrib)
-    title('Sensitivity Analysis');
+    title('Uncertainty Contribution Sensitivity Analysis');
     text(0.5,0.5,'No scenario bounds data','HorizontalAlignment','center');
     return;
 end
@@ -134,6 +134,6 @@ barh(sortedVals, 'FaceColor', [0.4 0.6 0.8]);
 set(gca,'YTick',1:numel(order),'YTickLabel',labels(order));
 set(gca,'YDir','reverse');
 xlabel('Contribution (%)');
-title('Sensitivity Analysis');
+title('Uncertainty Contribution Sensitivity Analysis');
 grid on;
 end

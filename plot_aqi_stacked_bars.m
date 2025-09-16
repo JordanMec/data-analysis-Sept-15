@@ -178,7 +178,7 @@ for i = 1:height(configs)
     ylabel('Hours', 'FontSize', 11);
     
     % Clean title formatting
-    titleStr = sprintf('%s - %s', ...
+    titleStr = sprintf('Air Quality Exposure for %s with %s Filter', ...
         strrep(loc,'_',' '), strrep(filt,'_',' '));
     title(titleStr, 'FontSize', 12);
     
@@ -206,7 +206,7 @@ for i = 1:height(configs)
 end
 
 % Overall title with clear description
-sgtitle('Indoor AQI Exposure: Mean Values with Building Envelope Uncertainty', ...
+sgtitle('Indoor Air Quality Index Exposure Mean Values with Building Envelope Uncertainty', ...
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save with high resolution

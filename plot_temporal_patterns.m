@@ -38,7 +38,7 @@ end
 
 xlabel('Hour of Day');
 ylabel('Average I/O Ratio');
-title('Diurnal Pattern of Filtration Performance');
+title('Diurnal Variation in Filtration Performance');
 if ~isempty(diurnalHandles)
     legend(diurnalHandles, diurnalLabels, 'Location', 'best');
 else
@@ -81,7 +81,7 @@ if any(~isnan(stab_lower))
 end
 set(gca, 'XTick', 1:length(labels), 'XTickLabel', labels);
 ylabel('Stability Score');
-title('Temporal Performance Stability');
+title('Filtration Performance Stability Over Time');
 grid on;
 
 % Performance degradation over time
@@ -114,7 +114,7 @@ end
 
 xlabel('Day');
 ylabel('Daily Average I/O Ratio');
-title('Performance Trend Over Time');
+title('Filtration Performance Trend Over Time');
 if ~isempty(lineHandles)
     legend(lineHandles, legendLabels, 'Location', 'best');
 else
@@ -122,7 +122,7 @@ else
 end
 grid on;
 
-sgtitle('Temporal Patterns in Active Mode Performance', 'FontSize', 14, 'FontWeight', 'bold');
+sgtitle('Temporal Patterns in Active Mode Filtration Performance', 'FontSize', 14, 'FontWeight', 'bold');
 save_figure(fig, saveDir, 'temporal_patterns.png');
 close(fig);
 end

@@ -25,7 +25,7 @@ colorTriggered = [0.9 0.6 0.2];
 colorAlwaysOn = [0.3 0.7 0.3];
 
 % Super title
-sgtitle('Air Quality Intervention Efficacy Dashboard', 'FontSize', 18, 'FontWeight', 'bold');
+sgtitle('Air Quality Intervention Efficacy Dashboard Overview', 'FontSize', 18, 'FontWeight', 'bold');
 
 %% Panel 1: PM2.5 Reduction Efficacy by Intervention
 subplot(2,3,1)
@@ -65,6 +65,8 @@ end
 function plotReductionEfficacy(costTable, pollutant)
     % Extract data for non-baseline scenarios
     data = costTable(~strcmp(costTable.mode, 'baseline'), :);
+
+    readablePollutant = format_pollutant_label(pollutant);
     
     % Group by location and filter type
     locations = unique(data.location);
@@ -144,8 +146,8 @@ function plotReductionEfficacy(costTable, pollutant)
     
     % Customize appearance
     set(gca, 'XTick', 1:length(labels), 'XTickLabel', labels);
-    ylabel(sprintf('%s Reduction (%%)' , pollutant));
-    title(sprintf('%s Reduction Efficacy', pollutant), 'FontWeight', 'bold');
+    ylabel(sprintf('%s Reduction (%%)', readablePollutant));
+    title(sprintf('%s Reduction Efficacy', readablePollutant), 'FontWeight', 'bold');
     legend(modes, 'Location', 'best', 'Interpreter', 'none');
     grid on;
     ylim([0 max(dataMatrix(:) + errorMatrix(:)) * 1.1]);
@@ -213,7 +215,7 @@ function plotScenarioBounds(costTable, summaryTable)
     
     set(gca, 'YTick', y, 'YTickLabel', configLabels(sortIdx));
     xlabel('PM2.5 Reduction (%)');
-    title('Efficacy Bounds: Tight vs Leaky Homes', 'FontWeight', 'bold');
+    title('Efficacy Bounds Across Tight and Leaky Homes', 'FontWeight', 'bold');
     grid on;
     xlim([0, max(boundsData(:,3)) * 1.1]);
 end
@@ -269,7 +271,7 @@ function plotCostEffectivenessBubble(costTable)
     
     xlabel('PM2.5 Reduction (%)');
     ylabel('Cost per μg/m³ Removed ($)');
-    title('Cost-Effectiveness Analysis', 'FontWeight', 'bold');
+    title('Cost Effectiveness Analysis Across Configurations', 'FontWeight', 'bold');
     
     % Add legend for bubble size
     text(min(x), max(y)*0.8, 'Bubble size = AQI hours avoided', ...
@@ -344,7 +346,7 @@ function plotCumulativeBenefit(summaryTable)
     
     xlabel('Hours');
     ylabel('Cumulative PM2.5 Reduction (μg/m³·h)');
-    title('Cumulative Exposure Benefit (First Week)', 'FontWeight', 'bold');
+    title('Cumulative Exposure Benefit During First Week', 'FontWeight', 'bold');
     legend('Location', 'best', 'Interpreter', 'none');
     grid on;
     
@@ -403,7 +405,7 @@ function plotBuildingEnvelopeSensitivity(costTable)
     
     set(gca, 'YTick', x, 'YTickLabel', labels(sortIdx));
     xlabel('Relative Sensitivity to Building Envelope (%)');
-    title('Building Envelope Impact on Performance', 'FontWeight', 'bold');
+    title('Building Envelope Impact on Performance Metrics', 'FontWeight', 'bold');
     
     % Add center line
     xline(0, 'k', 'LineWidth', 1);
@@ -521,4 +523,17 @@ function plotEfficacyScorecard(costTable, healthExposureTable)
     
     xlim([0 1]);
     ylim([0 1]);
+end
+
+function label = format_pollutant_label(pollutant)
+%FORMAT_POLLUTANT_LABEL Provide descriptive pollutant labels for titles.
+
+switch lower(pollutant)
+    case {'pm2.5', 'pm25', 'pm_25'}
+        label = 'Fine Particulate Matter Under 2.5 Micrometers';
+    case {'pm10', 'pm_10'}
+        label = 'Coarse Particulate Matter Under 10 Micrometers';
+    otherwise
+        label = strrep(pollutant, '_', ' ');
+end
 end

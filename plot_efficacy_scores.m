@@ -50,7 +50,7 @@ errorbar(1:nConfigs, efficacyScoreTable.mean_efficacy_score, ...
 set(gca, 'XTick', 1:nConfigs, 'XTickLabel', scenarioLabels);
 xtickangle(45);
 ylabel('Composite Efficacy Score (0-100)');
-title('Overall Efficacy Ranking');
+title('Overall Intervention Efficacy Ranking');
 grid on;
 ylim([0 100]);
 
@@ -72,7 +72,7 @@ bar(componentData, 'stacked');
 set(gca, 'XTick', 1:nConfigs, 'XTickLabel', scenarioLabels);
 xtickangle(45);
 ylabel('Component Score Contribution');
-title('Efficacy Component Breakdown');
+title('Efficacy Component Breakdown by Metric');
 legend({'PM2.5 (40%)', 'PM10 (20%)', 'Cost Eff. (20%)', 'AQI Hours (20%)'}, ...
     'Location', 'eastoutside');
 grid on;
@@ -92,7 +92,7 @@ bar(1:nConfigs, efficacyScoreTable.leaky_efficacy_score, ...
 set(gca, 'XTick', 1:nConfigs, 'XTickLabel', scenarioLabels);
 xtickangle(45);
 ylabel('Efficacy Score');
-title('Building Envelope Comparison');
+title('Building Envelope Performance Comparison');
 legend('Location', 'eastoutside');
 grid on;
 
@@ -102,7 +102,7 @@ bar(efficacyScoreTable.score_range, 'FaceColor', cmap.gray, 'EdgeColor', 'k');
 set(gca, 'XTick', 1:nConfigs, 'XTickLabel', scenarioLabels);
 xtickangle(45);
 ylabel('Score Range (Tight - Leaky)');
-title('Performance Uncertainty');
+title('Performance Uncertainty Range');
 grid on;
 
 % Add threshold line for "high uncertainty"
@@ -118,7 +118,7 @@ ylabel(cb, 'Overall Efficacy Score');
 
 xlabel('PM2.5 Component Score');
 ylabel('Cost Effectiveness Component Score');
-title('PM2.5 vs Cost Trade-off');
+title('Fine Particulate Matter Reduction Versus Cost Tradeoff');
 grid on;
 
 % Add scenario labels
@@ -145,7 +145,7 @@ ylabel(cb, 'Component Score');
 set(gca, 'XTick', 1:nConfigs, 'XTickLabel', scenarioLabels);
 set(gca, 'YTick', 1:4, 'YTickLabel', {'PM2.5', 'PM10', 'Cost', 'AQI'});
 xtickangle(45);
-title('Performance Heatmap');
+title('Performance Heatmap Across Configurations');
 
 % Add text annotations
 for i = 1:size(heatmapData,1)
@@ -156,7 +156,7 @@ for i = 1:size(heatmapData,1)
 end
 
 % Overall title
-sgtitle('Composite Efficacy Score Analysis: Multi-Criteria Performance Evaluation', ...
+sgtitle('Composite Efficacy Score Analysis with Multiple Performance Criteria', ...
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save
@@ -251,7 +251,7 @@ for rowIdx = 1:nDisplayRows
     end
 end
 
-title(ax, 'Efficacy Score Rankings: Top Performing Configurations', ...
+title(ax, 'Efficacy Score Rankings for Top Performing Configurations', ...
     'FontSize', 14, 'FontWeight', 'bold');
 
 hold(ax, 'off');
