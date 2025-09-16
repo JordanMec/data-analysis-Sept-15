@@ -74,8 +74,13 @@ temp = annotation(fig, 'textbox', [0 0 1 1], ...
     'FontSize', fontSize, ...
     'Margin', 6, ...
     'LineStyle', 'none');
-extent = temp.Extent;
-textHeight = extent(4);
+drawnow limitrate nocallbacks;
+pos = temp.Position;
+if numel(pos) >= 4
+    textHeight = pos(4);
+else
+    textHeight = 0;
+end
 delete(temp);
 end
 
