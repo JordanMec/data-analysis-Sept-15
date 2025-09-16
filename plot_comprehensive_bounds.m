@@ -48,8 +48,8 @@ for i = 1:nConfigs
     plot(costMean(i), i, 'o', 'MarkerFaceColor',colors(i,:), 'MarkerEdgeColor','k');
 end
 set(gca,'YTick',1:nConfigs,'YTickLabel',labels);
-ylabel('Scenario');
-xlabel('Total Cost ($)');
+ylabel('Scenario Identifier');
+xlabel('Total Cost (Dollars)');
 title('Cost Bounds Across Scenarios');
 box on; grid on;
 
@@ -60,8 +60,8 @@ for i = 1:nConfigs
     plot(pm25Mean(i), i, 'o', 'MarkerFaceColor',colors(i,:), 'MarkerEdgeColor','k');
 end
 set(gca,'YTick',1:nConfigs,'YTickLabel',labels);
-ylabel('Scenario');
-xlabel('PM2.5 Reduction (%)');
+ylabel('Scenario Identifier');
+xlabel('Particulate Matter 2.5 Reduction (Percent)');
 title('Fine Particulate Matter Reduction Bounds');
 box on; grid on;
 
@@ -72,8 +72,8 @@ for i = 1:nConfigs
     plot(pm10Mean(i), i, 'o', 'MarkerFaceColor',colors(i,:), 'MarkerEdgeColor','k');
 end
 set(gca,'YTick',1:nConfigs,'YTickLabel',labels);
-ylabel('Scenario');
-xlabel('PM10 Reduction (%)');
+ylabel('Scenario Identifier');
+xlabel('Particulate Matter 10 Reduction (Percent)');
 title('Coarse Particulate Matter Reduction Bounds');
 box on; grid on;
 
@@ -87,8 +87,8 @@ for i = 1:nConfigs
     end
 end
 set(gca,'YTick',1:nConfigs,'YTickLabel',labels);
-ylabel('Scenario');
-xlabel('AQI Hours Avoided');
+ylabel('Scenario Identifier');
+xlabel('Air Quality Index Hours Avoided');
 title('Air Quality Index Hours Avoided Bounds');
 box on; grid on;
 

@@ -35,7 +35,7 @@ h10 = bar(x + width/2, pm10_ranges, width, 'FaceColor', [0.8 0.3 0.3]);
 
 set(gca, 'XTick', x, 'XTickLabel', labels);
 xtickangle(45);
-ylabel('Scenario Range (%)');
+ylabel('Scenario Range (Percent)');
 legend([h25 h10], {'PM2.5', 'PM10'}, 'Location', 'best');
 title('Building Envelope Scenario Bounds Comparison');
 grid on;
@@ -55,9 +55,8 @@ if isfield(data, 'hourly_ci_pm25')
     hold on;
     plot(t, data.hourly_mean_pm25(t), 'b-', 'LineWidth', 2);
 
-    xlabel('Hour');
-    % Use TeX interpreter for micro symbol and superscript
-    ylabel('Indoor PM2.5 (\mu g/m^3)', 'Interpreter', 'tex');
+    xlabel('Time in Hours');
+    ylabel('Indoor Particulate Matter 2.5 Concentration (Micrograms per Cubic Meter)');
     title(sprintf('Confidence Intervals for %s', strrep(config, '_', ' ')));
     legend({'Envelope Bounds', 'Mean'}, 'Location', 'best');
     grid on;
@@ -92,7 +91,7 @@ if ~isempty(contribution_data)
 
     set(gca, 'XTick', 1:length(configs), 'XTickLabel', labels);
     xtickangle(45);
-    ylabel('Contribution to Total Range (%)');
+    ylabel('Contribution to Total Range (Percent)');
     legend(contribution_labels, 'Location', 'best');
     title('Scenario Bounds Source Contribution Analysis');
     grid on;
@@ -133,7 +132,7 @@ labels = {'Building Envelope','Outdoor Variability','System Response','Measureme
 barh(sortedVals, 'FaceColor', [0.4 0.6 0.8]);
 set(gca,'YTick',1:numel(order),'YTickLabel',labels(order));
 set(gca,'YDir','reverse');
-xlabel('Contribution (%)');
+xlabel('Contribution (Percent)');
 title('Uncertainty Contribution Sensitivity Analysis');
 grid on;
 end

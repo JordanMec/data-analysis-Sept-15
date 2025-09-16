@@ -130,8 +130,8 @@ for i = 1:nConfigs
 
     % Formatting
     ylim([0 105]);
-    xlabel('Hour of Simulation');
-    ylabel('Filter Life (%)');
+    xlabel('Simulation Time (Hours)');
+    ylabel('Remaining Filter Life (Percent)');
     title(sprintf('Filter Life Envelope for %s %s %s', ...
         strrep(loc,'_',' '), strrep(filt,'_',' '), strrep(mode,'_',' ')), ...
         'Interpreter', 'none');

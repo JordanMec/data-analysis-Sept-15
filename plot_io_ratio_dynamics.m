@@ -36,8 +36,8 @@ for i = 1:nConfigs
     yline(1, '--k', 'No Filtration');
     yline(data.stats.pm25_median, ':b', sprintf('Median: %.2f', data.stats.pm25_median));
     
-    xlabel('Hour');
-    ylabel('Indoor/Outdoor Ratio');
+    xlabel('Time Since Start (Hours)');
+    ylabel('Indoor to Outdoor Concentration Ratio');
     title(sprintf('Indoor to Outdoor Ratio Dynamics for %s with %s Filter', ...
         strrep(data.location, '_', ' '), strrep(data.filterType, '_', ' ')));
     legend({'PM2.5 Bounds', 'PM2.5 Mean', 'PM10 Bounds', 'PM10 Mean'}, 'Location', 'best');

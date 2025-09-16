@@ -175,7 +175,7 @@ for i = 1:height(configs)
     % Format axes
     set(gca, 'XTick', 1:numel(scenarios), 'XTickLabel', cellstr(scenarios), ...
         'FontSize', 10);
-    ylabel('Hours', 'FontSize', 11);
+    ylabel('Exposure Time in Hours', 'FontSize', 11);
     
     % Clean title formatting
     titleStr = sprintf('Air Quality Exposure for %s with %s Filter', ...

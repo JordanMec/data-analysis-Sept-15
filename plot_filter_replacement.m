@@ -125,7 +125,7 @@ end
 % Plot relative range
 bar(relativeRange', 'grouped');
 set(gca, 'XTick', 1:nFilters, 'XTickLabel', filters);
-ylabel('Relative Range (%)');
+ylabel('Relative Range (Percent)');
 title('Replacement Frequency Range by Filter Type');
 legend(modes, 'Location', 'best');
 grid on;

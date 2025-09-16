@@ -98,7 +98,7 @@ for i = 1:height(configs)
     end
 
     set(gca,'XTick',1:numel(scenarios),'XTickLabel',cellstr(scenarios));
-    ylabel('Hours Avoided');
+    ylabel('Hours of Exposure Avoided');
     title(sprintf('Avoided Exposure for %s with %s Filter', ...
         strrep(loc,'_',' '), strrep(filt,'_',' ')),'Interpreter','none');
     grid on;

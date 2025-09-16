@@ -106,7 +106,7 @@ if ~isfinite(vmin) || ~isfinite(vmax) || vmin == vmax
 end
 caxis(ax1, [vmin vmax]);
 cb = colorbar(ax1);
-ylabel(cb, sprintf('%s Reduction (%%) Mean Value', readablePollutant));
+ylabel(cb, sprintf('Mean %s Concentration Reduction (Percent)', readablePollutant));
 
 % Set labels
 set(ax1, 'XTick', 1:nInt, 'XTickLabel', interventions);

@@ -107,7 +107,7 @@ end
 
 % Formatting
 set(gca, 'XTick', x, 'XTickLabel', modes);
-ylabel('Cost per AQI Hour Avoided ($)');
+ylabel('Cost per Air Quality Index Hour Avoided (Dollars)');
 title('Cost Effectiveness Comparison with Uncertainty Ranges');
 legend(barHandles, filters, 'Location', 'best');
 grid on;

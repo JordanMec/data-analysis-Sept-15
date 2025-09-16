@@ -45,8 +45,8 @@ for i = 1:nConfigs
         plot(data.lags(max_idx_pm25), max_corr_pm25, 'bo', 'MarkerSize', 8, 'LineWidth', 2);
         plot(data.lags(max_idx_pm10), max_corr_pm10, 'ro', 'MarkerSize', 8, 'LineWidth', 2);
 
-        xlabel('Lag (hours)');
-        ylabel('Cross-Correlation');
+        xlabel('Lag Time (Hours)');
+        ylabel('Cross Correlation');
         title(sprintf('%s\nOptimal Lag Fine Particulate Matter 2.5 Micrometers = %dh, Coarse Particulate Matter 10 Micrometers = %dh', ...
             strrep(config, '_', ' '), ...
             data.lags(max_idx_pm25), data.lags(max_idx_pm10)));

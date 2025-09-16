@@ -20,8 +20,8 @@ if isempty(cleanTbl)
 end
 
 metrics = {'lag_peak','recovery_time','attenuation','auc_reduction'};
-labels = {'Lag to Indoor Peak (h)','Recovery Time (h)', ...
-          'Indoor/Outdoor Amplitude','AUC Reduction (frac)'};
+labels = {'Time to Indoor Peak (Hours)','Recovery Time (Hours)', ...
+          'Indoor to Outdoor Amplitude Ratio','Area Under Curve Reduction (Fraction)'};
 
 [G, groups] = findgroups(cleanTbl.config, cleanTbl.pollutant);
 grpLabels = strcat(strrep(groups(:,1),'_',' '), " (", groups(:,2), ")");
@@ -51,7 +51,7 @@ for m = 1:numel(metrics)
         plot(x,f,'DisplayName',grpLabels(g));
     end
     xlabel(labels{m});
-    ylabel('ECDF');
+    ylabel('Empirical Cumulative Distribution Function');
     title(sprintf('Empirical Cumulative Distribution of %s', strrep(metric,'_',' ')));
     legend('Location','best');
     grid on;

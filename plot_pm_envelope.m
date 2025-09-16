@@ -16,6 +16,11 @@ elseif contains(lower(pmField), 'outdoor')
 end
 
 readablePmLabel = expand_pm_label(pmLabel);
+if isempty(envLabel)
+    concentrationLabel = sprintf('%s Concentration (Micrograms per Cubic Meter)', readablePmLabel);
+else
+    concentrationLabel = sprintf('%s %s Concentration (Micrograms per Cubic Meter)', envLabel, readablePmLabel);
+end
 
 configs = unique(summaryTable(:, {'location','filterType'}));
 
@@ -115,12 +120,8 @@ for i = 1:height(configs)
         legendEntries{end+1} = sprintf('%s (mean)', modeName);
     end
 
-    xlabel('Hour of Year');
-    if isempty(envLabel)
-        ylabel(sprintf('%s Concentration (µg/m³)', pmLabel));
-    else
-        ylabel(sprintf('%s %s Concentration (µg/m³)', envLabel, pmLabel));
-    end
+    xlabel('Hour of the Year');
+    ylabel(concentrationLabel);
     title(sprintf('Hourly Concentration Bounds for %s with %s Filter', ...
         strrep(loc, '_', ' '), strrep(filt, '_', ' ')));
     legend(legendEntries, 'Location', 'best');
@@ -189,11 +190,7 @@ for i = 1:height(configs)
         end
     end
 
-    if isempty(envLabel)
-        xlabel(sprintf('%s Concentration (µg/m³)', pmLabel));
-    else
-        xlabel(sprintf('%s %s Concentration (µg/m³)', envLabel, pmLabel));
-    end
+    xlabel(concentrationLabel);
     ylabel('Probability');
     title('Distribution Across Building Envelopes');
     legend(modes, 'Location','eastoutside');
@@ -226,8 +223,8 @@ for i = 1:height(configs)
             'Color', colors(m,:), 'LineWidth', 1.5);
     end
 
-    xlabel('Hour of Year');
-    ylabel('Relative Bounds Width (%)');
+    xlabel('Hour of the Year');
+    ylabel('Relative Bounds Width (Percent)');
     title('Concentration Range Over Time');
     legend(modes, 'Location','eastoutside');
     grid on;

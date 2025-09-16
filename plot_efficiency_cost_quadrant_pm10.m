@@ -56,8 +56,8 @@ set(hX, 'DisplayName', 'Median Reduction');
 hY = yline(y_median, '--k', 'Median Cost', 'LineWidth', 1.5);
 set(hY, 'DisplayName', 'Median Cost');
 
-xlabel('% Indoor PM10 Reduction from Baseline');
-ylabel('Total Operational Cost ($)');
+xlabel('Indoor Particulate Matter 10 Reduction from Baseline (Percent)');
+ylabel('Total Operational Cost (Dollars)');
 title('Cost Versus Indoor Coarse Particulate Matter Under 10 Micrometers Reduction with Uncertainty Regions');
 grid on;
 legend('Location', 'eastoutside');

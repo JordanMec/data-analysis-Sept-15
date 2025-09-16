@@ -55,7 +55,7 @@ b2 = bar(positions + offset, avg_durations, 0.4, 'FaceColor','flat');
 b2.CData = colors;
 hold on;
 errorbar(positions + offset, avg_durations, avg_durations - duration_bounds(:,1)', duration_bounds(:,2)' - avg_durations, 'k', 'LineStyle','none');
-ylabel('Avg Duration (hours)');
+ylabel('Average Duration (Hours)');
 
 text(0.02,0.98,'Error bars show tight/leaky bounds', 'Units','normalized', ...
     'VerticalAlignment','top','FontSize',8,'FontAngle','italic');
@@ -109,8 +109,8 @@ for i = 1:length(configs)
     end
 end
 
-xlabel('Peak Reduction (%)');
-ylabel('Integrated Reduction (%)');
+xlabel('Peak Concentration Reduction (Percent)');
+ylabel('Integrated Concentration Reduction (Percent)');
 title('Effectiveness of Event Responses');
 grid on;
 legend('Location','best');
@@ -143,7 +143,7 @@ end
 xlim([0 length(configs)+1]);
 set(gca, 'XTick', 1:length(configs), 'XTickLabel', labels);
 xtickangle(45);
-ylabel('Peak/Baseline Ratio');
+ylabel('Peak to Baseline Concentration Ratio');
 title('Distribution of Event Severity Levels');
 legend({'Tight','Leaky'}, 'Location', 'best');
 grid on;
@@ -212,8 +212,8 @@ for i = 1:nConfigs
     legendHandles(i) = scatter(NaN, NaN, 30, 'filled', 'MarkerFaceColor', colors(i,:), 'MarkerEdgeColor', 'k');
 end
 
-xlabel('Event Index');
-ylabel('Peak Reduction (%)');
+xlabel('Event Sequence Number');
+ylabel('Peak Concentration Reduction (Percent)');
 title('Event Response Metrics by Occurrence');
 % Filter out any invalid handles in case some configs lacked data
 valid = isgraphics(legendHandles);
