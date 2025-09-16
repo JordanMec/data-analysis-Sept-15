@@ -17,6 +17,13 @@ elseif contains(lower(pmField), 'outdoor')
     envLabel = 'Outdoor';
 end
 
+readablePmLabel = expand_pm_label(pmLabel);
+if isempty(envLabel)
+    yLabelText = sprintf('Cumulative %s Exposure (Microgram Hours per Cubic Meter)', readablePmLabel);
+else
+    yLabelText = sprintf('Cumulative %s %s Exposure (Microgram Hours per Cubic Meter)', envLabel, readablePmLabel);
+end
+
 if isempty(summaryTable)
     warning('plot_cumulative_exposure: no data provided, skipping plot.');
     return;
@@ -67,17 +74,12 @@ for i = 1:height(uniqueConfigs)
     end
     title(sprintf('Cumulative Exposure for %s with %s Filter', ...
         strrep(loc, '_', ' '), strrep(filt, '_', ' ')));
-    xlabel('Hour of Year');
-    if isempty(envLabel)
-        ylabel(sprintf('Cumulative %s Exposure (µg/m³·h)', pmLabel));
-    else
-        ylabel(sprintf('Cumulative %s %s Exposure (µg/m³·h)', envLabel, pmLabel));
-    end
+    xlabel('Hour of the Year');
+    ylabel(yLabelText);
     legend(legendEntries, 'Location','eastoutside');
     grid on;
 end
 
-readablePmLabel = expand_pm_label(pmLabel);
 if isempty(envLabel)
     sgTxt = sprintf('Cumulative %s Exposure Over Time', readablePmLabel);
 else

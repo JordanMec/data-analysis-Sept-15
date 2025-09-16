@@ -58,9 +58,22 @@ hold on;
 values = rows.mean;
 lowerBounds = rows.lower_bound;
 upperBounds = rows.upper_bound;
-yLabelText = metricName;
-titleText = sprintf('Range for %s Across Tight and Leaky Envelopes', strrep(metricName, '_', ' '));
 noteText = '';
+
+switch lower(metricName)
+    case 'avg_indoor_pm25'
+        yLabelText = 'Average Indoor Particulate Matter 2.5 Concentration (Micrograms per Cubic Meter)';
+        titleText = 'Range of Average Indoor Particulate Matter 2.5 Concentration Across Tight and Leaky Envelopes';
+    case 'avg_indoor_pm10'
+        yLabelText = 'Average Indoor Particulate Matter 10 Concentration (Micrograms per Cubic Meter)';
+        titleText = 'Range of Average Indoor Particulate Matter 10 Concentration Across Tight and Leaky Envelopes';
+    case 'total_cost'
+        yLabelText = 'Total Operational Cost (Dollars)';
+        titleText = 'Total Operational Cost Range Across Tight and Leaky Envelopes';
+    otherwise
+        yLabelText = strrep(metricName, '_', ' ');
+        titleText = sprintf('Range for %s Across Tight and Leaky Envelopes', strrep(metricName, '_', ' '));
+end
 
 if strcmp(metricName, 'filter_replaced')
     hoursPerYear = 8760; % Consistent assumption used throughout reports

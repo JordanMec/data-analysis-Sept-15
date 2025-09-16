@@ -142,8 +142,8 @@ for i = 1:height(scenarios)
         'FontSize', 8, 'HorizontalAlignment', 'center');
 end
 
-xlabel('PM2.5 Reduction (%)');
-ylabel('Annual Operating Cost ($)');
+    xlabel('Particulate Matter 2.5 Reduction (Percent)');
+    ylabel('Annual Operating Cost (Dollars)');
 title('Feasible Operating Regions');
 legend({'Operating Range', 'Tight Envelope', 'Leaky Envelope'}, 'Location','eastoutside');
 grid on;
@@ -173,7 +173,7 @@ end
 bar(boundWidths);
 set(gca, 'XTick', 1:nScenarios, 'XTickLabel', scenarioLabels);
 xtickangle(45);
-ylabel('Absolute Bounds Width');
+ylabel('Absolute Bounds Width (Varies by Metric)');
 legend({'PM2.5 (µg/m³)', 'Cost ($)', 'Filter Hours'}, 'Location','northwestoutside');
 title('Physical Bounds Width by Scenario');
 grid on;
@@ -214,15 +214,15 @@ if ~isempty(exampleIdx)
         hold on;
         plot(hours, tightPM_subset, 'b-', 'LineWidth', 2);
         plot(hours, leakyPM_subset, 'b--', 'LineWidth', 2);
-        ylabel('Indoor PM2.5 (µg/m³)');
+        ylabel('Indoor Particulate Matter 2.5 Concentration (Micrograms per Cubic Meter)');
         ylim([0 max([tightPM_subset(:); leakyPM_subset(:)])*1.1]);
 
         yyaxis right
         boundWidth = abs(tightPM_subset - leakyPM_subset);
         plot(hours, boundWidth, 'r-', 'LineWidth', 1.5);
-        ylabel('Bounds Width (µg/m³)');
+        ylabel('Bounds Width (Micrograms per Cubic Meter)');
 
-        xlabel('Hour');
+        xlabel('Time in Hours');
         title(sprintf('Physical Bounds Evolution for %s %s %s During First Week', ...
             strrep(scenarios.location{exampleIdx}, '_', ' '), ...
             strrep(scenarios.filterType{exampleIdx}, '_', ' '), ...

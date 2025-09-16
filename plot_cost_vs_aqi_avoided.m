@@ -68,8 +68,8 @@ if sum(validIdx) >= 2
     plot(xFit, yFit, ':k', 'LineWidth', 1.5, 'DisplayName', 'Trend (means)');
 end
 
-xlabel('AQI Hours Avoided');
-ylabel('Total Operational Cost ($)');
+xlabel('Air Quality Index Hours Avoided');
+ylabel('Total Operational Cost (Dollars)');
 title('Cost Versus Air Quality Index Exposure Avoided with Scenario Bounds');
 grid on;
 legend('Location', 'eastoutside');

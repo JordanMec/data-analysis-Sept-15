@@ -49,7 +49,7 @@ errorbar(1:nConfigs, efficacyScoreTable.mean_efficacy_score, ...
 % Formatting
 set(gca, 'XTick', 1:nConfigs, 'XTickLabel', scenarioLabels);
 xtickangle(45);
-ylabel('Composite Efficacy Score (0-100)');
+ylabel('Composite Efficacy Score (Zero to One Hundred)');
 title('Overall Intervention Efficacy Ranking');
 grid on;
 ylim([0 100]);
@@ -91,7 +91,7 @@ bar(1:nConfigs, efficacyScoreTable.leaky_efficacy_score, ...
 
 set(gca, 'XTick', 1:nConfigs, 'XTickLabel', scenarioLabels);
 xtickangle(45);
-ylabel('Efficacy Score');
+ylabel('Overall Efficacy Score');
 title('Building Envelope Performance Comparison');
 legend('Location', 'eastoutside');
 grid on;
@@ -101,7 +101,7 @@ nexttile;
 bar(efficacyScoreTable.score_range, 'FaceColor', cmap.gray, 'EdgeColor', 'k');
 set(gca, 'XTick', 1:nConfigs, 'XTickLabel', scenarioLabels);
 xtickangle(45);
-ylabel('Score Range (Tight - Leaky)');
+ylabel('Score Range from Tight to Leaky');
 title('Performance Uncertainty Range');
 grid on;
 
@@ -116,7 +116,7 @@ colormap(parula);
 cb = colorbar;
 ylabel(cb, 'Overall Efficacy Score');
 
-xlabel('PM2.5 Component Score');
+xlabel('Particulate Matter 2.5 Component Score');
 ylabel('Cost Effectiveness Component Score');
 title('Fine Particulate Matter Reduction Versus Cost Tradeoff');
 grid on;

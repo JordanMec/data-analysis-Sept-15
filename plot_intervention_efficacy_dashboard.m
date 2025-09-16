@@ -146,7 +146,7 @@ function plotReductionEfficacy(costTable, pollutant)
     
     % Customize appearance
     set(gca, 'XTick', 1:length(labels), 'XTickLabel', labels);
-    ylabel(sprintf('%s Reduction (%%)', readablePollutant));
+    ylabel(sprintf('%s Concentration Reduction (Percent)', readablePollutant));
     title(sprintf('%s Reduction Efficacy', readablePollutant), 'FontWeight', 'bold');
     legend(modes, 'Location', 'best', 'Interpreter', 'none');
     grid on;
@@ -214,7 +214,7 @@ function plotScenarioBounds(costTable, summaryTable)
     end
     
     set(gca, 'YTick', y, 'YTickLabel', configLabels(sortIdx));
-    xlabel('PM2.5 Reduction (%)');
+    xlabel('Particulate Matter 2.5 Reduction (Percent)');
     title('Efficacy Bounds Across Tight and Leaky Homes', 'FontWeight', 'bold');
     grid on;
     xlim([0, max(boundsData(:,3)) * 1.1]);
@@ -269,8 +269,8 @@ function plotCostEffectivenessBubble(costTable)
          'HorizontalAlignment', 'left', 'VerticalAlignment', 'bottom', ...
          'FontWeight', 'bold', 'Color', [0.8 0 0]);
     
-    xlabel('PM2.5 Reduction (%)');
-    ylabel('Cost per μg/m³ Removed ($)');
+    xlabel('Particulate Matter 2.5 Reduction (Percent)');
+    ylabel('Cost per Microgram per Cubic Meter of Pollutant Removed (Dollars)');
     title('Cost Effectiveness Analysis Across Configurations', 'FontWeight', 'bold');
     
     % Add legend for bubble size
@@ -344,8 +344,8 @@ function plotCumulativeBenefit(summaryTable)
         end
     end
     
-    xlabel('Hours');
-    ylabel('Cumulative PM2.5 Reduction (μg/m³·h)');
+    xlabel('Time in Hours');
+    ylabel('Cumulative Particulate Matter 2.5 Reduction (Microgram Hours per Cubic Meter)');
     title('Cumulative Exposure Benefit During First Week', 'FontWeight', 'bold');
     legend('Location', 'best', 'Interpreter', 'none');
     grid on;
@@ -404,7 +404,7 @@ function plotBuildingEnvelopeSensitivity(costTable)
     barh(x, -normSens(sortIdx, 2), 'FaceColor', [0.9 0.3 0.3]);
     
     set(gca, 'YTick', x, 'YTickLabel', labels(sortIdx));
-    xlabel('Relative Sensitivity to Building Envelope (%)');
+    xlabel('Relative Sensitivity to the Building Envelope (Percent)');
     title('Building Envelope Impact on Performance Metrics', 'FontWeight', 'bold');
     
     % Add center line

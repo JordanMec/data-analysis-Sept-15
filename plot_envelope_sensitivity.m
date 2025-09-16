@@ -200,7 +200,7 @@ end
 [sortedSens, sortIdx] = sort(meanSens, 'descend');
 barh(sortedSens);
 set(gca, 'YTick', 1:length(metrics), 'YTickLabel', metricLabels(sortIdx));
-xlabel('Mean Sensitivity (normalized)');
+xlabel('Mean Sensitivity (Normalized Units)');
 title('Parameter Sensitivity Ranking');
 grid on;
 
@@ -234,8 +234,8 @@ for i = 1:height(sensitivity)
     end
 end
 
-xlabel('Scenario');
-ylabel('Sensitivity (% change or absolute*)');
+xlabel('Scenario Identifier');
+ylabel('Sensitivity (Percent Change or Absolute Difference)');
 title('Envelope Sensitivity Across Scenarios');
 legend({'PM2.5','Cost','Filter Life'}, 'Location','eastoutside');
 set(gca, 'XTick', x, 'XTickLabel', scenarioLabels);
@@ -251,8 +251,8 @@ scatter(sensitivity.cost_sensitivity(validIdx), ...
     sensitivity.effectiveness_change(validIdx), ...
     100, 1:sum(validIdx), 'filled');
 
-xlabel('Cost Increase (%)');
-ylabel('Effectiveness Change (% points)');
+xlabel('Cost Increase (Percent)');
+ylabel('Effectiveness Change (Percentage Points)');
 title('Cost Impact Versus Effectiveness Change');
 colormap(lines(sum(validIdx)));
 

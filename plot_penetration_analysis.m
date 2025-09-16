@@ -54,7 +54,7 @@ errorbar(x + width/2, pm10_factors, ...
     'k', 'LineStyle', 'none', 'HandleVisibility', 'off');
 
 set(gca, 'XTick', x, 'XTickLabel', labels);
-ylabel('Penetration Factor');
+ylabel('Particle Penetration Factor');
 legend([hPM25 hPM10], {'PM2.5', 'PM10'}, 'Location', 'best');
 title('Particle Penetration Factors by Configuration');
 grid on;
@@ -84,7 +84,7 @@ errorbar(x + width/2, pm10_removal, ...
     'k', 'LineStyle', 'none', 'HandleVisibility', 'off');
 
 set(gca, 'XTick', x, 'XTickLabel', labels);
-ylabel('Removal Efficiency (%)');
+ylabel('Removal Efficiency (Percent)');
 legend([hR25 hR10], {'PM2.5', 'PM10'}, 'Location', 'best');
 title('Particle Removal Efficiency by Configuration');
 grid on;
@@ -102,7 +102,7 @@ errorbar(x, size_ratio, ...
     'k', 'LineStyle', 'none', 'HandleVisibility', 'off');
 
 set(gca, 'XTick', x, 'XTickLabel', labels);
-ylabel('PM10/PM2.5 Penetration Ratio');
+ylabel('Particulate Matter 10 to Particulate Matter 2.5 Penetration Ratio');
 title('Size Dependent Penetration Ratio');
 yline(1, '--k', 'Equal Penetration');
 grid on;
@@ -133,8 +133,8 @@ if isfield(data, 'hourly_penetration_pm25')
     end
     plot(t, data.hourly_penetration_pm25(t), 'b-', 'LineWidth', 1.5);
     plot(t, data.hourly_penetration_pm10(t), 'r-', 'LineWidth', 1.5);
-    xlabel('Hour');
-    ylabel('Penetration Factor');
+    xlabel('Time in Hours');
+    ylabel('Particle Penetration Factor');
     title(sprintf('Penetration Temporal Variation for %s', strrep(config, '_', ' ')));
     legend({'PM2.5 Bounds', 'PM10 Bounds', 'PM2.5 Mean', 'PM10 Mean'}, 'Location', 'best');
     grid on;

@@ -36,8 +36,8 @@ for i = 1:length(configs)
     end
 end
 
-xlabel('Hour of Day');
-ylabel('Average I/O Ratio');
+xlabel('Hour of the Day');
+ylabel('Average Indoor to Outdoor Ratio');
 title('Diurnal Variation in Filtration Performance');
 if ~isempty(diurnalHandles)
     legend(diurnalHandles, diurnalLabels, 'Location', 'best');
@@ -80,7 +80,7 @@ if any(~isnan(stab_lower))
         stability_scores - stab_lower, stab_upper - stability_scores, 'k.', 'LineStyle','none');
 end
 set(gca, 'XTick', 1:length(labels), 'XTickLabel', labels);
-ylabel('Stability Score');
+ylabel('Filtration Stability Score');
 title('Filtration Performance Stability Over Time');
 grid on;
 
@@ -112,8 +112,8 @@ for i = 1:length(configs)
     end
 end
 
-xlabel('Day');
-ylabel('Daily Average I/O Ratio');
+xlabel('Day of Observation');
+ylabel('Daily Average Indoor to Outdoor Ratio');
 title('Filtration Performance Trend Over Time');
 if ~isempty(lineHandles)
     legend(lineHandles, legendLabels, 'Location', 'best');

@@ -85,7 +85,7 @@ yline(20, '--', 'Color', [0.8 0.4 0], 'LineWidth', 1.5);
 text(0.5, 20.5, 'Noticeable Impact (20%)', 'FontSize', 9, 'Color', [0.8 0.4 0]);
 
 set(gca, 'XTick', x, 'XTickLabel', modes);
-ylabel('Airflow Reduction (%)');
+ylabel('Airflow Reduction (Percent)');
 title('Airflow Penalty Across Filter Types and Operating Modes');
 legend(filters, 'Location', 'northwest');
 grid on;
@@ -159,7 +159,7 @@ for i = 1:length(b)
     end
 end
 set(gca, 'XTick', 1:length(locations), 'XTickLabel', locations);
-ylabel('Mean Airflow Penalty (%)');
+ylabel('Mean Airflow Penalty (Percent)');
 title('Location Specific Airflow Impact');
 legend(filters, 'Location', 'best');
 grid on;
@@ -192,7 +192,7 @@ sensitivity = real(sensitivity);
 topN = min(10, length(sortedSens));
 barh(1:topN, sortedSens(1:topN), 'FaceColor', [0.6 0.6 0.8]);
 set(gca, 'YTick', 1:topN, 'YTickLabel', configLabels(sortIdx(1:topN)));
-xlabel('Envelope Sensitivity (% variation)');
+xlabel('Envelope Sensitivity (Percent Variation)');
 title('Configurations Most Sensitive to Building Envelope');
 grid on;
 
@@ -243,8 +243,8 @@ for i = 1:height(tradeoffTable)
     text(allMeans(i), allRanges(i), labels{i}, 'VerticalAlignment','bottom', ...
         'HorizontalAlignment','center', 'FontSize', 8);
 end
-xlabel('Mean Airflow Penalty (%)');
-ylabel('Uncertainty Range (% points)');
+xlabel('Mean Airflow Penalty (Percent)');
+ylabel('Uncertainty Range (Percentage Points)');
 title('Airflow Penalty Versus Uncertainty Range');
 grid on;
 

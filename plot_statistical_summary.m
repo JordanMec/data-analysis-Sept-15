@@ -95,8 +95,8 @@ avgRange = mean(summaryStats(:,1:4), 2, 'omitnan');
 avgPerformance = 100 - summaryStats(:,5); % Convert to reduction
 
 scatter(avgRange, avgPerformance, 100, 1:nConfigs, 'filled');
-xlabel('Average Range (%)');
-ylabel('PM2.5 Reduction Performance');
+xlabel('Average Range (Percent)');
+ylabel('Particulate Matter 2.5 Reduction Performance');
 title('Performance Versus Range Tradeoff');
 colormap(lines(nConfigs));
 grid on;
@@ -113,7 +113,7 @@ validIdx = sortIdx(sortedCost > 0);
 if ~isempty(validIdx)
     barh(1:length(validIdx), sortedCost(sortedCost > 0));
     set(gca, 'YTick', 1:length(validIdx), 'YTickLabel', configLabels(validIdx));
-    xlabel('Cost Range (%)');
+    xlabel('Cost Range (Percent)');
     title('Cost Variability Ranking');
     grid on;
 end
@@ -126,7 +126,7 @@ heatmapData = summaryStats(:,1:4)';
 imagesc(heatmapData);
 colormap(flipud(hot));
 cb = colorbar;
-ylabel(cb, 'Range (%)');
+ylabel(cb, 'Range (Percent)');
 
 set(gca, 'XTick', 1:nConfigs, 'XTickLabel', configLabels);
 set(gca, 'YTick', 1:4, 'YTickLabel', metricLabels);

@@ -90,7 +90,7 @@ else
         end
     end
 
-    ylabel('Value');
+    ylabel('Metric Value (Varies by Category)');
     title('Active Intervention Results for Bakersfield');
     grid on;
 end
@@ -138,8 +138,8 @@ yMed = median(costTable.total_cost);
 xline(xMed, '--k', 'Median Reduction');
 yline(yMed, '--k', 'Median Cost');
 
-xlabel('PM2.5 Reduction (%)');
-ylabel('Annual Cost ($)');
+xlabel('Particulate Matter 2.5 Reduction (Percent)');
+ylabel('Annual Cost (Dollars)');
 title('Cost and Effectiveness Outcomes with Uncertainty Ranges');
 grid on;
 legend('Location', 'eastoutside');
@@ -176,7 +176,7 @@ for f = 1:length(filterTypes)
 end
 set(gca, 'XTick', positions, 'XTickLabel', filterTypes);
 xlabel('Filter Type');
-ylabel('PM2.5 Reduction (%)');
+ylabel('Particulate Matter 2.5 Reduction (Percent)');
 title('Performance Distribution Across Filter Types');
 grid on;
 legend(unique(get(gca,'Children')),'Location','bestoutside');
@@ -209,8 +209,8 @@ if length(performance) > 2
     yfit = polyval(p, xfit);
     hLine = plot(xfit, yfit, 'r--', 'LineWidth', 1.5, 'DisplayName', 'Trend Line');
 end
-xlabel('Mean PM2.5 Reduction (%)');
-ylabel('Uncertainty Range (% points)');
+xlabel('Mean Particulate Matter 2.5 Reduction (Percent)');
+ylabel('Uncertainty Range (Percentage Points)');
 title('Performance Versus Uncertainty Range');
 grid on;
 

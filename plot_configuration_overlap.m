@@ -73,7 +73,7 @@ for i = 1:nConfigs
 end
 
 set(gca, 'YTick', y, 'YTickLabel', labels(sortIdx));
-xlabel('PM2.5 Reduction (%)');
+xlabel('Particulate Matter 2.5 Reduction (Percent)');
 title('Fine Particulate Matter Reduction with Envelope Bounds');
 grid on;
 
@@ -164,7 +164,7 @@ for i = 1:nConfigs
 end
 
 set(gca, 'YTick', y, 'YTickLabel', labels(sortIdx));
-xlabel('Annual Cost ($)');
+xlabel('Annual Cost (Dollars)');
 title('Operating Cost with Envelope Bounds');
 grid on;
 
@@ -224,8 +224,8 @@ for i = 1:nConfigs
     end
 end
 
-xlabel('PM2.5 Reduction (%)');
-ylabel('Annual Cost ($)');
+xlabel('Particulate Matter 2.5 Reduction (Percent)');
+ylabel('Annual Cost (Dollars)');
 title('Performance Overlap Across Configurations');
 grid on;
 
