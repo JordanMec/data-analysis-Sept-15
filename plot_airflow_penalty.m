@@ -86,7 +86,7 @@ text(0.5, 20.5, 'Noticeable Impact (20%)', 'FontSize', 9, 'Color', [0.8 0.4 0]);
 
 set(gca, 'XTick', x, 'XTickLabel', modes);
 ylabel('Airflow Reduction (%)');
-title('Airflow Penalty by Filter Type and Operating Mode');
+title('Airflow Penalty Across Filter Types and Operating Modes');
 legend(filters, 'Location', 'northwest');
 grid on;
 % Account for complex values when determining y-limits
@@ -160,7 +160,7 @@ for i = 1:length(b)
 end
 set(gca, 'XTick', 1:length(locations), 'XTickLabel', locations);
 ylabel('Mean Airflow Penalty (%)');
-title('Location-Specific Airflow Impact');
+title('Location Specific Airflow Impact');
 legend(filters, 'Location', 'best');
 grid on;
 
@@ -245,7 +245,7 @@ for i = 1:height(tradeoffTable)
 end
 xlabel('Mean Airflow Penalty (%)');
 ylabel('Uncertainty Range (% points)');
-title('Airflow Penalty vs. Uncertainty');
+title('Airflow Penalty Versus Uncertainty Range');
 grid on;
 
 h1 = plot(NaN, NaN, 'o', 'MarkerSize', 10, 'MarkerFaceColor', [0.2 0.4 0.8], 'MarkerEdgeColor', 'k');
@@ -262,7 +262,7 @@ if length(allMeans) > 5
     end
 end
 
-sgtitle('Comprehensive Airflow Penalty Analysis with Consistent Methodology', ...
+sgtitle('Comprehensive Airflow Penalty Analysis Using Consistent Methodology', ...
         'FontSize', 14, 'FontWeight', 'bold');
 
 save_figure(fig, figuresDir, 'airflow_penalty_comprehensive_improved.png');

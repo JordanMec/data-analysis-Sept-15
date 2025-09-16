@@ -74,7 +74,7 @@ end
 
 set(gca, 'YTick', y, 'YTickLabel', labels(sortIdx));
 xlabel('PM2.5 Reduction (%)');
-title('PM2.5 Reduction with Bounds');
+title('Fine Particulate Matter Reduction with Envelope Bounds');
 grid on;
 
 % Add legend for filter types without obscuring data
@@ -165,7 +165,7 @@ end
 
 set(gca, 'YTick', y, 'YTickLabel', labels(sortIdx));
 xlabel('Annual Cost ($)');
-title('Operating Cost with Bounds');
+title('Operating Cost with Envelope Bounds');
 grid on;
 
 %% Panel 3: 2D Overlap Regions
@@ -226,7 +226,7 @@ end
 
 xlabel('PM2.5 Reduction (%)');
 ylabel('Annual Cost ($)');
-title('Performance Overlap Regions');
+title('Performance Overlap Across Configurations');
 grid on;
 
 % Add diagonal lines for equal value
@@ -253,7 +253,7 @@ text(xlims(2)*0.02, ylims(2)*0.98, strjoin(legendText, '\n'), ...
     'BackgroundColor', 'w', 'EdgeColor', 'k');
 
 % Overall title
-sgtitle('Configuration Performance Overlap Analysis', ...
+sgtitle('Configuration Performance Overlap Analysis Across Envelopes', ...
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save

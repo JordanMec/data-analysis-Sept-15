@@ -47,7 +47,7 @@ for i = 1:nConfigs
 
         xlabel('Lag (hours)');
         ylabel('Cross-Correlation');
-        title(sprintf('%s\nOptimal Lag: PM2.5=%dh, PM10=%dh', ...
+        title(sprintf('%s\nOptimal Lag Fine Particulate Matter 2.5 Micrometers = %dh, Coarse Particulate Matter 10 Micrometers = %dh', ...
             strrep(config, '_', ' '), ...
             data.lags(max_idx_pm25), data.lags(max_idx_pm10)));
         legend({'PM2.5 Bounds','PM10 Bounds','PM2.5','PM10'}, 'Location', 'best');
@@ -56,7 +56,7 @@ for i = 1:nConfigs
     end
 end
 
-sgtitle('Cross-Correlation Analysis: Indoor vs Outdoor', 'FontSize', 14, 'FontWeight', 'bold');
+sgtitle('Cross Correlation Analysis for Indoor Versus Outdoor Trends', 'FontSize', 14, 'FontWeight', 'bold');
 save_figure(fig, saveDir, 'correlation_analysis.png');
 close(fig);
 end

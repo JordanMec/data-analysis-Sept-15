@@ -46,7 +46,7 @@ if ~isempty(lag_times)
     end
     xlabel('Average Lag Time (hours)');
     ylabel('Average Peak Reduction (%)');
-    title('Trigger Response Performance');
+    title('Trigger Response Performance Summary');
     grid on;
 end
 
@@ -76,7 +76,7 @@ end
 
 set(gca, 'XTick', 1:nConfigs, 'XTickLabel', labels);
 ylabel('Response Time (hours)');
-title('Average System Response Time');
+title('Average System Response Time by Configuration');
 xtickangle(45);
 grid on;
 
@@ -107,7 +107,7 @@ hInactive = bar(x + width/2, inactive_ratios, width, 'FaceColor', [0.8 0.2 0.2])
 set(gca, 'XTick', x, 'XTickLabel', labels);
 ylabel('I/O Ratio');
 legend([hActive hInactive], {'Active', 'Inactive'}, 'Location', 'best');
-title('Active vs Inactive Performance');
+title('Active and Inactive Performance Comparison');
 xtickangle(45);
 grid on;
 
@@ -146,7 +146,7 @@ else
     plot_event_timeline_example(data, config);
 end
 
-sgtitle('Trigger Response Analysis - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+sgtitle('Trigger Response Analysis During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
 save_figure(fig, saveDir, 'trigger_response_analysis.png');
 close(fig);
 end
@@ -198,7 +198,7 @@ errorbar(x + width/2, pm10_factors, ...
 set(gca, 'XTick', x, 'XTickLabel', labels);
 ylabel('Penetration Factor');
 legend({'PM2.5', 'PM10'}, 'Location', 'best');
-title('Particle Penetration Factors');
+title('Particle Penetration Factors by Configuration');
 grid on;
 ylim([0 1]);
 
@@ -226,7 +226,7 @@ errorbar(x + width/2, pm10_removal, ...
 set(gca, 'XTick', x, 'XTickLabel', labels);
 ylabel('Removal Efficiency (%)');
 legend({'PM2.5', 'PM10'}, 'Location', 'best');
-title('Particle Removal Efficiency');
+title('Particle Removal Efficiency by Configuration');
 grid on;
 
 % Size-dependent efficiency ratio
@@ -243,7 +243,7 @@ errorbar(x, size_ratio, ...
 
 set(gca, 'XTick', x, 'XTickLabel', labels);
 ylabel('PM10/PM2.5 Penetration Ratio');
-title('Size-Dependent Penetration');
+title('Size Dependent Penetration Ratio');
 yline(1, '--k', 'Equal Penetration');
 grid on;
 
@@ -259,12 +259,12 @@ if isfield(data, 'hourly_penetration_pm25')
     plot(t, data.hourly_penetration_pm10(t), 'r-', 'LineWidth', 1.5);
     xlabel('Hour');
     ylabel('Penetration Factor');
-    title(sprintf('Temporal Variation - %s', config));
+    title(sprintf('Penetration Temporal Variation for %s', strrep(config, '_', ' ')));
     legend({'PM2.5', 'PM10'}, 'Location', 'best');
     grid on;
 end
 
-sgtitle('Particle Penetration Analysis - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+sgtitle('Particle Penetration Analysis During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
 save_figure(fig, saveDir, 'penetration_analysis.png');
 close(fig);
 end
@@ -325,7 +325,7 @@ text(0.02,0.98,'Error bars show tight/leaky bounds', 'Units','normalized', ...
 
 set(gca, 'XTick', 1:length(configs), 'XTickLabel', labels);
 xtickangle(45);
-title('Pollution Event Statistics');
+title('Pollution Event Summary Statistics');
 grid on;
 
 % Response effectiveness scatter
@@ -348,7 +348,7 @@ end
 scatter(peak_reductions, integrated_reductions, 100, 1:length(configs), 'filled');
 xlabel('Peak Reduction (%)');
 ylabel('Integrated Reduction (%)');
-title('Event Response Effectiveness');
+title('Effectiveness of Event Responses');
 colormap(lines(length(configs)));
 grid on;
 
@@ -381,7 +381,7 @@ xlim([0 length(configs)+1]);
 set(gca, 'XTick', 1:length(configs), 'XTickLabel', labels);
 xtickangle(45);
 ylabel('Peak/Baseline Ratio');
-title('Distribution of Event Severities');
+title('Distribution of Event Severity Levels');
 legend({'Tight','Leaky'}, 'Location', 'best');
 grid on;
 
@@ -390,7 +390,7 @@ subplot(2, 3, [4 6]);
 % Plot example responses for most severe events
 plot_example_event_responses(eventAnalysis);
 
-sgtitle('Pollution Event Response Analysis - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+sgtitle('Pollution Event Response Analysis During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
 save_figure(fig, saveDir, 'event_response_analysis.png');
 close(fig);
 end
@@ -418,7 +418,7 @@ end
 
 xlabel('Hour of Day');
 ylabel('Average I/O Ratio');
-title('Diurnal Pattern of Filtration Performance');
+title('Diurnal Variation in Filtration Performance');
 legend(strrep(configs, '_', ' '), 'Location', 'best');
 grid on;
 xlim([-0.5 23.5]);
@@ -443,7 +443,7 @@ end
 bar(stability_scores, 'FaceColor', [0.4 0.6 0.8]);
 set(gca, 'XTick', 1:length(labels), 'XTickLabel', labels);
 ylabel('Stability Score');
-title('Temporal Performance Stability');
+title('Filtration Performance Stability Over Time');
 grid on;
 
 % Performance degradation over time
@@ -462,11 +462,11 @@ end
 
 xlabel('Day');
 ylabel('Daily Average I/O Ratio');
-title('Performance Trend Over Time');
+title('Filtration Performance Trend Over Time');
 legend(strrep(configs, '_', ' '), 'Location', 'best');
 grid on;
 
-sgtitle('Temporal Patterns in Active Mode Performance', 'FontSize', 14, 'FontWeight', 'bold');
+sgtitle('Temporal Patterns in Active Mode Filtration Performance', 'FontSize', 14, 'FontWeight', 'bold');
 save_figure(fig, saveDir, 'temporal_patterns.png');
 close(fig);
 end
@@ -503,7 +503,7 @@ for i = 1:nConfigs
         
         xlabel('Lag (hours)');
         ylabel('Cross-Correlation');
-        title(sprintf('%s\nOptimal Lag: PM2.5=%dh, PM10=%dh', ...
+        title(sprintf('%s\nOptimal Lag Fine Particulate Matter 2.5 Micrometers = %dh, Coarse Particulate Matter 10 Micrometers = %dh', ...
             strrep(config, '_', ' '), ...
             data.lags(max_idx_pm25), data.lags(max_idx_pm10)));
         legend({'PM2.5', 'PM10'}, 'Location', 'best');
@@ -512,7 +512,7 @@ for i = 1:nConfigs
     end
 end
 
-sgtitle('Cross-Correlation Analysis: Indoor vs Outdoor', 'FontSize', 14, 'FontWeight', 'bold');
+sgtitle('Cross Correlation Analysis for Indoor Versus Outdoor Trends', 'FontSize', 14, 'FontWeight', 'bold');
 save_figure(fig, saveDir, 'correlation_analysis.png');
 close(fig);
 end
@@ -564,7 +564,7 @@ for loc_idx = 1:length(locations)
     set(gca, 'XTick', x, 'XTickLabel', metric_labels);
     xtickangle(45);
     ylabel('Normalized Score');
-    title(sprintf('%s - Filter Comparison', location));
+    title(sprintf('Filter Comparison for %s', strrep(location, '_', ' ')));
     legend({'HEPA', 'MERV'}, 'Location', 'best');
     grid on;
 end
@@ -573,7 +573,7 @@ end
 subplot(2, 2, [3 4]);
 plot_filter_radar_comparison(filterComparison);
 
-sgtitle('Dynamic Filter Performance Comparison - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+sgtitle('Dynamic Filter Performance Comparison During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
 save_figure(fig, saveDir, 'filter_comparison_dynamic.png');
 close(fig);
 end
@@ -608,7 +608,7 @@ set(gca, 'XTick', x, 'XTickLabel', labels);
 xtickangle(45);
 ylabel('Uncertainty Range (%)');
 legend({'PM2.5', 'PM10'}, 'Location', 'best');
-title('Building Envelope Uncertainty');
+title('Building Envelope Uncertainty Range by Configuration');
 grid on;
 
 % Confidence intervals over time
@@ -628,7 +628,7 @@ if isfield(data, 'hourly_ci_pm25')
     
     xlabel('Hour');
     ylabel('Indoor PM2.5 (μg/m³)');
-    title(sprintf('Confidence Intervals - %s', config));
+    title(sprintf('Confidence Intervals for %s', strrep(config, '_', ' ')));
     legend({'Envelope Bounds', 'Mean'}, 'Location', 'best');
     grid on;
 end
@@ -653,7 +653,7 @@ if ~isempty(contribution_data)
     xtickangle(45);
     ylabel('Contribution to Total Uncertainty (%)');
     legend(contribution_labels, 'Location', 'best');
-    title('Uncertainty Source Analysis');
+    title('Uncertainty Source Contribution Analysis');
     grid on;
 end
 
@@ -661,7 +661,7 @@ end
 subplot(2, 2, 4);
 plot_sensitivity_tornado(uncertaintyAnalysis);
 
-sgtitle('Uncertainty Quantification - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+sgtitle('Uncertainty Quantification During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
 save_figure(fig, saveDir, 'uncertainty_analysis.png');
 close(fig);
 end
@@ -672,7 +672,7 @@ function plot_event_timeline_example(triggerData, configName)
 
 resp = triggerData.pm25_response;
 if isempty(resp) || resp.num_events == 0
-    title(sprintf('Event Timeline Example - %s', strrep(configName,'_',' ')));
+    title(sprintf('Event Timeline Example for %s', strrep(configName,'_',' ')));
     text(0.5,0.5,'No events','HorizontalAlignment','center');
     return;
 end
@@ -691,7 +691,7 @@ end
 
 xlabel('Hours Relative to Event Peak');
 ylabel('Event Index');
-title(sprintf('Event Timeline Example - %s', strrep(configName,'_',' ')));
+title(sprintf('Event Timeline Example for %s', strrep(configName,'_',' ')));
 legend({'Lag Time','Recovery'}, 'Location','best');
 grid on;
 end
@@ -700,7 +700,7 @@ function plot_event_timeline(eventTable, configName)
 %PLOT_EVENT_TIMELINE Draw lag, rise and recovery segments using event metrics
 
 if isempty(eventTable)
-    title(sprintf('Event Timeline - %s', strrep(configName,'_',' ')));
+    title(sprintf('Event Timeline for %s', strrep(configName,'_',' ')));
     text(0.5,0.5,'No events','HorizontalAlignment','center');
     return;
 end
@@ -737,7 +737,7 @@ end
     ylabel('Event Number');
     yticks(1:n);
     ylim([0 n+1]);
-    title(sprintf('Event Timeline - %s', strrep(configName,'_',' ')));
+    title(sprintf('Event Timeline for %s', strrep(configName,'_',' ')));
 legend({'Rise','Lag','Recovery'}, 'Location','best');
 grid on;
 end
@@ -794,7 +794,7 @@ end
 
 xlabel('Event Index');
 ylabel('Peak Reduction (%)');
-title('Event Response Metrics by Event');
+title('Event Response Metrics by Occurrence');
 % Filter out invalid handles before creating the legend
 valid = isgraphics(legendHandles);
 if any(valid)
@@ -851,7 +851,7 @@ ax.ThetaTick = rad2deg(theta(1:end-1));
 ax.ThetaTickLabel = metric_labels;
 ax.RLim = [0 1];
 legend(ax, {'HEPA','MERV'}, 'Location','southoutside');
-title(ax,'Multi-Criteria Filter Comparison');
+title(ax,'Filter Comparison Across Multiple Criteria');
 end
 
 function plot_sensitivity_tornado(uncertaintyAnalysis)
@@ -867,7 +867,7 @@ for i = 1:numel(configs)
 end
 
 if isempty(contrib)
-    title('Sensitivity Analysis');
+    title('Uncertainty Contribution Sensitivity Analysis');
     text(0.5,0.5,'No uncertainty data','HorizontalAlignment','center');
     return;
 end
@@ -879,6 +879,6 @@ labels = {'Building Envelope','Outdoor Variability','System Response','Measureme
 barh(sortedVals,'FaceColor',[0.4 0.6 0.8]);
 set(gca,'YTick',1:numel(order),'YTickLabel',labels(order));
 xlabel('Contribution (%)');
-title('Sensitivity Analysis');
+title('Uncertainty Contribution Sensitivity Analysis');
 grid on;
 end

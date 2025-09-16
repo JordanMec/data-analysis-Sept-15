@@ -37,7 +37,7 @@ for m = 1:numel(metrics)
     set(gca,'XTick',1:numel(grpLabels),'XTickLabel',grpLabels);
     xtickangle(45);
     ylabel(labels{m});
-    title(sprintf('Distribution of %s', strrep(metric,'_',' ')));
+    title(sprintf('Distribution of %s Values', strrep(metric,'_',' ')));
     grid on;
 
     % ECDF
@@ -52,7 +52,7 @@ for m = 1:numel(metrics)
     end
     xlabel(labels{m});
     ylabel('ECDF');
-    title(sprintf('ECDF of %s', strrep(metric,'_',' ')));
+    title(sprintf('Empirical Cumulative Distribution of %s', strrep(metric,'_',' ')));
     legend('Location','best');
     grid on;
 

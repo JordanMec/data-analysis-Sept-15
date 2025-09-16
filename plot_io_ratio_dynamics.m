@@ -38,13 +38,14 @@ for i = 1:nConfigs
     
     xlabel('Hour');
     ylabel('Indoor/Outdoor Ratio');
-    title(sprintf('%s - %s Filter', data.location, data.filterType));
+    title(sprintf('Indoor to Outdoor Ratio Dynamics for %s with %s Filter', ...
+        strrep(data.location, '_', ' '), strrep(data.filterType, '_', ' ')));
     legend({'PM2.5 Bounds', 'PM2.5 Mean', 'PM10 Bounds', 'PM10 Mean'}, 'Location', 'best');
     grid on;
     ylim([0 1.5]);
 end
 
-sgtitle('Indoor/Outdoor Ratio Dynamics - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+sgtitle('Indoor to Outdoor Ratio Dynamics During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
 save_figure(fig, saveDir, 'io_ratio_dynamics.png');
 close(fig);
 end

@@ -70,7 +70,7 @@ end
 
 xlabel('AQI Hours Avoided');
 ylabel('Total Operational Cost ($)');
-title('Cost vs. AQI Exposure Avoided (with Scenario Bounds)');
+title('Cost Versus Air Quality Index Exposure Avoided with Scenario Bounds');
 grid on;
 legend('Location', 'eastoutside');
 

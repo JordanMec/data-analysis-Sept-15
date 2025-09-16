@@ -91,7 +91,7 @@ else
     end
 
     ylabel('Value');
-    title('Bakersfield – Active Intervention');
+    title('Active Intervention Results for Bakersfield');
     grid on;
 end
 
@@ -140,7 +140,7 @@ yline(yMed, '--k', 'Median Cost');
 
 xlabel('PM2.5 Reduction (%)');
 ylabel('Annual Cost ($)');
-title('Cost-Effectiveness with Uncertainty Regions');
+title('Cost and Effectiveness Outcomes with Uncertainty Ranges');
 grid on;
 legend('Location', 'eastoutside');
 
@@ -177,7 +177,7 @@ end
 set(gca, 'XTick', positions, 'XTickLabel', filterTypes);
 xlabel('Filter Type');
 ylabel('PM2.5 Reduction (%)');
-title('Performance Distribution by Filter Type');
+title('Performance Distribution Across Filter Types');
 grid on;
 legend(unique(get(gca,'Children')),'Location','bestoutside');
 
@@ -211,7 +211,7 @@ if length(performance) > 2
 end
 xlabel('Mean PM2.5 Reduction (%)');
 ylabel('Uncertainty Range (% points)');
-title('Performance vs. Uncertainty');
+title('Performance Versus Uncertainty Range');
 grid on;
 
 %% Panel 5: Top Interventions Table
@@ -322,7 +322,7 @@ text(0.5, 0.05, 'Score = 0.5×(PM2.5 reduction) + 0.3×(cost efficiency) + 0.2×
     'HorizontalAlignment', 'center', 'FontSize', 8, 'FontAngle', 'italic');
 
 % Overall title
-sgtitle('Executive Summary: Intervention Performance with Uncertainty', ...
+sgtitle('Executive Summary of Intervention Performance with Uncertainty Ranges', ...
     'FontSize', 16, 'FontWeight', 'bold');
 
 save_figure(fig, figuresDir, 'executive_summary_with_bounds.png');

@@ -11,6 +11,8 @@ if nargin < 2 || isempty(pollutant)
     pollutant = 'PM25';
 end
 
+readablePollutant = format_pollutant_label(pollutant);
+
 % Get unique configurations (no leakage grouping)
 locations = unique(costTable.location);
 filterTypes = unique(costTable.filterType(~strcmp(costTable.filterType, 'baseline')));
@@ -104,14 +106,14 @@ if ~isfinite(vmin) || ~isfinite(vmax) || vmin == vmax
 end
 caxis(ax1, [vmin vmax]);
 cb = colorbar(ax1);
-ylabel(cb, sprintf('%s Reduction (%%) - Mean Value', pollutant));
+ylabel(cb, sprintf('%s Reduction (%%) Mean Value', readablePollutant));
 
 % Set labels
 set(ax1, 'XTick', 1:nInt, 'XTickLabel', interventions);
 set(ax1, 'YTick', 1:nLoc, 'YTickLabel', locations);
 xlabel(ax1, 'Intervention Type');
 ylabel(ax1, 'Location');
-title(ax1, sprintf('%s Reduction Efficacy Matrix with Uncertainty', pollutant));
+title(ax1, sprintf('%s Reduction Efficacy Matrix with Uncertainty', readablePollutant));
 
 % Add text annotations with uncertainty
 for l = 1:nLoc
@@ -164,4 +166,17 @@ text(ax1, 0.02, 0.02, 'Range bars span tight (left) to leaky (right) outcomes', 
 
 save_figure(fig, figuresDir, sprintf('intervention_matrix_%s_with_uncertainty.png', lower(pollutant)));
 close(fig);
+end
+
+function label = format_pollutant_label(pollutant)
+%FORMAT_POLLUTANT_LABEL Create descriptive pollutant labels for titles.
+
+switch lower(pollutant)
+    case {'pm2.5', 'pm25', 'pm_25'}
+        label = 'Fine Particulate Matter Under 2.5 Micrometers';
+    case {'pm10', 'pm_10'}
+        label = 'Coarse Particulate Matter Under 10 Micrometers';
+    otherwise
+        label = strrep(pollutant, '_', ' ');
+end
 end

@@ -56,7 +56,7 @@ errorbar(x + width/2, pm10_factors, ...
 set(gca, 'XTick', x, 'XTickLabel', labels);
 ylabel('Penetration Factor');
 legend([hPM25 hPM10], {'PM2.5', 'PM10'}, 'Location', 'best');
-title('Particle Penetration Factors');
+title('Particle Penetration Factors by Configuration');
 grid on;
 ylim([0 1]);
 
@@ -86,7 +86,7 @@ errorbar(x + width/2, pm10_removal, ...
 set(gca, 'XTick', x, 'XTickLabel', labels);
 ylabel('Removal Efficiency (%)');
 legend([hR25 hR10], {'PM2.5', 'PM10'}, 'Location', 'best');
-title('Particle Removal Efficiency');
+title('Particle Removal Efficiency by Configuration');
 grid on;
 
 % Size-dependent efficiency ratio
@@ -103,7 +103,7 @@ errorbar(x, size_ratio, ...
 
 set(gca, 'XTick', x, 'XTickLabel', labels);
 ylabel('PM10/PM2.5 Penetration Ratio');
-title('Size-Dependent Penetration');
+title('Size Dependent Penetration Ratio');
 yline(1, '--k', 'Equal Penetration');
 grid on;
 
@@ -135,12 +135,12 @@ if isfield(data, 'hourly_penetration_pm25')
     plot(t, data.hourly_penetration_pm10(t), 'r-', 'LineWidth', 1.5);
     xlabel('Hour');
     ylabel('Penetration Factor');
-    title(sprintf('Temporal Variation - %s', config));
+    title(sprintf('Penetration Temporal Variation for %s', strrep(config, '_', ' ')));
     legend({'PM2.5 Bounds', 'PM10 Bounds', 'PM2.5 Mean', 'PM10 Mean'}, 'Location', 'best');
     grid on;
 end
 
-sgtitle('Particle Penetration Analysis - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
+sgtitle('Particle Penetration Analysis During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
 save_figure(fig, saveDir, 'penetration_analysis.png');
 close(fig);
 end

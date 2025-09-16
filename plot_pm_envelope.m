@@ -15,6 +15,8 @@ elseif contains(lower(pmField), 'outdoor')
     envLabel = 'Outdoor';
 end
 
+readablePmLabel = expand_pm_label(pmLabel);
+
 configs = unique(summaryTable(:, {'location','filterType'}));
 
 for i = 1:height(configs)
@@ -119,7 +121,8 @@ for i = 1:height(configs)
     else
         ylabel(sprintf('%s %s Concentration (µg/m³)', envLabel, pmLabel));
     end
-    title(sprintf('%s - %s: Hourly Concentration Bounds', loc, filt));
+    title(sprintf('Hourly Concentration Bounds for %s with %s Filter', ...
+        strrep(loc, '_', ' '), strrep(filt, '_', ' ')));
     legend(legendEntries, 'Location', 'best');
     grid on;
     xlim([1 length(t)]);
@@ -225,15 +228,19 @@ for i = 1:height(configs)
 
     xlabel('Hour of Year');
     ylabel('Relative Bounds Width (%)');
-    title('Range Over Time');
+    title('Concentration Range Over Time');
     legend(modes, 'Location','eastoutside');
     grid on;
 
     % Overall title
+    cleanLoc = strrep(loc, '_', ' ');
+    cleanFilt = strrep(filt, '_', ' ');
     if isempty(envLabel)
-        sgTitle = sprintf('Comprehensive %s Analysis: %s - %s Filter', pmLabel, loc, filt);
+        sgTitle = sprintf('Comprehensive %s Analysis for %s with %s Filter', ...
+            readablePmLabel, cleanLoc, cleanFilt);
     else
-        sgTitle = sprintf('Comprehensive %s %s Analysis: %s - %s Filter', envLabel, pmLabel, loc, filt);
+        sgTitle = sprintf('Comprehensive %s %s Analysis for %s with %s Filter', ...
+            envLabel, readablePmLabel, cleanLoc, cleanFilt);
     end
     sgtitle(sgTitle, 'FontSize',14,'FontWeight','bold');
     % Save
@@ -248,5 +255,20 @@ for i = 1:height(configs)
     fname = sprintf('%s_%s_%s_enhanced.png', prefix, locStr, filtStr);
     save_figure(fig, figuresDir, fullfile(locStr, filtStr), fname);
     close(fig);
+end
+
+end
+
+function readable = expand_pm_label(label)
+%EXPAND_PM_LABEL Provide descriptive particulate matter labels for titles.
+
+switch lower(label)
+    case {'pm2.5', 'pm25', 'pm_25'}
+        readable = 'Fine Particulate Matter Under 2.5 Micrometers';
+    case {'pm10', 'pm_10'}
+        readable = 'Coarse Particulate Matter Under 10 Micrometers';
+    otherwise
+        readable = strrep(label, '_', ' ');
+end
 end
 end

@@ -59,7 +59,7 @@ values = rows.mean;
 lowerBounds = rows.lower_bound;
 upperBounds = rows.upper_bound;
 yLabelText = metricName;
-titleText = sprintf('Range: %s (tight vs. leaky)', metricName);
+titleText = sprintf('Range for %s Across Tight and Leaky Envelopes', strrep(metricName, '_', ' '));
 noteText = '';
 
 if strcmp(metricName, 'filter_replaced')
@@ -108,7 +108,7 @@ if strcmp(metricName, 'filter_replaced')
     upperBounds(missingMask) = 0;
 
     yLabelText = 'Filter Replacements per Year';
-    titleText = 'Range: Filter Replacement Frequency (tight vs. leaky)';
+    titleText = 'Filter Replacement Frequency Range Across Tight and Leaky Envelopes';
     noteText = 'Derived from simulated replacement events; 0 indicates no replacements observed.';
 end
 

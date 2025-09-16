@@ -132,7 +132,9 @@ for i = 1:nConfigs
     ylim([0 105]);
     xlabel('Hour of Simulation');
     ylabel('Filter Life (%)');
-    title(sprintf('%s - %s - %s', loc, filt, mode), 'Interpreter', 'none');
+    title(sprintf('Filter Life Envelope for %s %s %s', ...
+        strrep(loc,'_',' '), strrep(filt,'_',' '), strrep(mode,'_',' ')), ...
+        'Interpreter', 'none');
     grid on;
 
     % Add statistics box
@@ -148,7 +150,7 @@ for i = 1:nConfigs
 end
 
 % Add overall title
-sgtitle('Filter Life Degradation: Building Envelope Bounds', ...
+sgtitle('Filter Life Degradation Across Building Envelope Bounds', ...
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Add general note
