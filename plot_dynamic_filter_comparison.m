@@ -117,6 +117,10 @@ nMetrics = numel(metrics);
 
 hepa_vals = NaN(numel(locations), nMetrics);
 merv_vals = NaN(numel(locations), nMetrics);
+hepa_lower_vals = NaN(numel(locations), nMetrics);
+hepa_upper_vals = NaN(numel(locations), nMetrics);
+merv_lower_vals = NaN(numel(locations), nMetrics);
+merv_upper_vals = NaN(numel(locations), nMetrics);
 for i = 1:numel(locations)
     loc = locations{i};
     for m = 1:nMetrics
@@ -126,29 +130,64 @@ for i = 1:numel(locations)
         if isfield(filterComparison.(loc).merv, metrics{m})
             merv_vals(i,m) = filterComparison.(loc).merv.(metrics{m});
         end
+        lowField = [metrics{m} '_lower'];
+        upField  = [metrics{m} '_upper'];
+        if isfield(filterComparison.(loc).hepa, lowField)
+            hepa_lower_vals(i,m) = filterComparison.(loc).hepa.(lowField);
+            hepa_upper_vals(i,m) = filterComparison.(loc).hepa.(upField);
+        end
+        if isfield(filterComparison.(loc).merv, lowField)
+            merv_lower_vals(i,m) = filterComparison.(loc).merv.(lowField);
+            merv_upper_vals(i,m) = filterComparison.(loc).merv.(upField);
+        end
     end
 end
 
 hepa_avg = nanmean(hepa_vals,1);
 merv_avg = nanmean(merv_vals,1);
-maxVals = nanmax([hepa_avg; merv_avg], [], 1);
+hepa_lower_avg = nanmean(hepa_lower_vals,1);
+hepa_upper_avg = nanmean(hepa_upper_vals,1);
+merv_lower_avg = nanmean(merv_lower_vals,1);
+merv_upper_avg = nanmean(merv_upper_vals,1);
+
+maxVals = nanmax([hepa_upper_avg; merv_upper_avg; hepa_avg; merv_avg], [], 1);
 maxVals(maxVals == 0) = 1;
 hepa_norm = hepa_avg ./ maxVals;
 merv_norm = merv_avg ./ maxVals;
+hepa_lower_norm = hepa_lower_avg ./ maxVals;
+hepa_upper_norm = hepa_upper_avg ./ maxVals;
+merv_lower_norm = merv_lower_avg ./ maxVals;
+merv_upper_norm = merv_upper_avg ./ maxVals;
 
 theta = linspace(0, 2*pi, nMetrics + 1);
 hepa_r = [hepa_norm hepa_norm(1)];
 merv_r = [merv_norm merv_norm(1)];
+hepa_lower_poly = [hepa_lower_norm hepa_lower_norm(1)];
+hepa_upper_poly = [hepa_upper_norm hepa_upper_norm(1)];
+merv_lower_poly = [merv_lower_norm merv_lower_norm(1)];
+merv_upper_poly = [merv_upper_norm merv_upper_norm(1)];
 
-  hPolarHepa = polarplot(ax, theta, hepa_r, 'LineWidth', 2, 'Color', [0.2 0.4 0.8]);
-  hold(ax, 'on');
-  hPolarMerv = polarplot(ax, theta, merv_r, 'LineWidth', 2, 'Color', [0.8 0.3 0.3]);
-  polarscatter(ax, theta, hepa_r, 50, [0.2 0.4 0.8], 'filled', 'HandleVisibility', 'off');
-  polarscatter(ax, theta, merv_r, 50, [0.8 0.3 0.3], 'filled', 'HandleVisibility', 'off');
+hold(ax, 'on');
+if all(isfinite(hepa_lower_poly)) && all(isfinite(hepa_upper_poly))
+    patch(ax, [theta fliplr(theta)], [hepa_lower_poly fliplr(hepa_upper_poly)], ...
+        [0.2 0.4 0.8], 'FaceAlpha', 0.1, 'EdgeColor', 'none', 'HandleVisibility', 'off');
+end
+if all(isfinite(merv_lower_poly)) && all(isfinite(merv_upper_poly))
+    patch(ax, [theta fliplr(theta)], [merv_lower_poly fliplr(merv_upper_poly)], ...
+        [0.8 0.3 0.3], 'FaceAlpha', 0.1, 'EdgeColor', 'none', 'HandleVisibility', 'off');
+end
+hPolarHepa = polarplot(ax, theta, hepa_r, 'LineWidth', 2, 'Color', [0.2 0.4 0.8]);
+hPolarMerv = polarplot(ax, theta, merv_r, 'LineWidth', 2, 'Color', [0.8 0.3 0.3]);
+polarscatter(ax, theta, hepa_r, 50, [0.2 0.4 0.8], 'filled', 'HandleVisibility', 'off');
+polarscatter(ax, theta, merv_r, 50, [0.8 0.3 0.3], 'filled', 'HandleVisibility', 'off');
 
 ax.ThetaTick = rad2deg(theta(1:end-1));
 ax.ThetaTickLabel = metric_labels;
 ax.RLim = [0 1];
-  legend(ax, [hPolarHepa hPolarMerv], {'HEPA','MERV'}, 'Location', 'southoutside');
+hRangeHepa = patch(ax, NaN, NaN, [0.2 0.4 0.8], 'FaceAlpha', 0.1, 'EdgeColor', 'none');
+hRangeMerv = patch(ax, NaN, NaN, [0.8 0.3 0.3], 'FaceAlpha', 0.1, 'EdgeColor', 'none');
+legend(ax, [hPolarHepa hPolarMerv hRangeHepa hRangeMerv], ...
+    {'HEPA mean', 'MERV mean', 'HEPA tight–leaky', 'MERV tight–leaky'}, ...
+    'Location', 'southoutside');
 title(ax, 'Multi-Criteria Filter Comparison');
 end

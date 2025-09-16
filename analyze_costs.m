@@ -185,12 +185,17 @@ for i = 1:height(uniqueConfigs)
 end
 
 fprintf('\n=== AQI Hours Avoided Summary (Improved Metric) ===\n');
-fprintf('Mean AQI hours avoided: %.1f\n', mean(costTable.AQI_hours_avoided, 'omitnan'));
+aqiMean = mean(costTable.AQI_hours_avoided, 'omitnan');
+aqiLower = min(costTable.AQI_hours_avoided_lower, [], 'omitnan');
+aqiUpper = max(costTable.AQI_hours_avoided_upper, [], 'omitnan');
+fprintf('Mean AQI hours avoided: %s\n', ...
+    format_bounds(aqiMean, aqiLower, aqiUpper, ...
+    'MeanFormat', '%.1f h', 'BoundFormat', '%.1f h', 'Style', 'both'));
 fprintf('Scenarios with zero lower bound: %d of %d\n', ...
     sum(costTable.AQI_hours_avoided_lower == 0), height(costTable));
 nz = costTable.AQI_hours_avoided_lower(costTable.AQI_hours_avoided_lower > 0);
 if ~isempty(nz)
-    fprintf('Minimum non-zero lower bound: %.1f\n', min(nz));
+    fprintf('Minimum non-zero lower bound: %.1f h (tight case)\n', min(nz));
 else
     fprintf('Minimum non-zero lower bound: N/A\n');
 end
