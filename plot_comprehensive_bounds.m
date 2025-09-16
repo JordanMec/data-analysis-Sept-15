@@ -8,7 +8,8 @@ if isempty(costTable)
     return;
 end
 
-figure('Position',[100 100 1200 800],'Visible','off');
+fig = figure('Visible','off');
+set_figure_fullscreen(fig);
 layout = tiledlayout(2,2,'TileSpacing','compact','Padding','compact');
 
 % Unique configurations (without leakage dimension)
@@ -93,6 +94,6 @@ box on; grid on;
 
 sgtitle('Comprehensive Scenario Bounds Analysis','FontSize',14,'FontWeight','bold');
 
-save_figure(gcf, figuresDir, 'comprehensive_bounds_analysis.png');
-close(gcf);
+save_figure(fig, figuresDir, 'comprehensive_bounds_analysis.png');
+close(fig);
 end

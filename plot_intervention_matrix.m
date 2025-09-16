@@ -69,7 +69,8 @@ for l = 1:nLoc
 end
 
 % Create figure
-fig = figure('Position', [100 100 1000 600], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 ax1 = axes('Parent', fig);
 
 % Main heatmap

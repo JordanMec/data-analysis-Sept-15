@@ -22,7 +22,8 @@ if isempty(summaryTable)
     return;
 end
 
-figure('Visible','off');
+fig = figure('Visible','off');
+set_figure_fullscreen(fig);
 tiledlayout('flow');
 
 uniqueConfigs = unique(summaryTable(:, {'location', 'filterType'}));
@@ -81,6 +82,6 @@ else
     sgTxt = sprintf('Cumulative %s %s Exposure Over Time', envLabel, pmLabel);
 end
 sgtitle(sgTxt);
-save_figure(gcf, figuresDir, fileName);
-close(gcf);
+save_figure(fig, figuresDir, fileName);
+close(fig);
 end

@@ -29,6 +29,7 @@ grpLabels = strcat(strrep(groups(:,1),'_',' '), " (", groups(:,2), ")");
 for m = 1:numel(metrics)
     metric = metrics{m};
     fig = figure('Visible','off');
+    set_figure_fullscreen(fig);
     tiledlayout(1,2);
     % Boxplot
     nexttile;

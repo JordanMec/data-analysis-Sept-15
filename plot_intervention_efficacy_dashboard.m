@@ -14,7 +14,8 @@ if isempty(summaryTable) || isempty(costTable) || isempty(healthExposureTable)
 end
 
 %% Setup
-figure('Position',[50 50 1800 1000],'Visible','off', 'Color','white');
+fig = figure('Visible','off', 'Color','white');
+set_figure_fullscreen(fig);
 
 % Define consistent color scheme
 colorBaseline = [0.5 0.5 0.5];
@@ -54,9 +55,9 @@ plotEfficacyScorecard(costTable, healthExposureTable);
 if ~exist(figuresDir, 'dir')
     mkdir(figuresDir);
 end
-saveas(gcf, fullfile(figuresDir, 'intervention_efficacy_dashboard.png'));
-print(gcf, fullfile(figuresDir, 'intervention_efficacy_dashboard_hires.png'), '-dpng', '-r300');
-close(gcf);
+save_figure(fig, figuresDir, 'intervention_efficacy_dashboard.png');
+save_figure(fig, figuresDir, 'intervention_efficacy_dashboard_hires.png');
+close(fig);
 
 end
 

@@ -5,7 +5,8 @@ if isempty(summaryTable) || isempty(costTable)
     warning('plot_envelope_sensitivity: no data provided, skipping plot.');
     return;
 end
-figure('Position',[100 100 1200 800],'Visible','off');
+fig = figure('Visible','off');
+set_figure_fullscreen(fig);
 
 %% Calculate sensitivity indices with enhanced zero handling
 scenarios = unique(summaryTable(~strcmp(summaryTable.mode,'baseline'), ...
@@ -303,6 +304,6 @@ sgtitle('Building Envelope Sensitivity Analysis: Impact of Leakage on System Per
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save
-save_figure(gcf, figuresDir, 'envelope_sensitivity_analysis.png');
-close(gcf);
+save_figure(fig, figuresDir, 'envelope_sensitivity_analysis.png');
+close(fig);
 end

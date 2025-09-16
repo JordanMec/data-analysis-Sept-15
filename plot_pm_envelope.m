@@ -51,7 +51,8 @@ for i = 1:height(configs)
     if isempty(rows), continue; end
 
     % Create sophisticated multi-panel figure
-    figure('Position',[100 100 1400 900],'Visible','off');
+    fig = figure('Visible','off');
+    set_figure_fullscreen(fig);
     tiledlayout(2,2,'TileSpacing','compact','Padding','compact');
 
     modes = unique(rows.mode);
@@ -245,7 +246,7 @@ for i = 1:height(configs)
     filtStr = matlab.lang.makeValidName(filtStr);
 
     fname = sprintf('%s_%s_%s_enhanced.png', prefix, locStr, filtStr);
-    save_figure(gcf, figuresDir, fullfile(locStr, filtStr), fname);
-    close(gcf);
+    save_figure(fig, figuresDir, fullfile(locStr, filtStr), fname);
+    close(fig);
 end
 end

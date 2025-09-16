@@ -9,7 +9,8 @@ if isempty(fieldnames(penetrationAnalysis))
     return;
 end
 
-figure('Position', [100 100 1400 900], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 configs = fieldnames(penetrationAnalysis);
 nConfigs = length(configs);
@@ -124,6 +125,6 @@ if isfield(data, 'hourly_penetration_pm25')
 end
 
 sgtitle('Particle Penetration Analysis - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
-save_figure(gcf, saveDir, 'penetration_analysis.png');
-close(gcf);
+save_figure(fig, saveDir, 'penetration_analysis.png');
+close(fig);
 end

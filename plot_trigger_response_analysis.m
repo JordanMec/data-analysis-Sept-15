@@ -15,7 +15,8 @@ if isempty(fieldnames(triggerAnalysis))
     return;
 end
 
-figure('Position', [100 100 1600 1000], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 configs = fieldnames(triggerAnalysis);
 nConfigs = length(configs);
@@ -146,13 +147,14 @@ else
 end
 
 sgtitle('Trigger Response Analysis - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
-save_figure(gcf, saveDir, 'trigger_response_analysis.png');
-close(gcf);
+save_figure(fig, saveDir, 'trigger_response_analysis.png');
+close(fig);
 end
 
 %% Visualization Function 3: Penetration Analysis
 function plot_penetration_analysis(penetrationAnalysis, saveDir)
-figure('Position', [100 100 1400 900], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 configs = fieldnames(penetrationAnalysis);
 nConfigs = length(configs);
@@ -263,13 +265,14 @@ if isfield(data, 'hourly_penetration_pm25')
 end
 
 sgtitle('Particle Penetration Analysis - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
-save_figure(gcf, saveDir, 'penetration_analysis.png');
-close(gcf);
+save_figure(fig, saveDir, 'penetration_analysis.png');
+close(fig);
 end
 
 %% Visualization Function 4: Event Response Analysis
 function plot_event_response_analysis(eventAnalysis, saveDir)
-figure('Position', [100 100 1600 1000], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 configs = fieldnames(eventAnalysis);
 colors = get_color_palette(length(configs));
@@ -388,13 +391,14 @@ subplot(2, 3, [4 6]);
 plot_example_event_responses(eventAnalysis);
 
 sgtitle('Pollution Event Response Analysis - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
-save_figure(gcf, saveDir, 'event_response_analysis.png');
-close(gcf);
+save_figure(fig, saveDir, 'event_response_analysis.png');
+close(fig);
 end
 
 %% Visualization Function 5: Temporal Patterns
 function plot_temporal_patterns(temporalAnalysis, saveDir)
-figure('Position', [100 100 1400 1000], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 configs = fieldnames(temporalAnalysis);
 
@@ -463,13 +467,14 @@ legend(strrep(configs, '_', ' '), 'Location', 'best');
 grid on;
 
 sgtitle('Temporal Patterns in Active Mode Performance', 'FontSize', 14, 'FontWeight', 'bold');
-save_figure(gcf, saveDir, 'temporal_patterns.png');
-close(gcf);
+save_figure(fig, saveDir, 'temporal_patterns.png');
+close(fig);
 end
 
 %% Visualization Function 6: Cross-Correlation Analysis
 function plot_correlation_analysis(correlationAnalysis, saveDir)
-figure('Position', [100 100 1600 900], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 configs = fieldnames(correlationAnalysis);
 
@@ -508,13 +513,14 @@ for i = 1:nConfigs
 end
 
 sgtitle('Cross-Correlation Analysis: Indoor vs Outdoor', 'FontSize', 14, 'FontWeight', 'bold');
-save_figure(gcf, saveDir, 'correlation_analysis.png');
-close(gcf);
+save_figure(fig, saveDir, 'correlation_analysis.png');
+close(fig);
 end
 
 %% Visualization Function 7: Dynamic Filter Comparison
 function plot_dynamic_filter_comparison(filterComparison, saveDir)
-figure('Position', [100 100 1600 1000], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 locations = fieldnames(filterComparison);
 
@@ -568,13 +574,14 @@ subplot(2, 2, [3 4]);
 plot_filter_radar_comparison(filterComparison);
 
 sgtitle('Dynamic Filter Performance Comparison - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
-save_figure(gcf, saveDir, 'filter_comparison_dynamic.png');
-close(gcf);
+save_figure(fig, saveDir, 'filter_comparison_dynamic.png');
+close(fig);
 end
 
 %% Visualization Function 8: Uncertainty Analysis
 function plot_uncertainty_analysis(uncertaintyAnalysis, saveDir)
-figure('Position', [100 100 1400 900], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 configs = fieldnames(uncertaintyAnalysis);
 
@@ -655,8 +662,8 @@ subplot(2, 2, 4);
 plot_sensitivity_tornado(uncertaintyAnalysis);
 
 sgtitle('Uncertainty Quantification - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
-save_figure(gcf, saveDir, 'uncertainty_analysis.png');
-close(gcf);
+save_figure(fig, saveDir, 'uncertainty_analysis.png');
+close(fig);
 end
 
 %% Helper visualization functions
