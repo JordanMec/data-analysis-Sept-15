@@ -52,23 +52,15 @@ for i = 1:length(prefixes)
         dataStruct = loaded;
     end
 
-    % Extract metadata from filename prefix (ignore UUID/run suffixes)
-    name = erase(filename, '.mat');
-    parts = split(name, '_');
-
-    % Remove trailing numeric run identifier
-    if ~isempty(parts) && all(isstrprop(parts{end}, 'digit'))
-        parts(end) = [];
-    end
-    % Remove trailing UUID segment (contains hyphen)
-    if ~isempty(parts) && contains(parts{end}, '-')
-        parts(end) = [];
-    end
+    % Extract metadata from the known prefix that matched this file. The
+    % prefix encodes the scenario without any UUID/run suffix, so it is a
+    % reliable source even when filenames contain new alphanumeric tokens.
+    parts = cellstr(split(prefix, '_'));
 
     location = parts{1};       % e.g., 'adams' or 'baker'
     leakage  = parts{2};       % 'tight' or 'leaky'
 
-    if numel(parts) == 3
+    if numel(parts) == 3 && strcmp(parts{3}, 'baseline')
         % <location>_<leakage>_baseline
         filterType = 'baseline';
         mode = 'baseline';
