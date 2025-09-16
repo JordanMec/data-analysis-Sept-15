@@ -64,23 +64,33 @@ for i = 1:rows
         leaky_val(idx) = valL;
 
         % Compute bounds (min/max regardless of which is tight/leaky)
-        lower_bound(idx) = min(valT, valL);
-        upper_bound(idx) = max(valT, valL);
-        mean_val(idx) = (valT + valL) / 2;
-
-        % Range metrics
-        range_width(idx) = upper_bound(idx) - lower_bound(idx);
-        if mean_val(idx) ~= 0
-            range_percent(idx) = 100 * range_width(idx) / abs(mean_val(idx));
+        vals = [valT, valL];
+        validMask = ~isnan(vals);
+        if any(validMask)
+            validVals = vals(validMask);
+            lower_bound(idx) = min(validVals);
+            upper_bound(idx) = max(validVals);
+            mean_val(idx) = mean(validVals);
         else
-            range_percent(idx) = 0;
+            lower_bound(idx) = NaN;
+            upper_bound(idx) = NaN;
+            mean_val(idx) = NaN;
         end
 
-        % Range factor (deterministic envelope spread relative to mean)
-        if mean_val(idx) ~= 0
-            range_factor(idx) = upper_bound(idx) / mean_val(idx);
+        % Range metrics
+        if any(validMask)
+            range_width(idx) = upper_bound(idx) - lower_bound(idx);
+            if mean_val(idx) ~= 0 && isfinite(mean_val(idx))
+                range_percent(idx) = 100 * range_width(idx) / abs(mean_val(idx));
+                range_factor(idx) = upper_bound(idx) / mean_val(idx);
+            else
+                range_percent(idx) = 0;
+                range_factor(idx) = 1;
+            end
         else
-            range_factor(idx) = 1;
+            range_width(idx) = NaN;
+            range_percent(idx) = NaN;
+            range_factor(idx) = NaN;
         end
     end
 end
