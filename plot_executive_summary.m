@@ -59,8 +59,11 @@ else
     categories = {'PM2.5 Reduction (%)', 'PM10 Reduction (%)', ...
         'AQI Hours Avoided', 'Cost ($)'};
     means = [pm25Mean, pm10Mean, aqiMean, costMean];
-    errLow = means - [pm25Low, pm10Low, aqiLow, costLow];
-    errHigh = [pm25High, pm10High, aqiHigh, costHigh] - means;
+    lowerVals = [pm25Low, pm10Low, aqiLow, costLow];
+    upperVals = [pm25High, pm10High, aqiHigh, costHigh];
+    errLow = means - lowerVals;
+    errHigh = upperVals - means;
+    valueFormats = {'%.1f%%','%.1f%%','%.0f h','$%.0f'};
 
     b = bar(categorical(categories), means, 'FaceColor', 'flat');
     b.CData = lines(numel(means));
@@ -76,8 +79,15 @@ else
 
     % Numeric value labels on bars at the same centers
     for i = 1:numel(means)
-        text(xCenters(i), means(i), sprintf('%.1f', means(i)), ...
-            'HorizontalAlignment','center', 'VerticalAlignment','bottom');
+        if isfinite(lowerVals(i)) && isfinite(upperVals(i))
+            label = format_bounds(means(i), lowerVals(i), upperVals(i), ...
+                'MeanFormat', valueFormats{i}, 'BoundFormat', valueFormats{i}, ...
+                'Style', 'both', 'IncludeNewline', true);
+            offset = 0.05 * max(abs(upperVals(i)), 1);
+            text(xCenters(i), upperVals(i) + offset, label, ...
+                'HorizontalAlignment','center', 'VerticalAlignment','bottom', ...
+                'FontSize', 8);
+        end
     end
 
     ylabel('Value');
@@ -213,6 +223,14 @@ configs = unique(costTable(:, {'location', 'filterType', 'mode'}));
 nConfigs = height(configs);
 scores = zeros(nConfigs, 1);
 summaryData = cell(nConfigs, 5);
+maxCostTotal = max(costTable.total_cost);
+maxReduction = max(costTable.percent_PM25_reduction);
+if ~isfinite(maxCostTotal) || maxCostTotal == 0
+    maxCostTotal = 1;
+end
+if ~isfinite(maxReduction) || maxReduction == 0
+    maxReduction = 1;
+end
 
 for i = 1:nConfigs
     row = costTable(strcmp(costTable.location, configs.location{i}) & ...
@@ -235,16 +253,37 @@ for i = 1:nConfigs
 
         summaryData{i,1} = sprintf('%s-%s-%s', configs.location{i}(1:3), ...
             configs.filterType{i}(1:4), configs.mode{i}(1:min(6,end)));
-        summaryData{i,2} = sprintf('%.1f%%', row.percent_PM25_reduction);
-        summaryData{i,3} = sprintf('$%.0f', row.total_cost);
 
         if hasBounds
-            summaryData{i,4} = sprintf('±%.1f%%', uncRange/2);
-        else
-            summaryData{i,4} = '±?';
-        end
+            summaryData{i,2} = format_bounds(row.percent_PM25_reduction, ...
+                row.percent_PM25_reduction_lower, row.percent_PM25_reduction_upper, ...
+                'MeanFormat', '%.1f%%', 'BoundFormat', '%.1f%%', ...
+                'Style', 'both', 'IncludeNewline', true);
+            summaryData{i,3} = format_bounds(row.total_cost, ...
+                row.total_cost_lower, row.total_cost_upper, ...
+                'MeanFormat', '$%.0f', 'BoundFormat', '$%.0f', ...
+                'Style', 'both', 'IncludeNewline', true);
+            summaryData{i,4} = format_bounds(row.AQI_hours_avoided, ...
+                row.AQI_hours_avoided_lower, row.AQI_hours_avoided_upper, ...
+                'MeanFormat', '%.0f h', 'BoundFormat', '%.0f h', ...
+                'Style', 'both', 'IncludeNewline', true);
 
-        summaryData{i,5} = sprintf('%.2f', scores(i));
+            pm25LowerScore = row.percent_PM25_reduction_lower / 100;
+            pm25UpperScore = row.percent_PM25_reduction_upper / 100;
+            costLowerScore = 1 - (row.total_cost_upper / maxCostTotal);
+            costUpperScore = 1 - (row.total_cost_lower / maxCostTotal);
+            certScore = 1 - (uncRange / maxReduction);
+            scoreLower = 0.5*pm25LowerScore + 0.3*costLowerScore + 0.2*certScore;
+            scoreUpper = 0.5*pm25UpperScore + 0.3*costUpperScore + 0.2*certScore;
+            summaryData{i,5} = format_bounds(scores(i), scoreLower, scoreUpper, ...
+                'MeanFormat', '%.2f', 'BoundFormat', '%.2f', ...
+                'Style', 'both', 'IncludeNewline', true);
+        else
+            summaryData{i,2} = sprintf('%.1f%%', row.percent_PM25_reduction);
+            summaryData{i,3} = sprintf('$%.0f', row.total_cost);
+            summaryData{i,4} = sprintf('%.0f h', row.AQI_hours_avoided);
+            summaryData{i,5} = sprintf('%.2f', scores(i));
+        end
     end
 end
 
@@ -253,7 +292,7 @@ end
 topN = min(5, nConfigs);
 
 % Create table
-tableData = [{'Configuration', 'PM2.5↓', 'Cost/yr', 'Uncert.', 'Score'}; ...
+tableData = [{'Configuration', 'PM2.5↓', 'Cost/yr', 'AQI Hours', 'Score'}; ...
     summaryData(sortIdx(1:topN), :)];
 
 % Display table

@@ -68,10 +68,14 @@ for f = 1:nFilters
     errorbar(x + offset, meanPenalty(:, f), errorLow, errorHigh, ...
              'k', 'LineStyle', 'none', 'LineWidth', 1.5, 'CapSize', 8);
     for m = 1:nModes
-        if ~isnan(meanPenalty(m, f))
-            text(m + offset, upperBounds(m, f) + 0.5, ...
-                 sprintf('%.1f%%', meanPenalty(m, f)), ...
-                 'HorizontalAlignment', 'center', 'FontSize', 9);
+        if ~isnan(meanPenalty(m, f)) && ...
+                isfinite(lowerBounds(m,f)) && isfinite(upperBounds(m,f))
+            label = format_bounds(meanPenalty(m, f), ...
+                lowerBounds(m, f), upperBounds(m, f), ...
+                'MeanFormat', '%.1f%%', 'BoundFormat', '%.1f%%', ...
+                'Style', 'both', 'IncludeNewline', true);
+            text(m + offset, upperBounds(m, f) + 0.5, label, ...
+                 'HorizontalAlignment', 'center', 'FontSize', 8);
         end
     end
 end
@@ -104,8 +108,10 @@ text(0.1, 0.1, 'Bounds show tight vs leaky homes', 'FontSize', 9);
 subplot(2, 3, 4);
 hold on;
 
-locationMeans = zeros(length(locations), length(filters));
-locationRanges = zeros(length(locations), length(filters));
+locationMeans = nan(length(locations), length(filters));
+locationRanges = nan(length(locations), length(filters));
+locationLower = nan(length(locations), length(filters));
+locationUpper = nan(length(locations), length(filters));
 
 for l = 1:length(locations)
     for f = 1:length(filters)
@@ -117,10 +123,13 @@ for l = 1:length(locations)
             if hasBounds
                 lower = mean(rows.airflow_penalty_lower, 'omitnan');
                 upper = mean(rows.airflow_penalty_upper, 'omitnan');
-                locationRanges(l, f) = upper - lower;
             else
-                locationRanges(l, f) = locationMeans(l, f) * 0.2;
+                lower = locationMeans(l, f) * 0.9;
+                upper = locationMeans(l, f) * 1.1;
             end
+            locationLower(l, f) = lower;
+            locationUpper(l, f) = upper;
+            locationRanges(l, f) = upper - lower;
         end
     end
 end
@@ -132,6 +141,22 @@ locationRanges = real(locationRanges);
 b = bar(locationMeans, 'grouped');
 for i = 1:length(b)
     b(i).FaceColor = colors(i,:);
+    xCenters = b(i).XEndPoints;
+    errLow = locationMeans(:, i) - locationLower(:, i);
+    errHigh = locationUpper(:, i) - locationMeans(:, i);
+    errorbar(xCenters, locationMeans(:, i), errLow, errHigh, ...
+        'k', 'LineStyle', 'none', 'LineWidth', 1.2, 'CapSize', 6);
+    for l = 1:length(locations)
+        if ~isnan(locationMeans(l, i)) && isfinite(locationLower(l,i)) && ...
+                isfinite(locationUpper(l,i))
+            label = format_bounds(locationMeans(l, i), locationLower(l, i), ...
+                locationUpper(l, i), 'MeanFormat', '%.1f%%', ...
+                'BoundFormat', '%.1f%%', 'Style', 'both', ...
+                'IncludeNewline', true);
+            text(xCenters(l), locationUpper(l, i) + 0.4, label, ...
+                'HorizontalAlignment', 'center', 'FontSize', 8);
+        end
+    end
 end
 set(gca, 'XTick', 1:length(locations), 'XTickLabel', locations);
 ylabel('Mean Airflow Penalty (%)');

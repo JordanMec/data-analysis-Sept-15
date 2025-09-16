@@ -114,13 +114,29 @@ config = configs{1};
 data = penetrationAnalysis.(config);
 if isfield(data, 'hourly_penetration_pm25')
     t = 1:min(168, length(data.hourly_penetration_pm25)); % First week
-    plot(t, data.hourly_penetration_pm25(t), 'b-', 'LineWidth', 1.5);
     hold on;
+    if isfield(data, 'hourly_penetration_pm25_bounds')
+        bounds25 = data.hourly_penetration_pm25_bounds(:, 1:length(data.hourly_penetration_pm25));
+        tight25 = bounds25(1, t);
+        leaky25 = bounds25(2, t);
+        valid25 = isfinite(tight25) & isfinite(leaky25);
+        fill([t(valid25) fliplr(t(valid25))], [tight25(valid25) fliplr(leaky25(valid25))], ...
+            [0.2 0.4 0.8], 'FaceAlpha', 0.2, 'EdgeColor', 'none');
+    end
+    if isfield(data, 'hourly_penetration_pm10_bounds')
+        bounds10 = data.hourly_penetration_pm10_bounds(:, 1:length(data.hourly_penetration_pm10));
+        tight10 = bounds10(1, t);
+        leaky10 = bounds10(2, t);
+        valid10 = isfinite(tight10) & isfinite(leaky10);
+        fill([t(valid10) fliplr(t(valid10))], [tight10(valid10) fliplr(leaky10(valid10))], ...
+            [0.8 0.3 0.3], 'FaceAlpha', 0.2, 'EdgeColor', 'none');
+    end
+    plot(t, data.hourly_penetration_pm25(t), 'b-', 'LineWidth', 1.5);
     plot(t, data.hourly_penetration_pm10(t), 'r-', 'LineWidth', 1.5);
     xlabel('Hour');
     ylabel('Penetration Factor');
     title(sprintf('Temporal Variation - %s', config));
-    legend({'PM2.5', 'PM10'}, 'Location', 'best');
+    legend({'PM2.5 Bounds', 'PM10 Bounds', 'PM2.5 Mean', 'PM10 Mean'}, 'Location', 'best');
     grid on;
 end
 

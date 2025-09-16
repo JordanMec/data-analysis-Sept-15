@@ -47,6 +47,21 @@ active_periods = io_ratio < active_threshold;
 metrics.active_hours = sum(active_periods);
 metrics.active_percentage = 100 * sum(active_periods) / numel(active_periods);
 
+io_ratio_tight = data.indoor_PM25_tight ./ data.outdoor_PM25;
+io_ratio_leaky = data.indoor_PM25_leaky ./ data.outdoor_PM25;
+io_ratio_tight(~isfinite(io_ratio_tight)) = NaN;
+io_ratio_leaky(~isfinite(io_ratio_leaky)) = NaN;
+active_threshold_tight = nanmedian(io_ratio_tight) * params.active_mode.threshold_factor;
+active_threshold_leaky = nanmedian(io_ratio_leaky) * params.active_mode.threshold_factor;
+active_periods_tight = io_ratio_tight < active_threshold_tight;
+active_periods_leaky = io_ratio_leaky < active_threshold_leaky;
+hours_tight = sum(active_periods_tight);
+hours_leaky = sum(active_periods_leaky);
+percent_tight = 100 * hours_tight / numel(active_periods_tight);
+percent_leaky = 100 * hours_leaky / numel(active_periods_leaky);
+metrics.active_hours_bounds = [min(hours_tight, hours_leaky), max(hours_tight, hours_leaky)];
+metrics.active_percentage_bounds = [min(percent_tight, percent_leaky), max(percent_tight, percent_leaky)];
+
 % Efficiency during active periods
 if any(active_periods)
     metrics.active_io_ratio = nanmean(io_ratio(active_periods));

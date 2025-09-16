@@ -62,14 +62,24 @@ for i = 1:length(configs)
     end
     
     % Calculate hourly penetration factors for time series
-    hourly_pen_pm25 = data.indoor_PM25_mean ./ data.outdoor_PM25;
-    hourly_pen_pm10 = data.indoor_PM10_mean ./ data.outdoor_PM10;
-    
-    hourly_pen_pm25(~isfinite(hourly_pen_pm25)) = NaN;
-    hourly_pen_pm10(~isfinite(hourly_pen_pm10)) = NaN;
-    
-    penetrationAnalysis.(config).hourly_penetration_pm25 = hourly_pen_pm25;
-    penetrationAnalysis.(config).hourly_penetration_pm10 = hourly_pen_pm10;
+    hourly_pen_pm25_mean = data.indoor_PM25_mean ./ data.outdoor_PM25;
+    hourly_pen_pm10_mean = data.indoor_PM10_mean ./ data.outdoor_PM10;
+    hourly_pen_pm25_tight = data.indoor_PM25_tight ./ data.outdoor_PM25;
+    hourly_pen_pm25_leaky = data.indoor_PM25_leaky ./ data.outdoor_PM25;
+    hourly_pen_pm10_tight = data.indoor_PM10_tight ./ data.outdoor_PM10;
+    hourly_pen_pm10_leaky = data.indoor_PM10_leaky ./ data.outdoor_PM10;
+
+    hourly_pen_pm25_mean(~isfinite(hourly_pen_pm25_mean)) = NaN;
+    hourly_pen_pm10_mean(~isfinite(hourly_pen_pm10_mean)) = NaN;
+    hourly_pen_pm25_tight(~isfinite(hourly_pen_pm25_tight)) = NaN;
+    hourly_pen_pm25_leaky(~isfinite(hourly_pen_pm25_leaky)) = NaN;
+    hourly_pen_pm10_tight(~isfinite(hourly_pen_pm10_tight)) = NaN;
+    hourly_pen_pm10_leaky(~isfinite(hourly_pen_pm10_leaky)) = NaN;
+
+    penetrationAnalysis.(config).hourly_penetration_pm25 = hourly_pen_pm25_mean;
+    penetrationAnalysis.(config).hourly_penetration_pm10 = hourly_pen_pm10_mean;
+    penetrationAnalysis.(config).hourly_penetration_pm25_bounds = [hourly_pen_pm25_tight(:)'; hourly_pen_pm25_leaky(:)'];
+    penetrationAnalysis.(config).hourly_penetration_pm10_bounds = [hourly_pen_pm10_tight(:)'; hourly_pen_pm10_leaky(:)'];
     
     % Size-dependent analysis
     penetrationAnalysis.(config).size_selectivity = ...
