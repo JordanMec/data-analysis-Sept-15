@@ -73,7 +73,8 @@ for m = 1:nModes
 end
 
 % Create figure
-fig = figure('Position', [100 100 800 600], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 % Plot grouped bars with error bars
 x = 1:nModes;

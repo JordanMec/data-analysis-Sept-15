@@ -45,7 +45,9 @@ if ~exist(figuresDir, 'dir')
     mkdir(figuresDir);
 end
 
-figure('Visible','off'); hold on;
+fig = figure('Visible','off');
+set_figure_fullscreen(fig);
+hold on;
 
 % Plot bars representing mean values
 b = bar(1:height(rows), rows.mean, 'FaceColor','flat');
@@ -63,6 +65,6 @@ title(sprintf('Range: %s (tight vs. leaky)', metricName), 'Interpreter','none');
 grid on;
 
 fname = sprintf('%s_range.png', metricName);
-save_figure(gcf, figuresDir, fname);
-close(gcf);
+save_figure(fig, figuresDir, fname);
+close(fig);
 end

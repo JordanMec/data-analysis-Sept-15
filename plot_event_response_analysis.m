@@ -8,7 +8,8 @@ if isempty(fieldnames(eventAnalysis))
     return;
 end
 
-figure('Position', [100 100 1600 1000], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 configs = fieldnames(eventAnalysis);
 colors = get_color_palette(length(configs));
@@ -153,8 +154,8 @@ subplot(2, 3, [4 6]);
 plot_example_event_responses(eventAnalysis);
 
 sgtitle('Pollution Event Response Analysis - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
-save_figure(gcf, saveDir, 'event_response_analysis.png');
-close(gcf);
+save_figure(fig, saveDir, 'event_response_analysis.png');
+close(fig);
 end
 
 function plot_example_event_responses(eventAnalysis)

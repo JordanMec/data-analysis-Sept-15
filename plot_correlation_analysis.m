@@ -8,7 +8,8 @@ if isempty(fieldnames(correlationAnalysis))
     return;
 end
 
-figure('Position', [100 100 1600 900], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 configs = fieldnames(correlationAnalysis);
 
@@ -56,6 +57,6 @@ for i = 1:nConfigs
 end
 
 sgtitle('Cross-Correlation Analysis: Indoor vs Outdoor', 'FontSize', 14, 'FontWeight', 'bold');
-save_figure(gcf, saveDir, 'correlation_analysis.png');
-close(gcf);
+save_figure(fig, saveDir, 'correlation_analysis.png');
+close(fig);
 end

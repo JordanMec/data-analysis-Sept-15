@@ -11,7 +11,8 @@ if isempty(efficacyScoreTable)
 end
 
 % Create comprehensive efficacy visualization
-figure('Position',[100 100 1400 900],'Visible','off');
+fig = figure('Visible','off');
+set_figure_fullscreen(fig);
 tiledlayout(2,3,'TileSpacing','compact','Padding','compact');
 
 % Sort by rank for consistent ordering
@@ -159,8 +160,8 @@ sgtitle('Composite Efficacy Score Analysis: Multi-Criteria Performance Evaluatio
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save
-save_figure(gcf, figuresDir, 'efficacy_scores_comprehensive.png');
-close(gcf);
+save_figure(fig, figuresDir, 'efficacy_scores_comprehensive.png');
+close(fig);
 
 %% Create summary ranking table visualization
 create_efficacy_ranking_table(efficacyScoreTable, figuresDir);
@@ -170,7 +171,8 @@ end
 function create_efficacy_ranking_table(efficacyScoreTable, figuresDir)
 % Create a clean table visualization of the ranking without UI components
 
-fig = figure('Position',[100 100 1000 600],'Visible','off');
+fig = figure('Visible','off');
+set_figure_fullscreen(fig);
 ax = axes('Parent', fig, 'Position',[0.05 0.18 0.9 0.74]);
 axis(ax, 'off');
 

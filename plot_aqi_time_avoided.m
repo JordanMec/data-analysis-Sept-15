@@ -23,7 +23,8 @@ aqiNames = ["Good","Moderate","Unhealthy for Sensitive Groups", ...
 configs = unique(avoidedTable(:,["location","filterType"]),"rows");
 scenarios = ["baseline","active","always_on"];
 
-hFig = figure('Visible','off','Position',[0 0 1400 900]);
+hFig = figure('Visible','off');
+set_figure_fullscreen(hFig);
 tiledlayout('flow','TileSpacing','compact','Padding','compact');
 
 aqiColors = [
@@ -116,6 +117,6 @@ end
 sgtitle('Avoided AQI Exposure Time Relative to Outdoors', ...
     'FontSize',14,'FontWeight','bold');
 
-print(hFig, fullfile(figuresDir,'aqi_time_avoided.png'), '-dpng','-r300');
+save_figure(hFig, figuresDir, 'aqi_time_avoided.png');
 close(hFig);
 end

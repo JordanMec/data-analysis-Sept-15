@@ -35,7 +35,8 @@ nConfigs = height(configs);
 nCols = min(3, nConfigs);
 nRows = ceil(nConfigs / nCols);
 
-fig = figure('Position', [50 50 1400 900], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 tiledlayout(nRows, nCols, 'TileSpacing', 'compact', 'Padding', 'compact');
 
 % Process each configuration

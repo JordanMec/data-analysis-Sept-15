@@ -11,7 +11,8 @@ if isempty(summaryTable) || isempty(costTable)
     warning('plot_deterministic_bounds: no data provided, skipping plot.');
     return;
 end
-figure('Position',[100 100 1400 900],'Visible','off');
+fig = figure('Visible','off');
+set_figure_fullscreen(fig);
 t = tiledlayout(2,3,'TileSpacing','compact','Padding','compact');
 
 % Get unique scenarios
@@ -236,6 +237,6 @@ sgtitle('Deterministic Physical Bounds Analysis: Building Envelope Performance',
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save
-save_figure(gcf, figuresDir, 'deterministic_bounds_analysis.png');
-close(gcf);
+save_figure(fig, figuresDir, 'deterministic_bounds_analysis.png');
+close(fig);
 end

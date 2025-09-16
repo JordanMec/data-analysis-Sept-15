@@ -17,7 +17,8 @@ hasBounds = ismember('percent_PM25_reduction_lower', costTable.Properties.Variab
 configs = unique(costTable(:, {'location', 'filterType', 'mode'}));
 colors = lines(height(configs));
 
-fig = figure('Position', [100 100 1400 900], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 %% Panel 1: Active metrics for Bakersfield
 subplot(2, 3, 1);

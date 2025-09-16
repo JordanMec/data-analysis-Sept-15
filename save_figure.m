@@ -26,15 +26,31 @@ end
 
 outFile = fullfile(outDir, fileName);
 
+% Maximize the figure so on-screen windows and exports fill the screen
+set_figure_fullscreen(fig);
+
+% Choose a higher resolution automatically for files tagged as "hires"
+resolution = 300;
+lowerName = lower(fileName);
+if contains(lowerName, 'hires') || contains(lowerName, 'highres') || ...
+        contains(lowerName, 'hi_res') || contains(lowerName, 'high_res')
+    resolution = 450;
+end
+
+% Make sure all graphics updates are applied before exporting
+drawnow;
+
 % Detect UI components like uitable/uicontrol that require exportapp
 uiComponents = findall(fig, 'Type', 'uitable', '-or', 'Type', 'uicontrol');
 if ~isempty(uiComponents)
     try
-        exportapp(fig, outFile);
+        exportapp(fig, outFile, 'Resolution', resolution);
     catch
-        exportgraphics(fig, outFile);
+        exportgraphics(fig, outFile, 'ContentType', 'image', ...
+            'BackgroundColor', 'white', 'Resolution', resolution);
     end
 else
-    exportgraphics(fig, outFile);
+    exportgraphics(fig, outFile, 'ContentType', 'image', ...
+        'BackgroundColor', 'white', 'Resolution', resolution);
 end
 end

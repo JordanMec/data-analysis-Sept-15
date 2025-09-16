@@ -8,7 +8,8 @@ if isempty(fieldnames(temporalAnalysis))
     return;
 end
 
-figure('Position', [100 100 1400 1000], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 configs = fieldnames(temporalAnalysis);
 
@@ -122,6 +123,6 @@ end
 grid on;
 
 sgtitle('Temporal Patterns in Active Mode Performance', 'FontSize', 14, 'FontWeight', 'bold');
-save_figure(gcf, saveDir, 'temporal_patterns.png');
-close(gcf);
+save_figure(fig, saveDir, 'temporal_patterns.png');
+close(fig);
 end

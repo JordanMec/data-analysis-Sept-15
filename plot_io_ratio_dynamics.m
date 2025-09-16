@@ -1,5 +1,6 @@
 function plot_io_ratio_dynamics(ioAnalysis, saveDir)
-figure('Position', [100 100 1400 900], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 configs = fieldnames(ioAnalysis);
 nConfigs = numel(configs);
 
@@ -44,6 +45,6 @@ for i = 1:nConfigs
 end
 
 sgtitle('Indoor/Outdoor Ratio Dynamics - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
-save_figure(gcf, saveDir, 'io_ratio_dynamics.png');
-close(gcf);
+save_figure(fig, saveDir, 'io_ratio_dynamics.png');
+close(fig);
 end

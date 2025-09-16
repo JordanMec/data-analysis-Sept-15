@@ -8,7 +8,8 @@ if isempty(fieldnames(filterComparison))
     return;
 end
 
-figure('Position', [100 100 1600 1000], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 locations = fieldnames(filterComparison);
 
@@ -92,8 +93,8 @@ subplot(2, 2, [3 4]);
 plot_filter_radar_comparison(filterComparison);
 
 sgtitle('Dynamic Filter Performance Comparison - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
-save_figure(gcf, saveDir, 'filter_comparison_dynamic.png');
-close(gcf);
+save_figure(fig, saveDir, 'filter_comparison_dynamic.png');
+close(fig);
 end
 
 function plot_filter_radar_comparison(filterComparison)

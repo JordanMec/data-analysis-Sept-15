@@ -30,7 +30,8 @@ configs = unique(healthExposureTable(:,["location","filterType"]),"rows");
 scenarios = ["baseline","active","always_on"];
 
 % Create figure with proper sizing for publication quality
-hFig = figure('Visible','off', 'Position',[0 0 1400 900]);
+hFig = figure('Visible','off');
+set_figure_fullscreen(hFig);
 tiledlayout('flow','TileSpacing','compact','Padding','compact');
 
 % AQI category colors (EPA standard) - ensure colorblind accessibility
@@ -209,7 +210,7 @@ sgtitle('Indoor AQI Exposure: Mean Values with Building Envelope Uncertainty', .
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save with high resolution
-print(hFig, fullfile(figuresDir, 'aqi_exposure_with_bounds.png'), '-dpng', '-r300');
+save_figure(hFig, figuresDir, 'aqi_exposure_with_bounds.png');
 close(hFig);
 
 end

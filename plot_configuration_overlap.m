@@ -7,7 +7,8 @@ if isempty(costTable)
     return;
 end
 
-figure('Position', [100 100 1200 800], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 % Get configurations
 configs = unique(costTable(:, {'location', 'filterType', 'mode'}));
@@ -256,7 +257,7 @@ sgtitle('Configuration Performance Overlap Analysis', ...
     'FontSize', 14, 'FontWeight', 'bold');
 
 % Save
-save_figure(gcf, figuresDir, 'configuration_overlap_analysis.png');
-close(gcf);
+save_figure(fig, figuresDir, 'configuration_overlap_analysis.png');
+close(fig);
 
 end

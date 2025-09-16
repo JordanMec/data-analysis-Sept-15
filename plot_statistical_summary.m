@@ -4,7 +4,8 @@ if isempty(summaryTable) || isempty(rangeTable)
     warning('plot_statistical_summary: no data provided, skipping plot.');
     return;
 end
-figure('Position',[50 50 1600 900],'Visible','off');
+fig = figure('Visible','off');
+set_figure_fullscreen(fig);
 
 %% Calculate summary statistics
 configs = unique(summaryTable(:,{'location','filterType','mode'}));
@@ -147,6 +148,6 @@ sgtitle('Statistical Summary: Building Envelope Range Analysis', ...
     'FontSize', 16, 'FontWeight', 'bold');
 
 % Save
-save_figure(gcf, figuresDir, 'statistical_summary_bounds.png');
-close(gcf);
+save_figure(fig, figuresDir, 'statistical_summary_bounds.png');
+close(fig);
 end

@@ -8,7 +8,8 @@ if isempty(fieldnames(uncertaintyAnalysis))
     return;
 end
 
-figure('Position', [100 100 1400 900], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 configs = fieldnames(uncertaintyAnalysis);
 
@@ -102,8 +103,8 @@ subplot(2, 2, 4);
 plot_sensitivity_tornado(uncertaintyAnalysis);
 
 sgtitle('Scenario Bounds Quantification - Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
-save_figure(gcf, saveDir, 'uncertainty_analysis.png');
-close(gcf);
+save_figure(fig, saveDir, 'uncertainty_analysis.png');
+close(fig);
 end
 
 function plot_sensitivity_tornado(uncertaintyAnalysis)

@@ -16,7 +16,8 @@ modes = unique(tradeoffTable.mode);
 locations = unique(tradeoffTable.location);
 
 % Create figure with multiple panels
-fig = figure('Position', [100 100 1400 900], 'Visible', 'off');
+fig = figure('Visible', 'off');
+set_figure_fullscreen(fig);
 
 %% Panel 1: Main comparison by filter and mode
 subplot(2, 3, [1 2]);
