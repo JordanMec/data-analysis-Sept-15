@@ -87,8 +87,8 @@ end
 function [marginPixels, figHeight] = ensure_caption_margin(fig, requiredMargin)
 %ENSURE_CAPTION_MARGIN Expand the figure and shift plots to create space.
 storedMargin = getappdata(fig, 'CaptionMarginPixels');
-positionables = gather_positionable_objects(fig);
-minBottom = compute_min_bottom(positionables);
+[positionables, measurableObjects] = gather_positionable_objects(fig);
+minBottom = compute_min_bottom(measurableObjects);
 
 if isempty(storedMargin)
     currentMargin = minBottom;
@@ -111,10 +111,11 @@ figHeight = fig.Position(4);
 marginPixels = newMargin;
 end
 
-function handles = gather_positionable_objects(fig)
+function [handles, measurable] = gather_positionable_objects(fig)
 %GATHER_POSITIONABLE_OBJECTS Identify objects that should move with margins.
     allObjects = findall(fig);
-    mask = false(size(allObjects));
+    moveMask = false(size(allObjects));
+    measureMask = false(size(allObjects));
 
     for idx = 1:numel(allObjects)
         obj = allObjects(idx);
@@ -124,12 +125,18 @@ function handles = gather_positionable_objects(fig)
         if isprop(obj, 'Tag') && strcmp(obj.Tag, 'autoFigureCaption')
             continue;
         end
+        if supports_position_measurement(obj)
+            measureMask(idx) = true;
+        end
         if supports_manual_positioning(obj)
-            mask(idx) = true;
+            moveMask(idx) = true;
         end
     end
 
-    handles = allObjects(mask);
+    handles = allObjects(moveMask);
+    if nargout >= 2
+        measurable = allObjects(measureMask);
+    end
 end
 
 function minBottom = compute_min_bottom(objects)
@@ -202,6 +209,11 @@ for idx = 1:numel(objects)
 end
 end
 
+function tf = supports_position_measurement(obj)
+%SUPPORTS_POSITION_MEASUREMENT True when an object exposes position info.
+    tf = isvalid(obj) && isprop(obj, 'Position') && isprop(obj, 'Units');
+end
+
 function tf = supports_manual_positioning(obj)
 %SUPPORTS_MANUAL_POSITIONING True when the object allows manual positioning.
     tf = false;
@@ -216,6 +228,15 @@ function tf = supports_manual_positioning(obj)
         end
     catch
         % ISA can fail for some graphics objects that do not expose class info.
+    end
+
+    try
+        parentObj = get(obj, 'Parent');
+        if isa(parentObj, 'matlab.graphics.layout.TiledChartLayout')
+            return;
+        end
+    catch
+        % Some objects do not expose a Parent property; ignore.
     end
 
     try
