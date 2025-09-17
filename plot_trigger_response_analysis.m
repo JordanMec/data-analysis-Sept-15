@@ -35,7 +35,7 @@ for i = 1:nConfigs
         response = triggerAnalysis.(config).pm25_response;
         lag_times(end+1) = response.avg_lag_time;
         peak_reductions(end+1) = response.avg_peak_reduction;
-        labels{end+1} = strrep(config, '_', '-');
+        labels{end+1} = format_config_name(config, '-');
     end
 end
 
@@ -262,7 +262,7 @@ if isfield(data, 'hourly_penetration_pm25')
     plot(t, data.hourly_penetration_pm10(t), 'r-', 'LineWidth', 1.5);
     xlabel('Time in Hours');
     ylabel('Particle Penetration Factor');
-    title(sprintf('Penetration Temporal Variation for %s', strrep(config, '_', ' ')));
+    title(sprintf('Penetration Temporal Variation for %s', format_filter_label(config)));
     legend({'PM2.5', 'PM10'}, 'Location', 'best');
     grid on;
 end
@@ -306,7 +306,7 @@ for i = 1:length(configs)
     else
         duration_bounds(i,:) = [NaN NaN];
     end
-    labels{i} = strrep(config, '_', ' ');
+    labels{i} = format_filter_label(config);
 end
 
 positions = 1:length(configs);
@@ -516,7 +516,7 @@ for i = 1:nConfigs
         xlabel('Lag Time (Hours)');
         ylabel('Cross Correlation');
         title(sprintf('%s\nOptimal Lag Fine Particulate Matter 2.5 Micrometers = %dh, Coarse Particulate Matter 10 Micrometers = %dh', ...
-            strrep(config, '_', ' '), ...
+            format_filter_label(config), ...
             data.lags(max_idx_pm25), data.lags(max_idx_pm10)));
         legend({'PM2.5', 'PM10'}, 'Location', 'best');
         grid on;
@@ -580,7 +580,7 @@ for loc_idx = 1:length(locations)
     xtickangle(45);
     ylabel('Normalized Score');
     title(sprintf('Filter Comparison for %s', strrep(location, '_', ' ')));
-    legend({'HEPA', 'MERV'}, 'Location', 'best');
+    legend({'HEPA 13', 'MERV 15'}, 'Location', 'best');
     grid on;
 end
 
@@ -589,7 +589,7 @@ subplot(2, 2, [3 4]);
 plot_filter_radar_comparison(filterComparison);
 
 sgtitle('Dynamic Filter Performance Comparison During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
-add_figure_caption(fig, sprintf(['Side-by-side bar charts compare normalized performance metrics for HEPA and MERV filters at each location, while the radar chart synthesizes their strengths and weaknesses.' newline ...
+add_figure_caption(fig, sprintf(['Side-by-side bar charts compare normalized performance metrics for HEPA 13 and MERV 15 filters at each location, while the radar chart synthesizes their strengths and weaknesses.' newline ...
     'The shared scale makes it easy to see which filter leads on indoor/outdoor ratios, response time, and stability without being misled by differing units.' newline ...
     'By scanning across panels, you can judge whether one filter consistently dominates or whether the best choice depends on the site-specific priorities.']));
 save_figure(fig, saveDir, 'filter_comparison_dynamic.png');
@@ -614,7 +614,7 @@ for i = 1:length(configs)
     data = uncertaintyAnalysis.(config);
     pm25_ranges(i) = data.pm25_range_percent;
     pm10_ranges(i) = data.pm10_range_percent;
-    labels{i} = strrep(config, '_', '-');
+    labels{i} = format_config_name(config, '-');
 end
 
 x = 1:length(configs);
@@ -646,7 +646,7 @@ if isfield(data, 'hourly_ci_pm25')
     
     xlabel('Time in Hours');
     ylabel('Indoor Particulate Matter 2.5 Concentration (Micrograms per Cubic Meter)');
-    title(sprintf('Confidence Intervals for %s', strrep(config, '_', ' ')));
+    title(sprintf('Confidence Intervals for %s', format_filter_label(config)));
     legend({'Envelope Bounds', 'Mean'}, 'Location', 'best');
     grid on;
 end
@@ -826,7 +826,7 @@ xlim([0 maxEvents + 1]);
 end
 
 function plot_filter_radar_comparison(filterComparison)
-%PLOT_FILTER_RADAR_COMPARISON Radar chart comparing HEPA and MERV
+%PLOT_FILTER_RADAR_COMPARISON Radar chart comparing HEPA 13 and MERV 15
 
 ax = gca;
 pos = get(ax,'Position');
@@ -871,7 +871,7 @@ polarscatter(ax, theta, [merv_norm merv_norm(1)], 50, [0.8 0.3 0.3],'filled');
 ax.ThetaTick = rad2deg(theta(1:end-1));
 ax.ThetaTickLabel = metric_labels;
 ax.RLim = [0 1];
-legend(ax, {'HEPA','MERV'}, 'Location','southoutside');
+legend(ax, {'HEPA 13','MERV 15'}, 'Location','southoutside');
 title(ax,'Filter Comparison Across Multiple Criteria');
 end
 

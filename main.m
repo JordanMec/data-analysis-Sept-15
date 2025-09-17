@@ -60,8 +60,8 @@ metrics = {'avg_indoor_PM25', 'avg_indoor_PM10', ...
 rangeTable = build_range_table(summaryTable, metrics);
 save(fullfile(resultsDir,'rangeTable.mat'),'rangeTable');
 
-%% 5. Filter comparison (HEPA vs. MERV) (unchanged)
-disp("Running HEPA vs. MERV filter performance analysis...");
+%% 5. Filter comparison (HEPA 13 vs. MERV 15) (unchanged)
+disp("Running HEPA 13 vs. MERV 15 filter performance analysis...");
 filterComparisonTable = analyze_filter_performance(summaryTable);
 save(fullfile(resultsDir, 'filterComparisonTable.mat'), 'filterComparisonTable');
 
@@ -158,7 +158,7 @@ for i = 1:length(configs)
     pm10Str = format_bounds(ioData.stats.pm10_mean, ...
         min(pm10Bounds), max(pm10Bounds), 'MeanFormat', '%.3f', ...
         'BoundFormat', '%.3f', 'Style', 'both');
-    fprintf('  %s: PM2.5=%s, PM10=%s\n', strrep(config, '_', '-'), pm25Str, pm10Str);
+    fprintf('  %s: PM2.5=%s, PM10=%s\n', format_config_name(config, '-'), pm25Str, pm10Str);
 end
 
 % Show trigger response metrics
@@ -181,7 +181,7 @@ if isfield(activeAnalysisResults, 'triggerResponse')
                     'MeanFormat', '%.0f%%', 'BoundFormat', '%.0f%%', ...
                     'Style', 'both');
                 fprintf('  %s: Response Time=%s, Active=%s of time\n', ...
-                    strrep(config, '_', '-'), respStr, activeStr);
+                    format_config_name(config, '-'), respStr, activeStr);
             end
         end
     end
@@ -189,7 +189,7 @@ end
 
 % Show filter comparison
 if isfield(activeAnalysisResults, 'filterComparison')
-    fprintf('\nHEPA vs MERV Performance (Active Mode):\n');
+    fprintf('\nHEPA 13 vs MERV 15 Performance (Active Mode):\n');
     locations = fieldnames(activeAnalysisResults.filterComparison);
     for i = 1:length(locations)
         location = locations{i};
@@ -208,8 +208,8 @@ if isfield(activeAnalysisResults, 'filterComparison')
             mervPeak = format_bounds(comparison.merv.peak_reduction, ...
                 comparison.merv.peak_reduction_lower, comparison.merv.peak_reduction_upper, ...
                 'MeanFormat', '%.1f%%', 'BoundFormat', '%.1f%%', 'Style', 'both');
-            fprintf('    HEPA: I/O PM2.5=%s, Peak Reduction=%s\n', hepaIO, hepaPeak);
-            fprintf('    MERV: I/O PM2.5=%s, Peak Reduction=%s\n', mervIO, mervPeak);
+            fprintf('    HEPA 13: I/O PM2.5=%s, Peak Reduction=%s\n', hepaIO, hepaPeak);
+            fprintf('    MERV 15: I/O PM2.5=%s, Peak Reduction=%s\n', mervIO, mervPeak);
         end
     end
 end

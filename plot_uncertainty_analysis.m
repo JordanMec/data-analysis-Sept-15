@@ -24,7 +24,7 @@ for i = 1:length(configs)
     data = uncertaintyAnalysis.(config);
     pm25_ranges(i) = data.pm25_range_percent;
     pm10_ranges(i) = data.pm10_range_percent;
-    labels{i} = strrep(config, '_', '-');
+    labels{i} = format_config_name(config, '-');
 end
 
 x = 1:length(configs);
@@ -57,7 +57,7 @@ if isfield(data, 'hourly_ci_pm25')
 
     xlabel('Time in Hours');
     ylabel('Indoor Particulate Matter 2.5 Concentration (Micrograms per Cubic Meter)');
-    title(sprintf('Confidence Intervals for %s', strrep(config, '_', ' ')));
+    title(sprintf('Confidence Intervals for %s', format_filter_label(config)));
     legend({'Envelope Bounds', 'Mean'}, 'Location', 'best');
     grid on;
 end

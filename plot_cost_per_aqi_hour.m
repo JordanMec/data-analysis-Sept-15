@@ -79,7 +79,7 @@ set_figure_fullscreen(fig);
 % Plot grouped bars with error bars
 x = 1:nModes;
 width = 0.35;
-colors = [0.2 0.4 0.8; 0.8 0.3 0.3]; % Blue for HEPA, Red for MERV
+colors = [0.2 0.4 0.8; 0.8 0.3 0.3]; % Blue for HEPA 13, Red for MERV 15
 
 hold on;
 barHandles = gobjects(1, nFilters);

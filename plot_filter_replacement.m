@@ -63,7 +63,7 @@ hold on;
 
 x = 1:nModes;
 width = 0.35;
-colors = [0.2 0.4 0.8; 0.8 0.3 0.3]; % Blue for HEPA, Red for MERV
+colors = [0.2 0.4 0.8; 0.8 0.3 0.3]; % Blue for HEPA 13, Red for MERV 15
 
 for f = 1:nFilters
     offset = (f - 1.5) * width;

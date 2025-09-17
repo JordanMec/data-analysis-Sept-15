@@ -1,5 +1,5 @@
 function plot_dynamic_filter_comparison(filterComparison, saveDir)
-%PLOT_DYNAMIC_FILTER_COMPARISON Compare HEPA vs MERV filter performance dynamically
+%PLOT_DYNAMIC_FILTER_COMPARISON Compare HEPA 13 vs MERV 15 filter performance dynamically
 %   plot_dynamic_filter_comparison(filterComparison, saveDir) creates a set of
 %   plots illustrating how different filter types perform under active mode.
 
@@ -84,7 +84,7 @@ for loc_idx = 1:length(locations)
     xtickangle(45);
     ylabel('Normalized Score');
     title(sprintf('Filter Comparison for %s', strrep(location, '_', ' ')));
-    legend([hHepa hMerv], {'HEPA', 'MERV'}, 'Location', 'best');
+    legend([hHepa hMerv], {'HEPA 13', 'MERV 15'}, 'Location', 'best');
     grid on;
 end
 
@@ -93,7 +93,7 @@ subplot(2, 2, [3 4]);
 plot_filter_radar_comparison(filterComparison);
 
 sgtitle('Dynamic Filter Performance Comparison During Active Mode', 'FontSize', 14, 'FontWeight', 'bold');
-add_figure_caption(fig, sprintf(['Bar charts across the top compare normalized HEPA and MERV performance metrics for each location, and the radar chart aggregates those differences across all sites.' newline ...
+add_figure_caption(fig, sprintf(['Bar charts across the top compare normalized HEPA 13 and MERV 15 performance metrics for each location, and the radar chart aggregates those differences across all sites.' newline ...
     'Error bars appear when uncertainty bounds are available so you can see how envelope assumptions might change the story.' newline ...
     'Together the visuals reveal whether one filter consistently leads or if strengths trade places depending on metric and location.']));
 save_figure(fig, saveDir, 'filter_comparison_dynamic.png');
@@ -101,7 +101,7 @@ close(fig);
 end
 
 function plot_filter_radar_comparison(filterComparison)
-%PLOT_FILTER_RADAR_COMPARISON Create a simple radar chart comparing HEPA and MERV
+%PLOT_FILTER_RADAR_COMPARISON Create a simple radar chart comparing HEPA 13 and MERV 15
 %   Averages metrics across all locations and normalizes them for display.
 
 cartAx = gca;
@@ -240,7 +240,7 @@ scatter(ax, mervPointX, mervPointY, 50, [0.8 0.3 0.3], 'filled', 'HandleVisibili
 hRangeHepa = patch(ax, NaN, NaN, [0.2 0.4 0.8], 'FaceAlpha', 0.1, 'EdgeColor', 'none');
 hRangeMerv = patch(ax, NaN, NaN, [0.8 0.3 0.3], 'FaceAlpha', 0.1, 'EdgeColor', 'none');
 legend(ax, [hPolarHepa hPolarMerv hRangeHepa hRangeMerv], ...
-    {'HEPA mean', 'MERV mean', 'HEPA tight–leaky', 'MERV tight–leaky'}, ...
+    {'HEPA 13 mean', 'MERV 15 mean', 'HEPA 13 tight–leaky', 'MERV 15 tight–leaky'}, ...
     'Location', 'southoutside');
 title(ax, 'Filter Comparison Across Multiple Criteria');
 end

@@ -224,7 +224,7 @@ xErrHigh = allUpper - allMeans;
 
 filterColors = zeros(height(tradeoffTable), 3);
 for i = 1:height(tradeoffTable)
-    if strcmpi(tradeoffTable.filterType{i}, 'hepa')
+    if any(strcmpi(tradeoffTable.filterType{i}, {'hepa', 'hepa 13'}))
         filterColors(i,:) = [0.2 0.4 0.8];
     else
         filterColors(i,:) = [0.8 0.3 0.3];
@@ -241,7 +241,13 @@ scatter(allMeans, allRanges, 100, filterColors, 'filled', 'MarkerEdgeColor', 'k'
 
 labels = cell(height(tradeoffTable),1);
 for i = 1:height(tradeoffTable)
-    labels{i} = sprintf('%s-%s', tradeoffTable.location{i}, tradeoffTable.filterType{i});
+    labelFilter = tradeoffTable.filterType{i};
+    if any(strcmpi(labelFilter, {'hepa', 'hepa 13'}))
+        labelFilter = 'HEPA 13';
+    elseif any(strcmpi(labelFilter, {'merv', 'merv 15'}))
+        labelFilter = 'MERV 15';
+    end
+    labels{i} = sprintf('%s-%s', tradeoffTable.location{i}, labelFilter);
     text(allMeans(i), allRanges(i), labels{i}, 'VerticalAlignment','bottom', ...
         'HorizontalAlignment','center', 'FontSize', 8);
 end
@@ -252,7 +258,7 @@ grid on;
 
 h1 = plot(NaN, NaN, 'o', 'MarkerSize', 10, 'MarkerFaceColor', [0.2 0.4 0.8], 'MarkerEdgeColor', 'k');
 h2 = plot(NaN, NaN, 'o', 'MarkerSize', 10, 'MarkerFaceColor', [0.8 0.3 0.3], 'MarkerEdgeColor', 'k');
-legend([h1 h2], {'HEPA', 'MERV'}, 'Location', 'best');
+legend([h1 h2], {'HEPA 13', 'MERV 15'}, 'Location', 'best');
 
 if length(allMeans) > 5
     validIdx = ~isnan(allMeans) & ~isnan(allRanges);

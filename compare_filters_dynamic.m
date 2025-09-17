@@ -1,7 +1,7 @@
 function filterComparison = compare_filters_dynamic(activeData)
-% COMPARE_FILTERS_DYNAMIC Compare HEPA vs MERV performance under dynamic conditions
+% COMPARE_FILTERS_DYNAMIC Compare HEPA 13 vs MERV 15 performance under dynamic conditions
 %
-% This function compares the performance of HEPA and MERV filters under
+% This function compares the performance of HEPA 13 and MERV 15 filters under
 % active mode operation, analyzing various performance metrics.
 %
 % Input:
@@ -17,16 +17,16 @@ for loc_idx = 1:length(locations)
     location = locations{loc_idx};
     filterComparison.(location) = struct();
     
-    % Find HEPA and MERV configs
+    % Find HEPA 13 and MERV 15 configs
     configs = fieldnames(activeData);
     hepa_config = [];
     merv_config = [];
     
     for i = 1:length(configs)
         if strcmp(activeData.(configs{i}).location, location)
-            if strcmpi(activeData.(configs{i}).filterType, 'hepa')
+            if any(strcmpi(activeData.(configs{i}).filterType, {'hepa', 'hepa 13'}))
                 hepa_config = configs{i};
-            elseif strcmpi(activeData.(configs{i}).filterType, 'merv')
+            elseif any(strcmpi(activeData.(configs{i}).filterType, {'merv', 'merv 15'}))
                 merv_config = configs{i};
             end
         end
@@ -52,7 +52,7 @@ for loc_idx = 1:length(locations)
         merv_io_pm25_tight(~isfinite(merv_io_pm25_tight)) = NaN;
         merv_io_pm25_leaky(~isfinite(merv_io_pm25_leaky)) = NaN;
         
-        % Store PM2.5 bounds and means for HEPA
+        % Store PM2.5 bounds and means for HEPA 13
         filterComparison.(location).hepa.avg_io_ratio_pm25_tight = nanmean(hepa_io_pm25_tight);
         filterComparison.(location).hepa.avg_io_ratio_pm25_leaky = nanmean(hepa_io_pm25_leaky);
         filterComparison.(location).hepa.avg_io_ratio_pm25_lower = min(...
@@ -65,7 +65,7 @@ for loc_idx = 1:length(locations)
             (filterComparison.(location).hepa.avg_io_ratio_pm25_tight + ...
              filterComparison.(location).hepa.avg_io_ratio_pm25_leaky) / 2;
         
-        % Store PM2.5 bounds and means for MERV
+        % Store PM2.5 bounds and means for MERV 15
         filterComparison.(location).merv.avg_io_ratio_pm25_tight = nanmean(merv_io_pm25_tight);
         filterComparison.(location).merv.avg_io_ratio_pm25_leaky = nanmean(merv_io_pm25_leaky);
         filterComparison.(location).merv.avg_io_ratio_pm25_lower = min(...
@@ -90,7 +90,7 @@ for loc_idx = 1:length(locations)
         merv_io_pm10_tight(~isfinite(merv_io_pm10_tight)) = NaN;
         merv_io_pm10_leaky(~isfinite(merv_io_pm10_leaky)) = NaN;
         
-        % Store PM10 bounds and means for HEPA
+        % Store PM10 bounds and means for HEPA 13
         filterComparison.(location).hepa.avg_io_ratio_pm10_tight = nanmean(hepa_io_pm10_tight);
         filterComparison.(location).hepa.avg_io_ratio_pm10_leaky = nanmean(hepa_io_pm10_leaky);
         filterComparison.(location).hepa.avg_io_ratio_pm10_lower = min(...
@@ -103,7 +103,7 @@ for loc_idx = 1:length(locations)
             (filterComparison.(location).hepa.avg_io_ratio_pm10_tight + ...
              filterComparison.(location).hepa.avg_io_ratio_pm10_leaky) / 2;
         
-        % Store PM10 bounds and means for MERV
+        % Store PM10 bounds and means for MERV 15
         filterComparison.(location).merv.avg_io_ratio_pm10_tight = nanmean(merv_io_pm10_tight);
         filterComparison.(location).merv.avg_io_ratio_pm10_leaky = nanmean(merv_io_pm10_leaky);
         filterComparison.(location).merv.avg_io_ratio_pm10_lower = min(...
@@ -116,7 +116,7 @@ for loc_idx = 1:length(locations)
             (filterComparison.(location).merv.avg_io_ratio_pm10_tight + ...
              filterComparison.(location).merv.avg_io_ratio_pm10_leaky) / 2;
         
-        %% Response time with bounds for HEPA
+        %% Response time with bounds for HEPA 13
         filterComparison.(location).hepa.response_time_tight = calculate_avg_response_time(hepa_data, 'tight');
         filterComparison.(location).hepa.response_time_leaky = calculate_avg_response_time(hepa_data, 'leaky');
         filterComparison.(location).hepa.response_time_lower = nanmin([...
@@ -129,7 +129,7 @@ for loc_idx = 1:length(locations)
             nanmean([filterComparison.(location).hepa.response_time_tight, ...
                      filterComparison.(location).hepa.response_time_leaky]);
         
-        %% Response time with bounds for MERV
+        %% Response time with bounds for MERV 15
         filterComparison.(location).merv.response_time_tight = calculate_avg_response_time(merv_data, 'tight');
         filterComparison.(location).merv.response_time_leaky = calculate_avg_response_time(merv_data, 'leaky');
         filterComparison.(location).merv.response_time_lower = nanmin([...
@@ -142,7 +142,7 @@ for loc_idx = 1:length(locations)
             nanmean([filterComparison.(location).merv.response_time_tight, ...
                      filterComparison.(location).merv.response_time_leaky]);
         
-        %% Peak reduction capability with bounds for HEPA
+        %% Peak reduction capability with bounds for HEPA 13
         filterComparison.(location).hepa.peak_reduction_tight = calculate_peak_reduction_capability(hepa_data, 'tight');
         filterComparison.(location).hepa.peak_reduction_leaky = calculate_peak_reduction_capability(hepa_data, 'leaky');
         filterComparison.(location).hepa.peak_reduction_lower = min(...
@@ -155,7 +155,7 @@ for loc_idx = 1:length(locations)
             (filterComparison.(location).hepa.peak_reduction_tight + ...
              filterComparison.(location).hepa.peak_reduction_leaky) / 2;
         
-        %% Peak reduction capability with bounds for MERV
+        %% Peak reduction capability with bounds for MERV 15
         filterComparison.(location).merv.peak_reduction_tight = calculate_peak_reduction_capability(merv_data, 'tight');
         filterComparison.(location).merv.peak_reduction_leaky = calculate_peak_reduction_capability(merv_data, 'leaky');
         filterComparison.(location).merv.peak_reduction_lower = min(...
@@ -168,7 +168,7 @@ for loc_idx = 1:length(locations)
             (filterComparison.(location).merv.peak_reduction_tight + ...
              filterComparison.(location).merv.peak_reduction_leaky) / 2;
         
-        %% Stability score with bounds for HEPA
+        %% Stability score with bounds for HEPA 13
         filterComparison.(location).hepa.stability_score_tight = calculate_stability_score(hepa_io_pm25_tight);
         filterComparison.(location).hepa.stability_score_leaky = calculate_stability_score(hepa_io_pm25_leaky);
         filterComparison.(location).hepa.stability_score_lower = min(...
@@ -181,7 +181,7 @@ for loc_idx = 1:length(locations)
             (filterComparison.(location).hepa.stability_score_tight + ...
              filterComparison.(location).hepa.stability_score_leaky) / 2;
         
-        %% Stability score with bounds for MERV
+        %% Stability score with bounds for MERV 15
         filterComparison.(location).merv.stability_score_tight = calculate_stability_score(merv_io_pm25_tight);
         filterComparison.(location).merv.stability_score_leaky = calculate_stability_score(merv_io_pm25_leaky);
         filterComparison.(location).merv.stability_score_lower = min(...

@@ -30,7 +30,7 @@ fprintf(fid, '## Executive Summary\n\n');
 nScenarios = height(unique(summaryTable(:,{'location','leakage','filterType','mode'})));
 nLocations = numel(unique(summaryTable.location));
 fprintf(fid, '- Analyzed %d total scenarios across %d locations\n', nScenarios, nLocations);
-fprintf(fid, '- Compared HEPA vs MERV filters in tight vs leaky building envelopes\n');
+fprintf(fid, '- Compared HEPA 13 vs MERV 15 filters in tight vs leaky building envelopes\n');
 fprintf(fid, '- Evaluated baseline, active, and always-on operating modes\n');
 
 if ~isempty(efficacyScoreTable)
@@ -75,17 +75,19 @@ if ~isempty(efficacyScoreTable)
         bestScoreStr);
     
     % Calculate filter type performance
-    hepaConfigs = efficacyScoreTable(strcmpi(efficacyScoreTable.filterType, 'hepa'), :);
-    mervConfigs = efficacyScoreTable(strcmpi(efficacyScoreTable.filterType, 'merv'), :);
+    hepaMask = strcmpi(efficacyScoreTable.filterType, 'hepa') | strcmpi(efficacyScoreTable.filterType, 'hepa 13');
+    mervMask = strcmpi(efficacyScoreTable.filterType, 'merv') | strcmpi(efficacyScoreTable.filterType, 'merv 15');
+    hepaConfigs = efficacyScoreTable(hepaMask, :);
+    mervConfigs = efficacyScoreTable(mervMask, :);
     
     if ~isempty(hepaConfigs) && ~isempty(mervConfigs)
         hepaAvg = mean(hepaConfigs.mean_efficacy_score);
         mervAvg = mean(mervConfigs.mean_efficacy_score);
         if hepaAvg > mervAvg
-            fprintf(fid, '- **Filter Performance**: HEPA filters show %.1f%% higher average efficacy than MERV\n', ...
+            fprintf(fid, '- **Filter Performance**: HEPA 13 filters show %.1f%% higher average efficacy than MERV 15\n', ...
                 ((hepaAvg - mervAvg) / mervAvg * 100));
         else
-            fprintf(fid, '- **Filter Performance**: MERV filters show %.1f%% higher average efficacy than HEPA\n', ...
+            fprintf(fid, '- **Filter Performance**: MERV 15 filters show %.1f%% higher average efficacy than HEPA 13\n', ...
                 ((mervAvg - hepaAvg) / hepaAvg * 100));
         end
     end
@@ -127,7 +129,7 @@ if exist('activeAnalysisResults', 'var') && ~isempty(activeAnalysisResults)
                 min(pm10Bounds), max(pm10Bounds), '%.3f', '%.3f');
             pm25RangePct = 100 * abs(diff(pm25Bounds)) / (2 * ioData.stats.pm25_mean);
             fprintf(fid, '| %s | %s | %s | Range %.1f%% |\n', ...
-                strrep(config, '_', '-'), pm25Str, pm10Str, pm25RangePct);
+                format_config_name(config, '-'), pm25Str, pm10Str, pm25RangePct);
         end
     end
 
@@ -154,7 +156,7 @@ if exist('activeAnalysisResults', 'var') && ~isempty(activeAnalysisResults)
                     triggerData.pm25_response.avg_peak_reduction_bounds(1), ...
                     triggerData.pm25_response.avg_peak_reduction_bounds(2), '%.1f%%', '%.1f%%');
                 fprintf(fid, '| %s | %s | %s | %s |\n', ...
-                    strrep(config, '_', '-'), respTimeStr, activeStr, peakStr);
+                    format_config_name(config, '-'), respTimeStr, activeStr, peakStr);
             end
         end
     end
@@ -284,8 +286,8 @@ fprintf(fid, '\n');
 fprintf(fid, '## Filter Type Comparison\n\n');
 
 % Average performance by filter type
-hepaRows = costTable(strcmpi(costTable.filterType, 'hepa'), :);
-mervRows = costTable(strcmpi(costTable.filterType, 'merv'), :);
+hepaRows = costTable(strcmpi(costTable.filterType, 'hepa') | strcmpi(costTable.filterType, 'hepa 13'), :);
+mervRows = costTable(strcmpi(costTable.filterType, 'merv') | strcmpi(costTable.filterType, 'merv 15'), :);
 
 if ~isempty(hepaRows) && ~isempty(mervRows)
     fprintf(fid, '### Average Performance\n');
@@ -297,13 +299,13 @@ if ~isempty(hepaRows) && ~isempty(mervRows)
     hepaCostMax = max(hepaRows.total_cost);
     mervCostMin = min(mervRows.total_cost);
     mervCostMax = max(mervRows.total_cost);
-    fprintf(fid, '- HEPA PM2.5 Reduction: %.1f%% (range %.1f%% - %.1f%%)\n', ...
+    fprintf(fid, '- HEPA 13 PM2.5 Reduction: %.1f%% (range %.1f%% - %.1f%%)\n', ...
         mean(hepaRows.percent_PM25_reduction), hepaPM25Min, hepaPM25Max);
-    fprintf(fid, '- MERV PM2.5 Reduction: %.1f%% (range %.1f%% - %.1f%%)\n', ...
+    fprintf(fid, '- MERV 15 PM2.5 Reduction: %.1f%% (range %.1f%% - %.1f%%)\n', ...
         mean(mervRows.percent_PM25_reduction), mervPM25Min, mervPM25Max);
-    fprintf(fid, '- HEPA Annual Cost: $%.2f (range $%.2f - $%.2f)\n', ...
+    fprintf(fid, '- HEPA 13 Annual Cost: $%.2f (range $%.2f - $%.2f)\n', ...
         mean(hepaRows.total_cost), hepaCostMin, hepaCostMax);
-    fprintf(fid, '- MERV Annual Cost: $%.2f (range $%.2f - $%.2f)\n\n', ...
+    fprintf(fid, '- MERV 15 Annual Cost: $%.2f (range $%.2f - $%.2f)\n\n', ...
         mean(mervRows.total_cost), mervCostMin, mervCostMax);
 end
 
@@ -380,7 +382,7 @@ fprintf(fid, '### Data Tables\n');
 fprintf(fid, '- `summaryTable.mat` - Main processed simulation data\n');
 fprintf(fid, '- `rangeTable.mat` - Tight vs leaky uncertainty analysis\n');
 fprintf(fid, '- `costTable.mat` - Cost-effectiveness metrics\n');
-fprintf(fid, '- `filterComparisonTable.mat` - HEPA vs MERV performance\n');
+fprintf(fid, '- `filterComparisonTable.mat` - HEPA 13 vs MERV 15 performance\n');
 fprintf(fid, '- `efficacyTable.mat` - Baseline vs intervention analysis\n');
 fprintf(fid, '- `healthExposureTable.mat` - AQI exposure analysis\n');
 fprintf(fid, '- `tradeoffTable.mat` - Physical filter tradeoffs\n');

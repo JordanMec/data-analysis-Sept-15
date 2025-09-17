@@ -32,7 +32,7 @@ for i = 1:length(configs)
         h = plot(0:23, data.diurnal_io_ratio, 'o-', 'Color', colors(i,:), ...
             'LineWidth', 2, 'MarkerSize', 6);
         diurnalHandles(end+1) = h; %#ok<AGROW>
-        diurnalLabels{end+1} = strrep(config, '_', ' '); %#ok<AGROW>
+        diurnalLabels{end+1} = format_filter_label(config); %#ok<AGROW>
     end
 end
 
@@ -108,7 +108,7 @@ for i = 1:length(configs)
         h = plot(days, data.performance_trend, 'o-', 'Color', colors(i,:), ...
                  'LineWidth', 1.5, 'MarkerSize', 4);
         lineHandles(end+1) = h; %#ok<AGROW>
-        legendLabels{end+1} = strrep(config, '_', ' '); %#ok<AGROW>
+        legendLabels{end+1} = format_filter_label(config); %#ok<AGROW>
     end
 end
 
