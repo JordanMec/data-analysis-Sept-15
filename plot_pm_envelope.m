@@ -257,17 +257,16 @@ for i = 1:height(configs)
     close(fig);
 end
 
-end
+    function readable = expand_pm_label(label)
+        %EXPAND_PM_LABEL Provide descriptive particulate matter labels for titles.
 
-function readable = expand_pm_label(label)
-%EXPAND_PM_LABEL Provide descriptive particulate matter labels for titles.
-
-switch lower(label)
-    case {'pm2.5', 'pm25', 'pm_25'}
-        readable = 'Fine Particulate Matter Under 2.5 Micrometers';
-    case {'pm10', 'pm_10'}
-        readable = 'Coarse Particulate Matter Under 10 Micrometers';
-    otherwise
-        readable = strrep(label, '_', ' ');
-end
+        switch lower(label)
+            case {'pm2.5', 'pm25', 'pm_25'}
+                readable = 'Fine Particulate Matter Under 2.5 Micrometers';
+            case {'pm10', 'pm_10'}
+                readable = 'Coarse Particulate Matter Under 10 Micrometers';
+            otherwise
+                readable = strrep(label, '_', ' ');
+        end
+    end
 end
