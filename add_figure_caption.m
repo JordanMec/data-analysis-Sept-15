@@ -113,23 +113,23 @@ end
 
 function handles = gather_positionable_objects(fig)
 %GATHER_POSITIONABLE_OBJECTS Identify objects that should move with margins.
-allObjects = findall(fig);
-mask = false(size(allObjects));
+    allObjects = findall(fig);
+    mask = false(size(allObjects));
 
-for idx = 1:numel(allObjects)
-    obj = allObjects(idx);
-    if obj == fig
-        continue;
-    end
-    if isprop(obj, 'Position') && isprop(obj, 'Units')
+    for idx = 1:numel(allObjects)
+        obj = allObjects(idx);
+        if obj == fig
+            continue;
+        end
         if isprop(obj, 'Tag') && strcmp(obj.Tag, 'autoFigureCaption')
             continue;
         end
-        mask(idx) = true;
+        if supports_manual_positioning(obj)
+            mask(idx) = true;
+        end
     end
-end
 
-handles = allObjects(mask);
+    handles = allObjects(mask);
 end
 
 function minBottom = compute_min_bottom(objects)
@@ -173,9 +173,9 @@ end
 
 function shift_positionables(objects, delta)
 %SHIFT_POSITIONABLES Move all position-aware objects upward by DELTA pixels.
-if delta <= 0 || isempty(objects)
-    return;
-end
+    if delta <= 0 || isempty(objects)
+        return;
+    end
 
 for idx = 1:numel(objects)
     obj = objects(idx);
@@ -200,4 +200,35 @@ for idx = 1:numel(objects)
         % Ignore failures when restoring units.
     end
 end
+end
+
+function tf = supports_manual_positioning(obj)
+%SUPPORTS_MANUAL_POSITIONING True when the object allows manual positioning.
+    tf = false;
+
+    if ~isvalid(obj) || ~isprop(obj, 'Position') || ~isprop(obj, 'Units')
+        return;
+    end
+
+    try
+        if isa(obj, 'matlab.graphics.layout.TiledChartLayout')
+            return;
+        end
+    catch
+        % ISA can fail for some graphics objects that do not expose class info.
+    end
+
+    try
+        objType = get(obj, 'Type');
+        if ischar(objType)
+            if any(strcmpi(objType, {'tiledlayout', 'uigridlayout'}))
+                return;
+            end
+        end
+    catch
+        % Some objects do not expose a Type property via GET; assume they are
+        % positionable if we reach this point.
+    end
+
+    tf = true;
 end
