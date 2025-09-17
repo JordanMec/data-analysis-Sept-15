@@ -2,7 +2,7 @@ function simulationData = collect_simulation_data(dataDir)
 %COLLECT_SIMULATION_DATA Load simulation results allowing UUID-suffixed files.
 %   This function searches for the expected simulation scenarios by prefix so
 %   that files produced by parallel processing with random UUIDs can be loaded
-%   automatically.  The core filename prefix (e.g. `adams_leaky_HEPA_active`)
+%   automatically.  The core filename prefix (e.g. `adams_leaky_HEPA_active` for HEPA 13 data)
 %   is matched while any trailing UUID and run identifier segments are
 %   ignored.
 
@@ -72,6 +72,12 @@ for i = 1:length(prefixes)
         else
             mode = '';
         end
+    end
+
+    if strcmpi(filterType, 'hepa')
+        filterType = 'HEPA 13';
+    elseif strcmpi(filterType, 'merv')
+        filterType = 'MERV 15';
     end
 
     % Store into structured array

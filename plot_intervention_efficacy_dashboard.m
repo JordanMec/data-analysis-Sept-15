@@ -235,17 +235,17 @@ function plotCostEffectivenessBubble(costTable)
     % Create color map based on intervention type
     colorMap = zeros(height(data), 3);
     for i = 1:height(data)
-        if strcmp(data.filterType{i}, 'hepa')
+        if any(strcmpi(data.filterType{i}, {'hepa', 'hepa 13'}))
             if strcmp(data.mode{i}, 'active') || strcmp(data.mode{i}, 'triggered')
-                colorMap(i,:) = [0.2 0.4 0.8]; % Blue for HEPA active
+                colorMap(i,:) = [0.2 0.4 0.8]; % Blue for HEPA 13 active
             else
-                colorMap(i,:) = [0.1 0.2 0.6]; % Dark blue for HEPA always on
+                colorMap(i,:) = [0.1 0.2 0.6]; % Dark blue for HEPA 13 always on
             end
-        else % MERV
+        else % MERV 15
             if strcmp(data.mode{i}, 'active') || strcmp(data.mode{i}, 'triggered')
-                colorMap(i,:) = [0.8 0.3 0.3]; % Red for MERV active
+                colorMap(i,:) = [0.8 0.3 0.3]; % Red for MERV 15 active
             else
-                colorMap(i,:) = [0.6 0.1 0.1]; % Dark red for MERV always on
+                colorMap(i,:) = [0.6 0.1 0.1]; % Dark red for MERV 15 always on
             end
         end
     end

@@ -92,10 +92,10 @@ end
 displayNames = cell(size(uniqFilters));
 for f = 1:numel(uniqFilters)
     switch lower(strrep(uniqFilters{f}, '_', ' '))
-        case {'hepa', 'hepa filter'}
-            displayNames{f} = 'HEPA Filter';
-        case {'merv', 'merv filter'}
-            displayNames{f} = 'MERV Filter';
+        case {'hepa', 'hepa filter', 'hepa 13', 'hepa 13 filter'}
+            displayNames{f} = 'HEPA 13 Filter';
+        case {'merv', 'merv filter', 'merv 15', 'merv 15 filter'}
+            displayNames{f} = 'MERV 15 Filter';
         case 'baseline'
             displayNames{f} = 'Baseline';
         otherwise

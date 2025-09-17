@@ -1,7 +1,7 @@
 function tradeoffTable = analyze_physical_tradeoffs(summaryTable, hoursPerYear)
 % ANALYZE_PHYSICAL_TRADEOFFS Compute filter replacement and airflow metrics with bounds
 %   This version uses a consistent physics-based methodology for estimating
-%   airflow and energy penalties for both HEPA and MERV filters.
+%   airflow and energy penalties for both HEPA 13 and MERV 15 filters.
 if nargin < 2
     hoursPerYear = 8760;
 end
@@ -53,7 +53,7 @@ for i = 1:height(uniqueConfigs)
     %% IMPROVED Airflow Penalty Estimation
     % Use filter pressure drop characteristics and fan laws
 
-    if strcmpi(filt, 'hepa')
+    if any(strcmpi(filt, {'hepa', 'hepa 13'}))
         initial_pressure_drop = 0.5;  % inches w.c. at rated flow
         loaded_pressure_drop  = 1.0;  % inches w.c. when loaded
     else

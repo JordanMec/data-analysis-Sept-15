@@ -37,7 +37,7 @@ for i = 1:length(configs)
     else
         duration_bounds(i,:) = [NaN NaN];
     end
-    labels{i} = strrep(config, '_', ' ');
+    labels{i} = format_filter_label(config);
 end
 
 positions = 1:length(configs);
@@ -76,7 +76,7 @@ for i = 1:length(configs)
     data = eventAnalysis.(config);
 
     % Choose marker by filter type to visually differentiate
-    if strcmpi(data.filterType, 'HEPA')
+    if any(strcmpi(data.filterType, {'HEPA', 'HEPA 13'}))
         marker = 'o';
     else
         marker = 's';

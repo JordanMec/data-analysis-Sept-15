@@ -135,7 +135,7 @@ if isfield(data, 'hourly_penetration_pm25')
     plot(t, data.hourly_penetration_pm10(t), 'r-', 'LineWidth', 1.5);
     xlabel('Time in Hours');
     ylabel('Particle Penetration Factor');
-    title(sprintf('Penetration Temporal Variation for %s', strrep(config, '_', ' ')));
+    title(sprintf('Penetration Temporal Variation for %s', format_filter_label(config)));
     legend({'PM2.5 Bounds', 'PM10 Bounds', 'PM2.5 Mean', 'PM10 Mean'}, 'Location', 'best');
     grid on;
 end

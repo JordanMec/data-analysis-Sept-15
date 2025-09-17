@@ -421,7 +421,7 @@ end
 
 %% Analysis Function: Dynamic Filter Comparison
 function filterComparison = compare_filters_dynamic(activeData)
-% Compare HEPA vs MERV performance under dynamic conditions
+% Compare HEPA 13 vs MERV 15 performance under dynamic conditions
 
 filterComparison = struct();
 locations = unique(cellfun(@(x) activeData.(x).location, fieldnames(activeData), 'UniformOutput', false));
@@ -430,16 +430,16 @@ for loc_idx = 1:length(locations)
     location = locations{loc_idx};
     filterComparison.(location) = struct();
     
-    % Find HEPA and MERV configs for this location
+    % Find HEPA 13 and MERV 15 configs for this location
     configs = fieldnames(activeData);
     hepa_config = [];
     merv_config = [];
     
     for i = 1:length(configs)
         if strcmp(activeData.(configs{i}).location, location)
-            if strcmpi(activeData.(configs{i}).filterType, 'hepa')
+            if any(strcmpi(activeData.(configs{i}).filterType, {'hepa', 'hepa 13'}))
                 hepa_config = configs{i};
-            elseif strcmpi(activeData.(configs{i}).filterType, 'merv')
+            elseif any(strcmpi(activeData.(configs{i}).filterType, {'merv', 'merv 15'}))
                 merv_config = configs{i};
             end
         end

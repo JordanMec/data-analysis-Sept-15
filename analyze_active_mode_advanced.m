@@ -89,7 +89,7 @@ activeAnalysisResults.correlations = correlationAnalysis;
 plot_correlation_analysis(correlationAnalysis, activeDir);
 
 %% 8. Filter-Specific Performance Under Dynamic Conditions
-fprintf('8. Comparing HEPA vs MERV under dynamic conditions...\n');
+fprintf('8. Comparing HEPA 13 vs MERV 15 under dynamic conditions...\n');
 filterComparison = compare_filters_dynamic(activeData);
 activeAnalysisResults.filterComparison = filterComparison;
 
