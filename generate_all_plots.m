@@ -1,6 +1,4 @@
 function generate_all_plots(summaryTable, rangeTable, filterComparisonTable, healthExposureTable, avoidedExposureTable, costTable, tradeoffTable, figuresDir)
-[thisDir, ~, ~] = fileparts(mfilename('fullpath'));
-addpath(thisDir);
 if ~exist(figuresDir, 'dir')
     mkdir(figuresDir);
 end
