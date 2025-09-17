@@ -3,6 +3,10 @@
 
 close all; clear all; clc;
 
+% Ensure helper functions are accessible when the script is run from elsewhere
+[thisDir, ~, ~] = fileparts(mfilename('fullpath'));
+addpath(thisDir);
+
 %%  1. Setup (unchanged from original)
 disp("Starting enhanced air quality simulation pipeline...");
 
